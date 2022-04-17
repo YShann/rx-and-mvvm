@@ -2,6 +2,7 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.adapter
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
+import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.observer.IfError
 import tw.edu.ntub.imd.birc.rxandmvvm.observer.SourceStateObserver
 import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState

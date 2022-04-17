@@ -8,10 +8,7 @@ data class User(
     //var -> variable - 變數
     //Optional<T> - null safe
     //val id: Int?,加問號代表不確定有值
-    var id: Int?,
+    var id: String?,
     var name: String?,
-    var username: String?,
-    var email: String?,
-    var phone: String?,
-    var website: String?,
+    var gender: String?,
 )

@@ -4,6 +4,7 @@ import android.util.Log
 import io.reactivex.rxjava3.core.Observable
 import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
+import tw.edu.ntub.imd.birc.rxandmvvm.data.User
 import tw.edu.ntub.imd.birc.rxandmvvm.dto.ApiRetryDTO
 import tw.edu.ntub.imd.birc.rxandmvvm.exception.HttpRequestTimeoutException
 import tw.edu.ntub.imd.birc.rxandmvvm.exception.ProjectException
@@ -12,7 +13,7 @@ import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeUnit
 
-fun <T> Observable<Response<T>>.toApiSourceState(): Observable<SourceState<T>> {
+fun <T> Observable<Response<ResponseBody<T>>>.toApiSourceState(): Observable<SourceState<ResponseBody<T>>> {
     return retryWhen {
         Observable.range(1, 4)
             .zipWith(it) { times, t -> ApiRetryDTO(times, t) }
@@ -62,7 +63,7 @@ fun <T> Observable<T>.wrapSourceState(errorSupplier: (t: Throwable) -> SourceSta
     }
 }
 
-fun <T, R> Observable<SourceState<T>>.mapSourceState(mapper: (t: T) -> R): Observable<SourceState<R>> {
+fun <T, R> Observable<SourceState<ResponseBody<T>>>.mapSourceState(mapper: (t: ResponseBody<T>) -> List<R>): Observable<SourceState<List<R>>> {
     return map { it.map(mapper) }
 }
 

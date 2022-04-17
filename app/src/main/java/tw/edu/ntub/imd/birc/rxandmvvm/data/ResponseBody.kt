@@ -9,5 +9,5 @@ data class ResponseBody<T>(
     val isSuccess: Boolean,
     val errorCode: String,
     val message: String,
-    val data: T
+    val data: List<T>
 )

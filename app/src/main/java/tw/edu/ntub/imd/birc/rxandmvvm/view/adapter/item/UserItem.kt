@@ -9,12 +9,12 @@ import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.Adapter
 class UserItem(private val user: User) : AbstractViewItem() {
     override val layoutId: Int = R.layout.recycler_item_user
     override fun bindView(adapter: Adapter, view: View) {
+        val id = view.findViewById<TextView>(R.id.recycler_item_user_id)
         val name = view.findViewById<TextView>(R.id.recycler_item_user_name)
-        val email = view.findViewById<TextView>(R.id.recycler_item_user_email)
-        val phone = view.findViewById<TextView>(R.id.recycler_item_user_phone)
+        val gender = view.findViewById<TextView>(R.id.recycler_item_user_gender)
+        id.text = user.id
         name.text = user.name
-        email.text = user.email
-        phone.text = user.phone
+        gender.text = user.gender
     }
 
     override fun updateView(adapter: Adapter, view: View, payloads: List<Any>) {

@@ -1,5 +1,6 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.extension
 
+import android.util.Log
 import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.exception.EmptyResponseBodyException
