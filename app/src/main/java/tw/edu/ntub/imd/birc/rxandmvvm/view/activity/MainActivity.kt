@@ -3,29 +3,18 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.internal.NavigationMenu
-import com.google.android.material.internal.NavigationMenuItemView
-import com.google.android.material.internal.NavigationMenuView
-import com.google.android.material.navigation.NavigationView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.R
-import tw.edu.ntub.imd.birc.rxandmvvm.extension.attachToRecyclerView
-import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
-import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
-import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.UserItem
-import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.HomeFragment
-import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.OtherFragment
-import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.RecordFragment
-import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.UserFragment
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.*
 
 class MainActivity : AppCompatActivity() {
     companion object {
         val homeFragment = HomeFragment()
         val recordFragment = RecordFragment()
         val userFragemnt = UserFragment()
+
+        val addFragment = AddFragment()
+
         val otherFragment = OtherFragment()
     }
 
@@ -59,9 +48,15 @@ class MainActivity : AppCompatActivity() {
                     val t = supportFragmentManager.beginTransaction()
                     t.replace(R.id.container_activity_main, userFragemnt).commit()
                 }
+
                 R.id.f4 -> {
                     val t = supportFragmentManager.beginTransaction()
                     t.replace(R.id.container_activity_main, otherFragment).commit()
+                }
+
+                R.id.f5 -> {
+                    val t = supportFragmentManager.beginTransaction()
+                    t.replace(R.id.container_activity_main, addFragment).commit()
                 }
             }
             return true
