@@ -17,4 +17,8 @@
         android:id="@+id/f4"
         android:title="其他"
         android:icon="@drawable/sl_bar_other"/>
+    <item
+        android:id="@+id/f5"
+        android:title="添加"
+        android:icon="@drawable/sl_bar_add"/>
 </menu>
