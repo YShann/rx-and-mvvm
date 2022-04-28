@@ -2,14 +2,12 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.*
 
 class MainActivity : AppCompatActivity() {
-
     companion object {
         val homeFragment = HomeFragment()
         val recordFragment = RecordFragment()
@@ -59,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.f5 -> {
                     val t = supportFragmentManager.beginTransaction()
                     t.replace(R.id.container_activity_main, addFragment).commit()
-
                 }
             }
             return true
