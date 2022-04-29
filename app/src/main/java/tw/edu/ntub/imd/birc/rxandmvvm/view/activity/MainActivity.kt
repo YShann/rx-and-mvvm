@@ -1,8 +1,10 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.ArrayAdapter
+import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import tw.edu.ntub.imd.birc.rxandmvvm.R
@@ -20,9 +22,11 @@ class MainActivity : AppCompatActivity() {
         val otherFragment = OtherFragment()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val navigationview = findViewById<BottomNavigationView>(R.id.main_navigationView)
 
         //設定初始時要show哪個fragment
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                     val manager = supportFragmentManager
                     val transaction = manager.beginTransaction()
                     transaction.replace(R.id.container_activity_main, homeFragment).commit()
+
                 }
                 R.id.f2 -> {
                     val t = supportFragmentManager.beginTransaction()
@@ -64,5 +69,13 @@ class MainActivity : AppCompatActivity() {
             }
             return true
         }
+    }
+
+    //新版button.setOnClickListener的實作方法(首頁測試用按鈕)
+    fun btn_onClik(view: View) {
+        val button: Button = findViewById(R.id.button1)
+        //button.setOnClickListener {  },好像不用了刪掉也沒抱錯
+            startActivity(Intent(this, MainActivity2::class.java))
+
     }
 }
