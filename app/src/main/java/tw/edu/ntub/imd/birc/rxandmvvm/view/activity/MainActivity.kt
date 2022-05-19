@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     fun btn_onClik(view: View) {
         //val button: Button = findViewById(R.id.button1),好像不用
         //button.setOnClickListener {  },好像不用了刪掉也沒報錯
-            startActivity(Intent(this, MainActivity2::class.java))
+            startActivity(Intent(this, FoodDetailActivity::class.java))
 
     }
 
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun goBtn2(view: View) {
-
+        startActivity(Intent(this, AddWaterRecordActivity::class.java))
     }
 
 
