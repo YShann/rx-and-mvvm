@@ -23,29 +23,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
+            <ImageButton
                 android:id="@+id/deleteButton"
-                android:layout_width="78dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/board_tab_selector_background"
-                android:backgroundTint="@color/teal_200"
-                android:text="刪除"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:background="@drawable/btnbg"
+                android:backgroundTint="@color/my_default_background"
                 android:translationX="345dp"
-                android:translationY="5dp" />
+                app:srcCompat="@drawable/ic_delete"
+                tools:ignore="SpeakableTextPresentCheck" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/revisebutton"
-                android:layout_width="77dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/board_tab_selector_background"
-                android:backgroundTint="@color/teal_200"
-                android:text="修改"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:background="@drawable/btnbg"
+                android:backgroundTint="@color/my_default_background"
                 android:translationX="275dp"
-                android:translationY="5dp" />
+                app:srcCompat="@drawable/ic_edit"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton
                 android:id="@+id/imageButton5"
@@ -54,8 +50,8 @@
                 android:background="@null"
                 android:onClick="btn_back"
                 android:translationX="20dp"
-                android:translationY="7dp"
-                app:srcCompat="@drawable/ic_back2"
+                android:translationY="9dp"
+                app:srcCompat="@drawable/ic_back4"
                 tools:ignore="OnClick,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         </FrameLayout>
