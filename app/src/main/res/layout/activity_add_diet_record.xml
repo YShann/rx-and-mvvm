@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <FrameLayout
             android:id="@+id/frameLayout2"
             android:layout_width="416dp"
@@ -191,7 +193,7 @@
             app:layout_constraintVertical_bias="0.36" />
 
         <EditText
-            android:id="@+id/editTextTime"
+            android:id="@+id/time_edit"
             android:layout_width="136dp"
             android:layout_height="48dp"
             android:layout_marginEnd="38dp"
@@ -202,7 +204,7 @@
             android:translationY="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/editTextDate"
+            app:layout_constraintStart_toEndOf="@+id/date_edit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.485"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -395,7 +397,7 @@
             tools:ignore="TouchTargetSizeCheck" />
 
         <EditText
-            android:id="@+id/editTextDate"
+            android:id="@+id/date_edit"
             android:layout_width="166dp"
             android:layout_height="48dp"
             android:layout_marginStart="15dp"
@@ -405,7 +407,7 @@
             android:inputType="date"
             android:translationX="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/editTextTime"
+            app:layout_constraintEnd_toStartOf="@+id/time_edit"
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.483"

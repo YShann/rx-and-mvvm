@@ -6,6 +6,8 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -14,12 +16,18 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.databinding.ActivityMainBinding
+import java.text.SimpleDateFormat
+import java.util.*
+
+
 
 class AddDietRecordActivity : AppCompatActivity() {
 
@@ -35,9 +43,13 @@ class AddDietRecordActivity : AppCompatActivity() {
         cameraButton.setOnClickListener(cameraAppButtonHandler)
         val photoButton: ImageButton = findViewById(R.id.photoButton)
         photoButton.setOnClickListener(albumAppButtonHandler)
-
         val foodphoto: ImageView = findViewById(R.id.foodphoto)
         foodphoto.scaleType = ImageView.ScaleType.CENTER_CROP
+
+        val dateEdit: EditText = findViewById(R.id.date_edit)
+        val timeEdit: EditText = findViewById(R.id.time_edit)
+        dateEdit.setOnClickListener(listener)
+        timeEdit.setOnClickListener(listener)
 
     }
 
@@ -53,7 +65,7 @@ class AddDietRecordActivity : AppCompatActivity() {
 
     // 通過 intent 使用 album
     private fun takeImageFromAlbumWithIntent() {
-      
+
 
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -77,7 +89,7 @@ class AddDietRecordActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        println("收到 result code $requestCode")
+        //println("收到 result code $requestCode")
 
         when (requestCode) {
             ACTION_CAMERA_REQUEST_CODE -> {
@@ -126,6 +138,72 @@ class AddDietRecordActivity : AppCompatActivity() {
 
 
     }
+
+    private val calender: Calendar = Calendar.getInstance()
+
+    private val listener = View.OnClickListener {
+        val dateEdit: EditText = findViewById(R.id.date_edit)
+        val timeEdit: EditText = findViewById(R.id.time_edit)
+        when (it) {
+
+            dateEdit -> {
+                datePicker()
+            }
+
+            timeEdit -> {
+                timePicker()
+            }
+
+//            button -> {
+//                Dialog()
+//            }
+        }
+    }
+
+    fun datePicker() {
+        DatePickerDialog(this,
+            dateListener,
+            calender.get(Calendar.YEAR),
+            calender.get(Calendar.MONTH),
+            calender.get(Calendar.DAY_OF_MONTH)).show()
+    }
+
+    fun timePicker() {
+        TimePickerDialog(this,
+            timeListener,
+            calender.get(Calendar.HOUR_OF_DAY),
+            calender.get(Calendar.MINUTE),
+            true
+        ).show()
+    }
+
+    val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+        calender.set(year, month, day)
+        val dateEdit: EditText = findViewById(R.id.date_edit)
+        format("yyyy / MM / dd", dateEdit)
+    }
+
+    val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, min->
+        calender.set(Calendar.HOUR_OF_DAY, hour)
+        calender.set(Calendar.MINUTE, min)
+        val timeEdit: EditText = findViewById(R.id.time_edit)
+        format("HH : mm", timeEdit)
+    }
+
+    fun format(format: String, view: View) {
+        val time = SimpleDateFormat(format, Locale.TAIWAN)
+        (view as EditText).setText(time.format(calender.time))
+    }
+
+    //用一個小視窗顯示日期時間
+//    fun Dialog(){
+//        AlertDialog.Builder(this)
+//            .setTitle("Your Time")
+//            .setMessage("${date_edit.text}   ${time_edit.text}")
+//            .setNegativeButton("OK"){ dialog, which ->
+//                dialog.cancel()
+//            }.create().show()
+//    }
 
     fun back(view: View) {
         finish()
