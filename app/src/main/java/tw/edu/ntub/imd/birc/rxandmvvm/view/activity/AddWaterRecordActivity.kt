@@ -12,8 +12,8 @@ class AddWaterRecordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_water_record)
 
         // 顯示今天日期
-        val textclock:TextClock= findViewById(R.id.textclock)
-        textclock.setFormat12Hour("yyyy/MM/dd");
+        val textClock:TextClock= findViewById(R.id.textclock)
+        textClock.format12Hour = "yyyy/MM/dd"
     }
 
     fun back(view: View) {
