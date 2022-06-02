@@ -7,14 +7,16 @@ plugins {
     id 'koin'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'de.mannodermaus.android-junit5'
+
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "tw.edu.ntub.imd.birc.rxandmvvm"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -76,4 +78,10 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:1.1.2"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
     androidTestImplementation "androidx.room:room-testing:$room_version"
+
+    implementation "androidx.activity:activity:1.4.0"
+    implementation "androidx.fragment:fragment:1.4.1"
+
+    implementation 'com.karumi:dexter:6.2.2'
+
 }
