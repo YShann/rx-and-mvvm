@@ -169,7 +169,7 @@
             android:layout_width="249dp"
             android:layout_height="217dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/foodphoto"
+            android:src="@drawable/foodphoto4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -400,16 +400,15 @@
             android:layout_height="48dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="6dp"
             android:ems="10"
             android:hint="請輸入日期"
             android:inputType="date"
             android:translationX="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/servingsizeGroup"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/editTextTime"
             app:layout_constraintStart_toEndOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/foodphoto"
-            app:layout_constraintVertical_bias="0.056"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.483"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView

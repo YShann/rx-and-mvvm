@@ -4,21 +4,28 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 //import kotlinx.android.synthetic.main.activity_add_diet_record.*
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.R
+import tw.edu.ntub.imd.birc.rxandmvvm.databinding.ActivityMainBinding
 
 class AddDietRecordActivity : AppCompatActivity() {
 
     private val ACTION_CAMERA_REQUEST_CODE = 100
     private val ACTION_ALBUM_REQUEST_CODE = 200
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,17 +41,19 @@ class AddDietRecordActivity : AppCompatActivity() {
 
     }
 
+
     // 通過 intent 使用 Camera
     private fun takeImageFromCameraWithIntent() {
-        println("take image from camera")
 
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, ACTION_CAMERA_REQUEST_CODE)
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, ACTION_CAMERA_REQUEST_CODE)
+
+
     }
 
     // 通過 intent 使用 album
     private fun takeImageFromAlbumWithIntent() {
-        println("take image from album")
+      
 
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -59,6 +68,7 @@ class AddDietRecordActivity : AppCompatActivity() {
         takeImageFromAlbumWithIntent()
     }
 
+    //顯示圖片在foodphoto上
     private fun displayImage(bitmap: Bitmap) {
         val foodphoto: ImageView = findViewById(R.id.foodphoto)
 
@@ -121,3 +131,4 @@ class AddDietRecordActivity : AppCompatActivity() {
         finish()
     }
 }
+
