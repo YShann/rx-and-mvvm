@@ -9,31 +9,110 @@
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/rbgc">
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="紀錄"
-            android:textSize="18sp"
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="380dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:translationY="-30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.096">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search2" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="309dp"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:ems="10"
+                android:hint="輸入食物名稱查詢"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                android:translationX="15dp"
+                android:translationY="0dp" />
+
+            <ImageButton
+                android:id="@+id/searchButton"
+                android:layout_width="36dp"
+                android:layout_height="34dp"
+                android:background="#FFFFFF"
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:src="@drawable/ic_search"
+                android:translationX="333dp"
+                android:translationY="7dp"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/frameLayout2"
+
+            android:layout_width="380dp"
+
+            android:layout_height="50dp"
+            android:translationY="-10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.354"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints">
+
+            <EditText
+                android:id="@+id/date_edit"
+                android:layout_width="157dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:ems="10"
+                android:focusableInTouchMode="false"
+                android:text="點選想查詢的日期"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:translationX="29dp"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="177dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="566dp"
+                android:minHeight="48dp"
+                android:translationX="189dp"
+                android:translationY="-27dp"
+                tools:ignore="SpeakableTextPresentCheck" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="234dp"
             android:onClick="btn_onClik"
             android:text="查看食物紀錄"
-            app:layout_constraintBottom_toTopOf="@+id/textView12"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.535" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             .commit()
         navigationview.selectedItemId = R.id.f1
         navigationview.setOnNavigationItemSelectedListener(listener)
+
 
 
     }
@@ -132,7 +134,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
     //新版button.setOnClickListener的實作方法(歷史測試用按鈕)
     fun btn_onClik(view: View) {
         //val button: Button = findViewById(R.id.button1),好像不用
@@ -145,10 +146,12 @@ class MainActivity : AppCompatActivity() {
     fun goBtn1(view: View) {
         startActivity(Intent(this, AddDietRecordActivity::class.java))
     }
-
+    //切到添加飲水紀錄的畫面
     fun goBtn2(view: View) {
         startActivity(Intent(this, AddWaterRecordActivity::class.java))
     }
+
+
 
 
 }
