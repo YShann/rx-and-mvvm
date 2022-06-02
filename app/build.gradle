@@ -7,6 +7,7 @@ plugins {
     id 'koin'
     id 'org.jetbrains.kotlin.plugin.serialization'
     id 'de.mannodermaus.android-junit5'
+
 }
 
 android {
