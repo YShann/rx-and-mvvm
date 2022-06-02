@@ -1,29 +1,21 @@
-@file:Suppress("UnusedImport")
 
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 //import kotlinx.android.synthetic.main.activity_add_diet_record.*
 
-import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.Settings
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.R
-import tw.edu.ntub.imd.birc.rxandmvvm.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,21 +25,26 @@ class AddDietRecordActivity : AppCompatActivity() {
 
     private val ACTION_CAMERA_REQUEST_CODE = 100
     private val ACTION_ALBUM_REQUEST_CODE = 200
+    private lateinit var cameraButton: ImageButton
+    private lateinit var photoButton: ImageButton
+    private lateinit var foodPhoto: ImageView
 
+    private lateinit var dateEdit: EditText
+    private lateinit var timeEdit: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_diet_record)
 
-        val cameraButton: ImageButton = findViewById(R.id.cameraButton)
+        cameraButton = findViewById(R.id.cameraButton)
         cameraButton.setOnClickListener(cameraAppButtonHandler)
-        val photoButton: ImageButton = findViewById(R.id.photoButton)
+        photoButton = findViewById(R.id.photoButton)
         photoButton.setOnClickListener(albumAppButtonHandler)
-        val foodphoto: ImageView = findViewById(R.id.foodphoto)
-        foodphoto.scaleType = ImageView.ScaleType.CENTER_CROP
+        foodPhoto = findViewById(R.id.foodphoto)
+        foodPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
 
-        val dateEdit: EditText = findViewById(R.id.date_edit)
-        val timeEdit: EditText = findViewById(R.id.time_edit)
+        dateEdit = findViewById(R.id.date_edit)
+        timeEdit = findViewById(R.id.time_edit)
         dateEdit.setOnClickListener(listener)
         timeEdit.setOnClickListener(listener)
 
@@ -82,9 +79,8 @@ class AddDietRecordActivity : AppCompatActivity() {
 
     //顯示圖片在foodphoto上
     private fun displayImage(bitmap: Bitmap) {
-        val foodphoto: ImageView = findViewById(R.id.foodphoto)
 
-        foodphoto.setImageBitmap(bitmap)
+        foodPhoto.setImageBitmap(bitmap)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -140,19 +136,13 @@ class AddDietRecordActivity : AppCompatActivity() {
     }
 
     private val calender: Calendar = Calendar.getInstance()
-
     private val listener = View.OnClickListener {
-        val dateEdit: EditText = findViewById(R.id.date_edit)
-        val timeEdit: EditText = findViewById(R.id.time_edit)
+
         when (it) {
 
-            dateEdit -> {
-                datePicker()
-            }
+            dateEdit -> datePicker()
 
-            timeEdit -> {
-                timePicker()
-            }
+            timeEdit -> timePicker()
 
 //            button -> {
 //                Dialog()
@@ -160,7 +150,7 @@ class AddDietRecordActivity : AppCompatActivity() {
         }
     }
 
-    fun datePicker() {
+    private fun datePicker() {
         DatePickerDialog(this,
             dateListener,
             calender.get(Calendar.YEAR),
@@ -168,7 +158,7 @@ class AddDietRecordActivity : AppCompatActivity() {
             calender.get(Calendar.DAY_OF_MONTH)).show()
     }
 
-    fun timePicker() {
+    private fun timePicker() {
         TimePickerDialog(this,
             timeListener,
             calender.get(Calendar.HOUR_OF_DAY),
@@ -177,20 +167,18 @@ class AddDietRecordActivity : AppCompatActivity() {
         ).show()
     }
 
-    val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+    private val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
         calender.set(year, month, day)
-        val dateEdit: EditText = findViewById(R.id.date_edit)
         format("yyyy / MM / dd", dateEdit)
     }
 
-    val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, min->
+    private val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, min->
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, min)
-        val timeEdit: EditText = findViewById(R.id.time_edit)
         format("HH : mm", timeEdit)
     }
 
-    fun format(format: String, view: View) {
+    private fun format(format: String, view: View) {
         val time = SimpleDateFormat(format, Locale.TAIWAN)
         (view as EditText).setText(time.format(calender.time))
     }
