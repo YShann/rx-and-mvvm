@@ -11,14 +11,14 @@
         android:icon="@drawable/sl_bar_record"/>
     <item
         android:id="@+id/f3"
-        android:title="個人"
-        android:icon="@drawable/sl_bar_user"/>
+        android:title="添加"
+        android:icon="@drawable/sl_bar_add" />
     <item
         android:id="@+id/f4"
-        android:title="其他"
-        android:icon="@drawable/sl_bar_other"/>
+        android:title="個人"
+        android:icon="@drawable/sl_bar_user" />
     <item
         android:id="@+id/f5"
-        android:title="添加"
-        android:icon="@drawable/sl_bar_add"/>
+        android:title="其他"
+        android:icon="@drawable/sl_bar_other" />
 </menu>

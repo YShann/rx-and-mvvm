@@ -55,18 +55,17 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.f3 -> {
                     val t = supportFragmentManager.beginTransaction()
-                    t.replace(R.id.container_activity_main, userFragemnt).commit()
+                    t.replace(R.id.container_activity_main, addFragment).commit()
                 }
 
                 R.id.f4 -> {
                     val t = supportFragmentManager.beginTransaction()
-                    t.replace(R.id.container_activity_main, otherFragment).commit()
+                    t.replace(R.id.container_activity_main, userFragemnt).commit()
                 }
 
                 R.id.f5 -> {
                     val t = supportFragmentManager.beginTransaction()
-                    t.replace(R.id.container_activity_main, addFragment).commit()
-
+                    t.replace(R.id.container_activity_main, otherFragment).commit()
                 }
             }
             return true

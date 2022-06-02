@@ -23,23 +23,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="飲食紀錄"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:translationX="155dp"
+                android:translationY="10dp" />
+
             <ImageButton
                 android:id="@+id/deleteButton"
-                android:layout_width="75dp"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btnbg"
                 android:backgroundTint="@color/my_default_background"
-                android:translationX="345dp"
+                android:translationX="350dp"
                 app:srcCompat="@drawable/ic_delete"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <ImageButton
                 android:id="@+id/revisebutton"
-                android:layout_width="75dp"
+                android:layout_width="58dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btnbg"
                 android:backgroundTint="@color/my_default_background"
-                android:translationX="275dp"
+                android:translationX="295dp"
                 app:srcCompat="@drawable/ic_edit"
                 tools:ignore="SpeakableTextPresentCheck" />
 
@@ -61,7 +72,7 @@
             android:layout_width="249dp"
             android:layout_height="217dp"
             android:layout_marginBottom="372dp"
-            android:src="@drawable/text_foodphoto"
+            android:src="@drawable/hamburger"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,11 +115,10 @@
             android:text="全榖雜糧  蛋豆魚肉 "
             android:textColor="#000000"
             android:textSize="20sp"
-            android:translationX="7dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.732"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.301"
+            app:layout_constraintStart_toEndOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.637" />
 
@@ -116,14 +126,13 @@
             android:id="@+id/dateandtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2022/4/28  7:30"
+            android:text="2022/05/21  11:00"
             android:textColor="#000000"
             android:textSize="20sp"
-            android:translationX="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.407"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.107"
+            app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.507" />
 
@@ -150,7 +159,7 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.288"
+            app:layout_constraintHorizontal_bias="0.293"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.571" />
@@ -191,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:ems="10"
-                android:text="今天早餐吃的是早安美之城的里肌蛋餅"
+                android:text="今天難得回去吃了那家牛肉堡，依舊是記憶中的味道"
                 android:textSize="18sp"
                 android:translationX="55dp"
                 android:translationY="3dp"
@@ -216,12 +225,12 @@
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="卡路里："
+            android:text="熱量："
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.096"
+            app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.727" />
@@ -244,14 +253,14 @@
             android:id="@+id/calorie2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="150"
+            android:text="467kcal"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.347"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.089"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.727" />
 
@@ -259,14 +268,14 @@
             android:id="@+id/carbohydrate2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30"
+            android:text="35g"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.832"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.184"
+            app:layout_constraintStart_toEndOf="@+id/textView20"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.727" />
 
@@ -274,14 +283,14 @@
             android:id="@+id/protein2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20"
+            android:text="26g"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.34"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.056"
+            app:layout_constraintStart_toEndOf="@+id/textView19"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.775" />
 
@@ -289,14 +298,14 @@
             android:id="@+id/Fat2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="10"
+            android:text="25g"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.832"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.21"
+            app:layout_constraintStart_toEndOf="@+id/textView21"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.775" />
 
@@ -332,15 +341,15 @@
             android:id="@+id/foodname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="里肌蛋餅"
+            android:text="牛肉堡"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.324"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.066"
+            app:layout_constraintStart_toEndOf="@+id/textView10"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.441" />
+            app:layout_constraintVertical_bias="0.44" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
