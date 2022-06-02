@@ -43,5 +43,9 @@ class AddDietRecordActivity : AppCompatActivity() {
         }
     }
 
+    fun back(view: View) {
+        finish()
+    }
+
 
 }

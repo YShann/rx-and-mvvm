@@ -31,7 +31,7 @@
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:translationX="25dp"
+                android:translationX="70dp"
                 android:translationY="10dp" />
 
             <Button
@@ -44,6 +44,15 @@
                 android:textSize="20sp"
                 android:translationX="340dp"
                 android:translationY="5dp" />
+
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="59dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnbg"
+                android:onClick="back"
+                app:srcCompat="@drawable/ic_back"
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </FrameLayout>
 
