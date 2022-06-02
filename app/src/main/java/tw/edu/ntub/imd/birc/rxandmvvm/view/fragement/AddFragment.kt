@@ -35,8 +35,12 @@ class AddFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add, container, false)
+        val root = inflater.inflate(R.layout.fragment_add, container, false)
+
+        return root
     }
+
+
 
     companion object {
         /**

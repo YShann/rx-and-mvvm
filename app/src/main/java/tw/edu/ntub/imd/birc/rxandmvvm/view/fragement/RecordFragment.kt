@@ -30,7 +30,6 @@ class RecordFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var dateEdit: EditText
-    //private lateinit var adapter : Adapter
     private lateinit var spinner : Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
