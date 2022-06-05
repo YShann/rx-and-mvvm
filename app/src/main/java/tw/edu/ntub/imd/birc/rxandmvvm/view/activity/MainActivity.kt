@@ -18,6 +18,7 @@ import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.*
 
 class MainActivity : AppCompatActivity() {
 
+
     companion object {
         val homeFragment = HomeFragment()
         val recordFragment = RecordFragment()
