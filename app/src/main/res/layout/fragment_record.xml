@@ -10,108 +10,119 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rbgc">
+        android:background="@color/main_background">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="380dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="3dp"
-            android:translationY="-30dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/record_headBack"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:elevation="0dp"
+            app:cardBackgroundColor="@color/main_color"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/record_tabLayout_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/main_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:tabGravity="center"
+                    app:tabIndicatorColor="@color/main_color"
+                    app:tabMode="scrollable"
+                    app:tabTextColor="@color/white">
+
+
+                </com.google.android.material.tabs.TabLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="79dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.096">
+            app:layout_constraintTop_toBottomOf="@+id/record_headBack">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/search2" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_food_record"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
 
-            <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="309dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:ems="10"
-                android:hint="輸入食物名稱查詢"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:translationX="15dp"
-                android:translationY="0dp" />
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="177dp"
+            android:layout_height="48dp"
+            android:minHeight="48dp"
+            android:translationX="189dp"
+            android:translationY="-27dp"
+            tools:ignore="SpeakableTextPresentCheck"
+            tools:layout_editor_absoluteX="189dp" />
 
-            <ImageButton
-                android:id="@+id/searchButton"
-                android:layout_width="36dp"
-                android:layout_height="34dp"
-                android:background="#FFFFFF"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:src="@drawable/ic_search"
-                android:translationX="333dp"
-                android:translationY="7dp"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        <EditText
+            android:id="@+id/date_edit"
+            android:layout_width="157dp"
+            android:layout_height="48dp"
+            android:background="@null"
+            android:ems="10"
+            android:focusableInTouchMode="false"
+            android:text="點選想查詢的日期"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:translationX="29dp"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="29dp" />
 
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:id="@+id/frameLayout2"
-
-            android:layout_width="380dp"
-
-            android:layout_height="50dp"
-            android:translationY="-10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.354"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints">
-
-            <EditText
-                android:id="@+id/date_edit"
-                android:layout_width="157dp"
-                android:layout_height="48dp"
-                android:background="@null"
-                android:ems="10"
-                android:focusableInTouchMode="false"
-                android:text="點選想查詢的日期"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:translationX="29dp"
-                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="177dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="26dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="566dp"
-                android:minHeight="48dp"
-                android:translationX="189dp"
-                android:translationY="-27dp"
-                tools:ignore="SpeakableTextPresentCheck" />
-        </FrameLayout>
-
-        <Button
-            android:id="@+id/button1"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="btn_onClik"
-            android:text="查看食物紀錄"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.466"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.535" />
+            android:src="@drawable/search2" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:ems="10"
+            android:hint="輸入食物名稱查詢"
+            android:inputType="textPersonName"
+            android:minHeight="48dp"
+            android:translationX="15dp"
+            android:translationY="0dp"
+            app:layout_constraintStart_toStartOf="@+id/cardView" />
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="36dp"
+            android:layout_height="34dp"
+            android:background="#FFFFFF"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:src="@drawable/ic_search"
+            android:translationX="333dp"
+            android:translationY="7dp"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+            tools:layout_editor_absoluteX="333dp" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

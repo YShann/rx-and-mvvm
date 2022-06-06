@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         val userFragemnt = UserFragment()
         val addFragment = AddFragment()
         val otherFragment = OtherFragment()
+        val createDietRecordFragment = CreateDietRecordFragment()
 
         private const val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100
     }

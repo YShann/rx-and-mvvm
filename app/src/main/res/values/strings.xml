@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RxAndMVVM</string>
+    <string name="app_name">Eat In</string>
     <string-array name="lunch">
         <item>全部</item>
         <item>全榖雜糧</item>
@@ -11,4 +11,11 @@
         <item>其他</item>
     </string-array>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="create_record_portionSize_spinner_list">
+        <item>請選擇</item>
+        <item>少量</item>
+        <item>適中</item>
+        <item>飽食</item>
+        <item>過量</item>
+    </string-array>
 </resources>
