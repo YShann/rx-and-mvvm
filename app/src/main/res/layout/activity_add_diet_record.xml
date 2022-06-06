@@ -9,7 +9,7 @@
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
 
@@ -29,12 +29,13 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="詳細資料"
+                android:text="@string/detail"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:translationX="155dp"
-                android:translationY="10dp" />
+                android:translationY="10dp"
+                tools:ignore="TextContrastCheck" />
 
             <ImageButton
                 android:id="@+id/finshButton"
@@ -44,7 +45,7 @@
                 android:backgroundTint="@color/my_default_background"
                 android:translationX="340dp"
                 app:srcCompat="@drawable/ic_check"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck,ImageContrastCheck" />
 
             <ImageButton
                 android:id="@+id/backBtn"
@@ -54,7 +55,7 @@
                 android:onClick="back"
                 android:translationX="5dp"
                 app:srcCompat="@drawable/ic_back4"
-                tools:ignore="SpeakableTextPresentCheck" />
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
         </FrameLayout>
 
@@ -83,11 +84,12 @@
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:ems="10"
-                android:hint="搜尋食物"
+                android:hint="@string/searchFood"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:translationX="15dp"
-                android:translationY="0dp" />
+                android:translationY="0dp"
+                android:autofillHints="" />
 
             <ImageButton
                 android:id="@+id/searchButton"
@@ -108,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/frameLayout"
-            android:text="添加照片："
+            android:text="@string/添加照片"
             android:textColor="#000000"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -148,7 +150,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView1"
             app:layout_constraintTop_toBottomOf="@+id/frameLayout"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="OnClick,SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/photoButton"
@@ -198,8 +200,8 @@
             android:layout_height="48dp"
             android:layout_marginEnd="38dp"
             android:ems="10"
-            android:hint="點擊選擇時間"
             android:focusableInTouchMode="false"
+            android:hint="@string/點擊選擇時間"
             android:inputType="time"
             android:translationX="2dp"
             android:translationY="1dp"
@@ -208,7 +210,7 @@
             app:layout_constraintStart_toEndOf="@+id/date_edit"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.485"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,TextContrastCheck" />
 
         <TextView
             android:id="@+id/textView5"
@@ -279,7 +281,7 @@
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="種類"
+            android:text="@string/種類"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="-4dp"
@@ -294,7 +296,7 @@
             android:id="@+id/wholegrainscheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全榖雜糧"
+            android:text="@string/全榖雜糧"
             android:textSize="18sp"
             android:translationX="-4dp"
             android:translationY="-10dp"
@@ -309,7 +311,7 @@
             android:id="@+id/dairycheckBox"
             android:layout_width="70dp"
             android:layout_height="37dp"
-            android:text="乳品"
+            android:text="@string/乳品"
             android:textSize="18sp"
             android:translationX="-4dp"
             android:translationY="-10dp"
@@ -324,7 +326,7 @@
             android:id="@+id/eggbeancheckBox"
             android:layout_width="110dp"
             android:layout_height="37dp"
-            android:text="蛋豆魚肉"
+            android:text="@string/蛋豆魚肉"
             android:textSize="18sp"
             android:translationX="-4dp"
             android:translationY="-10dp"
@@ -339,7 +341,7 @@
             android:id="@+id/vegetablecheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="蔬菜"
+            android:text="@string/蔬菜"
             android:textSize="18sp"
             android:translationX="-4dp"
             android:translationY="-10dp"
@@ -356,7 +358,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:text="油脂與堅果種子"
+            android:text="@string/油脂與堅果種子"
             android:textSize="18sp"
             android:translationX="-4dp"
             android:translationY="-10dp"
@@ -370,7 +372,7 @@
             android:id="@+id/fruitcheckBox"
             android:layout_width="70dp"
             android:layout_height="37dp"
-            android:text="水果"
+            android:text="@string/水果"
             android:textSize="18sp"
             android:translationX="-4dp"
             android:translationY="-11dp"
@@ -386,7 +388,7 @@
             android:id="@+id/othercheckBox"
             android:layout_width="72dp"
             android:layout_height="37dp"
-            android:text="其他"
+            android:text="@string/其他"
             android:textSize="18sp"
             android:translationX="-7dp"
             android:translationY="-7dp"
@@ -404,8 +406,8 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
             android:ems="10"
-            android:hint="點擊選擇日期"
             android:focusableInTouchMode="false"
+            android:hint="@string/點擊選擇日期"
             android:inputType="date"
             android:translationX="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -413,13 +415,14 @@
             app:layout_constraintStart_toEndOf="@+id/textView7"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.483"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,TextContrastCheck"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="熱量"
+            android:text="@string/熱量"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="-4dp"
@@ -436,7 +439,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
-            android:text="蛋白質"
+            android:text="@string/蛋白質"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="12dp"
@@ -453,6 +456,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="4dp"
+            android:autofillHints=""
             android:ems="10"
             android:hint="kcal(千卡)"
             android:inputType="number"
@@ -462,7 +466,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView14"
             app:layout_constraintTop_toBottomOf="@+id/fruitcheckBox"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,TextContrastCheck" />
 
         <EditText
             android:id="@+id/carbohydrate"
@@ -470,6 +474,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="37dp"
             android:layout_marginBottom="46dp"
+            android:autofillHints=""
             android:ems="10"
             android:hint="g(克)"
             android:inputType="number"
@@ -481,13 +486,13 @@
             app:layout_constraintStart_toEndOf="@+id/textView16"
             app:layout_constraintTop_toBottomOf="@+id/othercheckBox"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,DuplicateSpeakableTextCheck,TextContrastCheck" />
 
         <TextView
             android:id="@+id/textView16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="碳水化合"
+            android:text="@string/碳水化合"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationY="-40dp"
@@ -505,6 +510,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="46dp"
             android:layout_marginBottom="16dp"
+            android:autofillHints=""
             android:ems="10"
             android:hint="g(克)"
             android:inputType="number"
@@ -515,7 +521,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView15"
             app:layout_constraintTop_toBottomOf="@+id/calorie"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,TextContrastCheck" />
 
         <EditText
             android:id="@+id/Fat"
@@ -523,6 +529,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="14dp"
+            android:autofillHints=""
             android:ems="10"
             android:hint="g(克)"
             android:inputType="number"
@@ -534,14 +541,14 @@
             app:layout_constraintStart_toEndOf="@+id/textView17"
             app:layout_constraintTop_toBottomOf="@+id/carbohydrate"
             app:layout_constraintVertical_bias="1.0"
-            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck,TextContrastCheck" />
 
         <TextView
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="脂肪"
+            android:text="@string/脂肪"
             android:textColor="#000000"
             android:textSize="20sp"
             android:translationX="-7dp"
@@ -567,7 +574,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="備註"
+                android:text="@string/備註"
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:translationX="3dp"
@@ -580,7 +587,8 @@
                 android:layout_width="291dp"
                 android:layout_height="99dp"
                 android:src="@drawable/note"
-                android:translationX="45dp" />
+                android:translationX="45dp"
+                tools:ignore="ImageContrastCheck" />
 
             <EditText
                 android:id="@+id/note"
@@ -588,12 +596,13 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:ems="10"
-                android:hint="選填"
+                android:hint="@string/選填"
                 android:inputType="textMultiLine|textPersonName"
                 android:textSize="18sp"
                 android:translationX="55dp"
                 android:translationY="3dp"
-                tools:ignore="TouchTargetSizeCheck" />
+                tools:ignore="TouchTargetSizeCheck"
+                android:autofillHints="" />
 
         </FrameLayout>
 
