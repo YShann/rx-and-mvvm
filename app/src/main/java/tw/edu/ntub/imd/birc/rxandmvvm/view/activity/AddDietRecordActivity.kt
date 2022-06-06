@@ -10,18 +10,32 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.encodeToJsonElement
+import kotlinx.serialization.json.jsonObject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
+import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 class AddDietRecordActivity : AppCompatActivity() {
+
+    private val viewModel: DietRecordViewModel by viewModel()
+
 
     private val ACTION_CAMERA_REQUEST_CODE = 100
     private val ACTION_ALBUM_REQUEST_CODE = 200
@@ -48,7 +62,26 @@ class AddDietRecordActivity : AppCompatActivity() {
         dateEdit.setOnClickListener(listener)
         timeEdit.setOnClickListener(listener)
 
+//        val data = Json.encodeToJsonElement(DietRecord("香蕉", 3,"2022/06/03 06:50:22","123"))
+//        val jsonObject: JsonObject = data.jsonObject
+//
+////        viewModel.createDietRecord(jsonObject).
+//        viewModel.createDietRecord(jsonObject).enqueue(object : Callback<DietRecord> {
+//            override fun onResponse(call: Call<DietRecord>, response: Response<DietRecord>) {
+//                if (response.isSuccessful){
+//                    Log.d("Retrofit","ssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+//
+//                }
+//            }
+//            override fun onFailure(call: Call<DietRecord>, t: Throwable) {
+//                Log.d("Retrofit","eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+//            }
+//        })
+////                .mapSourceState { it.data.map { user -> UserItem(user) } }
+//
+//        Log.d("Retrofit","tttttttttttttttttttttttttttttttttttttttttttttt")
     }
+
 
 
     // 通過 intent 使用 Camera
@@ -175,7 +208,7 @@ class AddDietRecordActivity : AppCompatActivity() {
     private val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, min->
         calender.set(Calendar.HOUR_OF_DAY, hour)
         calender.set(Calendar.MINUTE, min)
-        format("HH : mm", timeEdit)
+        format("HH : mm : ss", timeEdit)
     }
 
     private fun format(format: String, view: View) {
