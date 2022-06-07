@@ -3,32 +3,37 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 //import kotlinx.android.synthetic.main.activity_add_diet_record.*
 
-import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import tw.edu.ntub.imd.birc.rxandmvvm.R
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 class AddDietRecordActivity : AppCompatActivity() {
 
-    private val ACTION_CAMERA_REQUEST_CODE = 100
-    private val ACTION_ALBUM_REQUEST_CODE = 200
     private lateinit var cameraButton: ImageButton
     private lateinit var photoButton: ImageButton
     private lateinit var foodPhoto: ImageView
-
     private lateinit var dateEdit: EditText
     private lateinit var timeEdit: EditText
 
@@ -37,9 +42,7 @@ class AddDietRecordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_diet_record)
 
         cameraButton = findViewById(R.id.cameraButton)
-        cameraButton.setOnClickListener(cameraAppButtonHandler)
         photoButton = findViewById(R.id.photoButton)
-        photoButton.setOnClickListener(albumAppButtonHandler)
         foodPhoto = findViewById(R.id.foodphoto)
         foodPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
 
@@ -48,92 +51,86 @@ class AddDietRecordActivity : AppCompatActivity() {
         dateEdit.setOnClickListener(listener)
         timeEdit.setOnClickListener(listener)
 
-    }
+        //使用 camera獲取圖片
+        var filePath =""
+        val fileLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){
+            val option = BitmapFactory.Options()
+            option.inSampleSize = 3
+            val bitmap = BitmapFactory.decodeFile(filePath, option)
+            bitmap?.let{
+                handleCameraImage(bitmap)
+            }
+        }
+        cameraButton.setOnClickListener{
+            Log.d("tag", "-------------------------------1111")
+            // intent to open camera app
+            //val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            //launcher.launch(cameraIntent)
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+            val file = File.createTempFile(
+                "JPEG_${timeStamp}_",
+                ".jpg",
+                storageDir
+            )
+            Log.d("tag", "-------------------------------2222")
 
-
-    // 通過 intent 使用 Camera
-    private fun takeImageFromCameraWithIntent() {
-
+            filePath = file.absolutePath
+            Log.d("tag", filePath)
+            val uri = FileProvider.getUriForFile(
+                this,
+                "tw.edu.ntub.imd.birc.rxandmvvm.fileprovider",
+                file
+            )
+            Log.d("tag", uri.toString())
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, ACTION_CAMERA_REQUEST_CODE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+            fileLauncher.launch(intent)
+        }
 
+        // 使用album選擇圖片
+        val pickLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri? ->
+            uri?.let { it ->
+                Log.d("tag", it.toString())
+                val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.contentResolver, it))
+                } else {
+                    MediaStore.Images.Media.getBitmap(this.contentResolver, it)
+                }
+                handleCameraImage(bitmap)
+            }
+        }
+        photoButton.setOnClickListener{
+            //val intent = Intent(Intent.ACTION_GET_CONTENT)
+            //intent.type = "image/*"
+            pickLauncher.launch("image/*")
+        }
 
     }
 
-    // 通過 intent 使用 album
-    private fun takeImageFromAlbumWithIntent() {
-
-
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, ACTION_ALBUM_REQUEST_CODE)
-    }
-
-    private val cameraAppButtonHandler = View.OnClickListener { view ->
-        takeImageFromCameraWithIntent()
-    }
-
-    private val albumAppButtonHandler = View.OnClickListener { view ->
-        takeImageFromAlbumWithIntent()
-    }
-
-    //顯示圖片在foodphoto上
-    private fun displayImage(bitmap: Bitmap) {
-
+    //把圖片設定到foodPhoto
+    private fun handleCameraImage(bitmap: Bitmap) {
         foodPhoto.setImageBitmap(bitmap)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //println("收到 result code $requestCode")
 
-        when (requestCode) {
-            ACTION_CAMERA_REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    displayImage(data.extras?.get("data") as Bitmap)
-                }
-            }
-
-            ACTION_ALBUM_REQUEST_CODE -> {
-                if (resultCode == Activity.RESULT_OK && data != null) {
-                    val resolver = this.contentResolver
-                    val bitmap = MediaStore.Images.Media.getBitmap(resolver, data.data)
-                    displayImage(bitmap)
-
-                }
-            }
-            else -> {
-                println("no handler onActivityReenter")
-            }
-        }
-
-//    fun camera(view: View) {
-//        val i = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//        startActivityForResult(i,123)
-//    }
-//
-//    fun album(view: View) {
-//        val i = Intent(Intent.ACTION_PICK)
-//        intent.type = "image/*"
-//        startActivityForResult(i,456)
-//
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode==123)
-//        {
-//            var bmp = data?.extras?.get("data") as Bitmap
-//            val foodphoto: ImageView = findViewById(R.id.foodphoto)
-//            foodphoto.setImageBitmap(bmp)
-//        }else if(requestCode==456){
-//            val foodphoto: ImageView = findViewById(R.id.foodphoto)
-//            foodphoto.setImageURI(data?.data)
+//    private fun permission() {
+//        val permissionList = arrayListOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+//        var size = permissionList.size
+//        var i = 0
+//        while (i < size) {
+//            if (ActivityCompat.checkSelfPermission(this, permissionList[i]) == PackageManager.PERMISSION_GRANTED) {
+//                permissionList.removeAt(i)
+//                i -= 1
+//                size -= 1
+//            }
+//            i += 1
 //        }
+//        val array = arrayOfNulls<String>(permissionList.size)
+//        if (permissionList.isNotEmpty()) ActivityCompat.requestPermissions(this, permissionList.toArray(array), 0)
 //    }
 
-
-    }
 
     private val calender: Calendar = Calendar.getInstance()
     private val listener = View.OnClickListener {
@@ -197,4 +194,3 @@ class AddDietRecordActivity : AppCompatActivity() {
         finish()
     }
 }
-
