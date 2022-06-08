@@ -15,9 +15,13 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.create
 import tw.edu.ntub.imd.birc.rxandmvvm.constant.UrlConstant
+import tw.edu.ntub.imd.birc.rxandmvvm.model.DietRecordModel
 import tw.edu.ntub.imd.birc.rxandmvvm.model.UserModel
+import tw.edu.ntub.imd.birc.rxandmvvm.source.api.DietRecordAPI
+import tw.edu.ntub.imd.birc.rxandmvvm.source.api.DietRecordAPISource
 import tw.edu.ntub.imd.birc.rxandmvvm.source.api.UserAPI
 import tw.edu.ntub.imd.birc.rxandmvvm.source.api.UserAPISource
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
 
 class RxAndMVVMApplication : Application() {
@@ -44,6 +48,9 @@ class RxAndMVVMApplication : Application() {
                 single<UserAPI> {
                     get<Retrofit>().create()
                 }
+                single<DietRecordAPI> {
+                    get<Retrofit>().create()
+                }
             }
             val databaseModule = module {
 //                single {
@@ -56,15 +63,24 @@ class RxAndMVVMApplication : Application() {
                 single {
                     UserAPISource(get())
                 }
+                single {
+                    DietRecordAPISource(get())
+                }
             }
             val modelModule = module {
                 single {
                     UserModel(get<UserAPISource>())
                 }
+                single {
+                    DietRecordModel(get<DietRecordAPISource>())
+                }
             }
             val viewModelModule = module {
                 viewModel {
                     MainViewModel(get())
+                }
+                viewModel {
+                    DietRecordViewModel(get())
                 }
             }
             modules(

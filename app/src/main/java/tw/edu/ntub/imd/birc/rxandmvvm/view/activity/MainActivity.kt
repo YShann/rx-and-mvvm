@@ -21,10 +21,13 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val homeFragment = HomeFragment()
-        val recordFragment = RecordFragment()
+        //原本是val recordFragment = RecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
+        val recordFragment by lazy { RecordFragment() }
         val userFragemnt = UserFragment()
         val addFragment = AddFragment()
         val otherFragment = OtherFragment()
+        //原本是val createDietRecordFragment = CreateDietRecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
+        val createDietRecordFragment by lazy { CreateDietRecordFragment() }
 
         private const val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100
     }
