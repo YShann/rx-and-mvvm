@@ -4,9 +4,13 @@ import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -40,12 +44,12 @@ class MainActivity : AppCompatActivity() {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,       Manifest.permission.CAMERA)) {
                 AlertDialog.Builder(this@MainActivity)
                     .setMessage("本APP需要相機權限才可以運作, 請開啟權限")
-                    .setPositiveButton("OK") { _, _ ->
+                    .setPositiveButton("確定") { _, _ ->
                         ActivityCompat.requestPermissions(this@MainActivity,
                             arrayOf(Manifest.permission.CAMERA),
                             MY_PERMISSIONS_REQUEST_READ_CONTACTS)
                     }
-                    .setNegativeButton("No") { _, _ -> finish() }
+                    .setNegativeButton("拒絕") { _, _ -> finish() }
                     .show()
             } else {
                 ActivityCompat.requestPermissions(this@MainActivity,
@@ -56,12 +60,12 @@ class MainActivity : AppCompatActivity() {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,       READ_EXTERNAL_STORAGE)) {
                 AlertDialog.Builder(this@MainActivity)
                     .setMessage("本APP需要存取權限才可以運作, 請開啟權限")
-                    .setPositiveButton("OK") { _, _ ->
+                    .setPositiveButton("確定") { _, _ ->
                         ActivityCompat.requestPermissions(this@MainActivity,
                             arrayOf(READ_EXTERNAL_STORAGE),
                             MY_PERMISSIONS_REQUEST_READ_CONTACTS)
                     }
-                    .setNegativeButton("No") { _, _ -> finish() }
+                    .setNegativeButton("拒絕") { _, _ -> finish() }
                     .show()
             } else {
                 ActivityCompat.requestPermissions(this@MainActivity,
@@ -151,8 +155,5 @@ class MainActivity : AppCompatActivity() {
     fun goBtn2(view: View) {
         startActivity(Intent(this, AddWaterRecordActivity::class.java))
     }
-
-
-
 
 }

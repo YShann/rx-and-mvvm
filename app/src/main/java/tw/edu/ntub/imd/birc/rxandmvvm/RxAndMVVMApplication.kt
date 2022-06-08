@@ -5,6 +5,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -26,7 +27,7 @@ import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
 
 class RxAndMVVMApplication : Application() {
 
-    @ExperimentalSerializationApi
+//    @ExperimentalSerializationApi
     override fun onCreate() {
         super.onCreate()
 
@@ -40,7 +41,7 @@ class RxAndMVVMApplication : Application() {
                         .baseUrl(UrlConstant.BASE_URL)
                         .addConverterFactory(
                             Json(builderAction = {ignoreUnknownKeys = true})
-                                .asConverterFactory(MediaType.parse("application/json; charset=UTF-8")!!)
+                                .asConverterFactory("application/json; charset=UTF-8".toMediaTypeOrNull()!!)
                         )
                         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                         .build()

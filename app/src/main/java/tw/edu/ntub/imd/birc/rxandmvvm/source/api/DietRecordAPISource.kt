@@ -1,23 +1,18 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.source.api
 
-import android.util.Log
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableSource
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import org.json.JSONObject
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Part
+import retrofit2.http.PartMap
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
-import tw.edu.ntub.imd.birc.rxandmvvm.data.User
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.toApiSourceState
-import tw.edu.ntub.imd.birc.rxandmvvm.extension.toSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.source.DietRecordSource
 import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState
-import tw.edu.ntub.imd.birc.rxandmvvm.source.UserSource
 
 
 class DietRecordAPISource(private val dietRecordAPI: DietRecordAPI) : DietRecordSource {
@@ -25,8 +20,15 @@ class DietRecordAPISource(private val dietRecordAPI: DietRecordAPI) : DietRecord
         return dietRecordAPI.searchAll().toApiSourceState()
     }
 
-    override fun createDietRecord(@Body body: JsonObject): Call<DietRecord> {
-        return dietRecordAPI.createDietRecord(body)
+    //    override fun createDietRecord(@Body body: JsonObject): Call<DietRecord> {
+//        return dietRecordAPI.createDietRecord(body)
+//    }
+
+    override fun createDietRecord(
+        @PartMap params : Map<String,@JvmSuppressWildcards RequestBody> ,
+        @Part imageFile: MultipartBody.Part
+    ): Call<ResponseBody<DietRecord>> {
+        return dietRecordAPI.createDietRecord(params,imageFile)
     }
 }
 

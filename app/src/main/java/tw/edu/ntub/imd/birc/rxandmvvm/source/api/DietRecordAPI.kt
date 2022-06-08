@@ -1,25 +1,29 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.source.api
 
 import io.reactivex.rxjava3.core.Observable
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
-import org.json.JSONObject
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
-import tw.edu.ntub.imd.birc.rxandmvvm.data.User
-import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState
+
 
 interface DietRecordAPI {
 
     @GET("dietRecord")
     fun searchAll(): Observable<Response<ResponseBody<DietRecord>>>
 
+    ///不需圖片上傳用這個
+    //    @POST("dietRecord")
+//    fun createDietRecord(@Body body: JsonObject): Call<DietRecord>
+
+    @Multipart
     @POST("dietRecord")
-    fun createDietRecord(@Body body: JsonObject): Call<DietRecord>
+    fun createDietRecord(
+        @PartMap params : Map<String, @JvmSuppressWildcards RequestBody> ,
+        @Part imageFile: MultipartBody.Part
+    ): Call<ResponseBody<DietRecord>>
+
 }
