@@ -49,7 +49,7 @@
                             android:layout_marginEnd="4dp"
                             android:background="@null"
                             android:ems="10"
-                            android:hint="0kcal"
+                            android:hint="0Cal"
                             android:inputType="numberDecimal"
                             android:textAlignment="center"
                             app:layout_constraintEnd_toStartOf="@+id/edit_create_record_carbohydrate"
@@ -443,7 +443,7 @@
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.0" />
@@ -480,17 +480,19 @@
                     android:textColor="@color/white"
                     android:textSize="24dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/albumBtn"
-                    android:layout_width="204dp"
-                    android:layout_height="49dp"
-                    android:background="#00000000"
-                    android:text="從相簿中選擇"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+<!--                <Button-->
+<!--                    android:id="@+id/albumBtn"-->
+<!--                    android:layout_width="204dp"-->
+<!--                    android:layout_height="49dp"-->
+<!--                    android:background="#00000000"-->
+<!--                    android:text="從相簿中選擇"-->
+<!--                    android:textSize="16sp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent" />-->
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
