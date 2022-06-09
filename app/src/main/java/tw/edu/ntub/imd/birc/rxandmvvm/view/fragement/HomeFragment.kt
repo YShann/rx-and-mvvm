@@ -1,10 +1,10 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -35,6 +35,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
+
     }
 
     companion object {

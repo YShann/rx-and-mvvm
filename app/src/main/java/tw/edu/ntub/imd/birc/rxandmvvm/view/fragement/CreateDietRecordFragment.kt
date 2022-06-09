@@ -230,10 +230,10 @@ class CreateDietRecordFragment : Fragment() {
         return view
     }
 
-    //把圖片設定到foodPhoto
-    private fun handleCameraImage(bitmap: Bitmap) {
-        foodphotoView.setImageBitmap(bitmap)
-    }
+//    //把圖片設定到foodPhoto
+//    private fun handleCameraImage(bitmap: Bitmap) {
+//        foodphotoView.setImageBitmap(bitmap)
+//    }
 
 
     private fun creatDietRecord() {
