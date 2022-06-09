@@ -15,6 +15,12 @@ interface DietRecordAPI {
     @GET("dietRecord")
     fun searchAll(): Observable<Response<ResponseBody<DietRecord>>>
 
+    @GET("dietRecord")
+    fun searchByMealTime(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String
+    ): Observable<Response<ResponseBody<DietRecord>>>
+
     ///不需圖片上傳用這個
     //    @POST("dietRecord")
 //    fun createDietRecord(@Body body: JsonObject): Call<DietRecord>

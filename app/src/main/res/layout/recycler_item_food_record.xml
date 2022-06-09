@@ -8,62 +8,96 @@
 
     <TextView
         android:id="@+id/recycler_item_food_recordDate"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
         android:text="2022/06/03 08:30:25"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_recordImg"
+        android:textColor="@color/diet_record_icon"
+        android:textSize="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardView5"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/recycler_item_food_recordName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
         android:text="麵包"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_recordImg"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_item_food_recordDate"
+        app:layout_constraintStart_toStartOf="@+id/recycler_item_food_recordDate"
         app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_recordDate" />
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/recycler_item_food_recordImg"-->
+<!--        android:layout_width="160dp"-->
+<!--        android:layout_height="126dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:srcCompat="@drawable/btnbg" />-->
 
     <TextView
         android:id="@+id/recycler_item_food_portionSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/diet_record_label"
+        android:paddingLeft="4dp"
+        android:paddingTop="2dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp"
         android:text="適中"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_recordName"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_recordDate" />
-
-    <TextView
-        android:id="@+id/recycler_item_food_note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="備註"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_recordImg"
+        android:textColor="@color/white"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recycler_item_food_recordName"
         app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_recordName" />
 
-    <ImageView
-        android:id="@+id/recycler_item_food_recordImg"
-        android:layout_width="160dp"
-        android:layout_height="126dp"
-        android:layout_marginStart="8dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="250dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_item_food_portionSize"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/btnbg" />
+        app:layout_constraintTop_toTopOf="@+id/recycler_item_food_recordDate">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="250dp">
+
+            <ImageView
+                android:id="@+id/recycler_item_dietRecord_image"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:scaleType="centerCrop" />
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/recycler_item_dietRecord_text_foodKind"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_item_food_portionSize"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_item_food_recordName"
+        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_portionSize"
+        app:layout_constraintTop_toTopOf="@+id/recycler_item_food_portionSize" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

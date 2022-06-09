@@ -11,6 +11,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Part
 import retrofit2.http.PartMap
+import retrofit2.http.Query
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.model.DietRecordModel
@@ -19,6 +20,13 @@ import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState
 class DietRecordViewModel(private val model: DietRecordModel) : ViewModel() {
     fun searchAll(): Observable<SourceState<ResponseBody<DietRecord>>> {
         return model.searchAll()
+    }
+
+    fun searchByMealTime(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String
+    ): Observable<SourceState<ResponseBody<DietRecord>>> {
+        return model.searchByMealTime(startDate,endDate)
     }
 
     //

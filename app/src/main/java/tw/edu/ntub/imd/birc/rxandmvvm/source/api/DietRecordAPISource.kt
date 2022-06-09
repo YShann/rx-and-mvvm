@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Part
 import retrofit2.http.PartMap
+import retrofit2.http.Query
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.toApiSourceState
@@ -18,6 +19,13 @@ import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState
 class DietRecordAPISource(private val dietRecordAPI: DietRecordAPI) : DietRecordSource {
     override fun searchAll(): Observable<SourceState<ResponseBody<DietRecord>>> {
         return dietRecordAPI.searchAll().toApiSourceState()
+    }
+
+    override fun searchByMealTime(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String
+    ): Observable<SourceState<ResponseBody<DietRecord>>> {
+        return dietRecordAPI.searchByMealTime(startDate, endDate).toApiSourceState()
     }
 
     //    override fun createDietRecord(@Body body: JsonObject): Call<DietRecord> {

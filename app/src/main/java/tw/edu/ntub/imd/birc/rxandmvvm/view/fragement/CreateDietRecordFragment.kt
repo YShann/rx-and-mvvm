@@ -1,5 +1,6 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -7,8 +8,10 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -230,10 +233,10 @@ class CreateDietRecordFragment : Fragment() {
         return view
     }
 
-    //把圖片設定到foodPhoto
-    private fun handleCameraImage(bitmap: Bitmap) {
-        foodphotoView.setImageBitmap(bitmap)
-    }
+//    //把圖片設定到foodPhoto
+//    private fun handleCameraImage(bitmap: Bitmap) {
+//        foodphotoView.setImageBitmap(bitmap)
+//    }
 
 
     private fun creatDietRecord() {
@@ -257,23 +260,23 @@ class CreateDietRecordFragment : Fragment() {
         val fruits = if (checkBoxFruits.isChecked) one else zero
         val fats = if (checkBoxFats.isChecked) one else zero
 
-        val requestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("foodName", foodName)
-            .addFormDataPart("portionSize", portionSize)
-            .addFormDataPart("mealTime", mealTime)
-            .addFormDataPart("note", note)
-            .addFormDataPart("energy", energy)
-            .addFormDataPart("fat", fat)
-            .addFormDataPart("saturatedFat", saturatedFat)
-            .addFormDataPart("carbohydrate", carbohydrate)
-            .addFormDataPart("protein", protein)
-            .addFormDataPart("grains", grains)
-            .addFormDataPart("vegetables", vegetables)
-            .addFormDataPart("meatsAndProtein", meatsAndProtein)
-            .addFormDataPart("milkAndDairy", milkAndDairy)
-            .addFormDataPart("fruits", fruits)
-            .addFormDataPart("fats", fats)
+//        val requestBody = MultipartBody.Builder()
+//            .setType(MultipartBody.FORM)
+//            .addFormDataPart("foodName", foodName)
+//            .addFormDataPart("portionSize", portionSize)
+//            .addFormDataPart("mealTime", mealTime)
+//            .addFormDataPart("note", note)
+//            .addFormDataPart("energy", energy)
+//            .addFormDataPart("fat", fat)
+//            .addFormDataPart("saturatedFat", saturatedFat)
+//            .addFormDataPart("carbohydrate", carbohydrate)
+//            .addFormDataPart("protein", protein)
+//            .addFormDataPart("grains", grains)
+//            .addFormDataPart("vegetables", vegetables)
+//            .addFormDataPart("meatsAndProtein", meatsAndProtein)
+//            .addFormDataPart("milkAndDairy", milkAndDairy)
+//            .addFormDataPart("fruits", fruits)
+//            .addFormDataPart("fats", fats)
 
         val hashMap: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
         hashMap["foodName"] = foodName.toRequestBody(MultipartBody.FORM)
@@ -494,4 +497,6 @@ class CreateDietRecordFragment : Fragment() {
         cursor?.close()
         return result
     }
+
+
 }
