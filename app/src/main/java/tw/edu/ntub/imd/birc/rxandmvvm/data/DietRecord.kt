@@ -19,4 +19,5 @@ data class DietRecord(
     var milkAndDairy: String?,
     var fruits: String?,
     var fats: String?,
+    var imageUrl:String?
 )

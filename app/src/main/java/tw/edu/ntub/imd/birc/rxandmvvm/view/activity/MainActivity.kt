@@ -2,13 +2,19 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -159,5 +165,7 @@ class MainActivity : AppCompatActivity() {
     fun goBtn2(view: View) {
         startActivity(Intent(this, AddWaterRecordActivity::class.java))
     }
+
+
 
 }

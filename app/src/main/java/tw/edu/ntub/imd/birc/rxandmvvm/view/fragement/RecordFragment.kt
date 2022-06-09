@@ -16,6 +16,9 @@ import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.DietRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
+import java.util.*
+import android.os.Handler
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,7 +52,12 @@ class RecordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_record, container, false)
         val tabLayout = view.findViewById<TabLayout>(R.id.record_tabLayout_date)
-
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_food_record)
+        val adapter = ObservableAdapter(
+            viewModel.searchAll()
+                .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
+        )
+        adapter.attachToRecyclerView(recyclerView)
 /////////////////////////////////以下某段程式碼會導致導覽列跳轉頁面時app閃退，不能確定是哪部份
 //        dateEdit = root.findViewById(R.id.date_edit)
 //        dateEdit.setOnClickListener(dlistener)
@@ -71,15 +79,35 @@ class RecordFragment : Fragment() {
 //            override fun onNothingSelected(parent: AdapterView<*>) {}
 //        }
 
+        var year = Calendar.getInstance().get(Calendar.YEAR)
+        var dayList: MutableList<String> = mutableListOf("31","28","31","30","31","30","31","31","30","31","30","31")
         for (i in 1..12) {
             tabLayout.addTab(tabLayout.newTab().setText("$i 月"))
         }
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_food_record)
-        val adapter = ObservableAdapter(
-            viewModel.searchAll()
-                .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
+        Handler().postDelayed(
+            Runnable { tabLayout.getTabAt(Calendar.getInstance().get(Calendar.MONTH))?.select() }, 100
         )
-        adapter.attachToRecyclerView(recyclerView)
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val month= (tab?.position)?.plus(1)
+                val day = month?.let { dayList[it] }
+                val startDate="$year-$month-01"
+                val endDate="$year-$month-$day"
+                val adapter = ObservableAdapter(
+                    viewModel.searchByMealTime(startDate,endDate)
+                        .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
+                )
+                adapter.attachToRecyclerView(recyclerView)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
 
 
         return view
@@ -113,6 +141,30 @@ class RecordFragment : Fragment() {
 //    private fun format(format: String, view: View) {
 //        val time = SimpleDateFormat(format, Locale.TAIWAN)
 //        (view as EditText).setText(time.format(calender.time))
+//    }
+
+//    @SuppressLint("StaticFieldLeak")
+//    @Suppress("DEPRECATION")
+//    private inner class DownloadImageFromInternet(var imageView: ImageView) : AsyncTask<String, Void, Bitmap?>() {
+//        init {
+//            Toast.makeText(context, "請稍候，可能需要幾分鐘...",     Toast.LENGTH_SHORT).show()
+//        }
+//        override fun doInBackground(vararg urls: String): Bitmap? {
+//            val imageURL = urls[0]
+//            var image: Bitmap? = null
+//            try {
+//                val `in` = java.net.URL(imageURL).openStream()
+//                image = BitmapFactory.decodeStream(`in`)
+//            }
+//            catch (e: Exception) {
+//                Log.e("Error Message", e.message.toString())
+//                e.printStackTrace()
+//            }
+//            return image
+//        }
+//        override fun onPostExecute(result: Bitmap?) {
+//            imageView.setImageBitmap(result)
+//        }
 //    }
 
 }

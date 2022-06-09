@@ -1,6 +1,11 @@
 package tw.edu.ntub.imd.birc.rxandmvvm
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.view.View
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 class loginActivity : AppCompatActivity() {
@@ -9,7 +14,7 @@ class loginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
     }
 
-//
+
 //    fun login(view: View?) {
 //        val EditTextname = findViewById<View>(R.id.name) as EditText
 //        val EditTextpassword = findViewById<View>(R.id.password) as EditText
