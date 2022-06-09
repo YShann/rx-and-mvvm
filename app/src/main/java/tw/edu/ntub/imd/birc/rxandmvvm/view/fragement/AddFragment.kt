@@ -47,7 +47,10 @@ class AddFragment : Fragment() {
         }
 
         return view
+
     }
+
+
 
     companion object {
         /**

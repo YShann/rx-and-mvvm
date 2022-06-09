@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.serialization.json.JsonObject
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.http.Body
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
