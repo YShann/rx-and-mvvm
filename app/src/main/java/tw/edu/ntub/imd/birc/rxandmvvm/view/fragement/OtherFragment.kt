@@ -44,12 +44,12 @@ class OtherFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_other, container, false)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_main_user)
-        val adapter = ObservableAdapter(
-            viewModel.searchAll()
-                .mapSourceState { it.data.map { user -> UserItem(user) } }
-        )
-        adapter.attachToRecyclerView(recyclerView)
+//        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_main_user)
+//        val adapter = ObservableAdapter(
+//            viewModel.searchAll()
+//                .mapSourceState { it.data.map { user -> UserItem(user) } }
+//        )
+//        adapter.attachToRecyclerView(recyclerView)
 
         return view
     }

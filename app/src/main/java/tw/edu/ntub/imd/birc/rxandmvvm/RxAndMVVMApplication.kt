@@ -5,6 +5,7 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -15,14 +16,18 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.create
 import tw.edu.ntub.imd.birc.rxandmvvm.constant.UrlConstant
+import tw.edu.ntub.imd.birc.rxandmvvm.model.DietRecordModel
 import tw.edu.ntub.imd.birc.rxandmvvm.model.UserModel
+import tw.edu.ntub.imd.birc.rxandmvvm.source.api.DietRecordAPI
+import tw.edu.ntub.imd.birc.rxandmvvm.source.api.DietRecordAPISource
 import tw.edu.ntub.imd.birc.rxandmvvm.source.api.UserAPI
 import tw.edu.ntub.imd.birc.rxandmvvm.source.api.UserAPISource
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
 
 class RxAndMVVMApplication : Application() {
 
-    @ExperimentalSerializationApi
+//    @ExperimentalSerializationApi
     override fun onCreate() {
         super.onCreate()
 
@@ -36,12 +41,15 @@ class RxAndMVVMApplication : Application() {
                         .baseUrl(UrlConstant.BASE_URL)
                         .addConverterFactory(
                             Json(builderAction = {ignoreUnknownKeys = true})
-                                .asConverterFactory(MediaType.parse("application/json; charset=UTF-8")!!)
+                                .asConverterFactory("application/json; charset=UTF-8".toMediaTypeOrNull()!!)
                         )
                         .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                         .build()
                 }
                 single<UserAPI> {
+                    get<Retrofit>().create()
+                }
+                single<DietRecordAPI> {
                     get<Retrofit>().create()
                 }
             }
@@ -56,15 +64,24 @@ class RxAndMVVMApplication : Application() {
                 single {
                     UserAPISource(get())
                 }
+                single {
+                    DietRecordAPISource(get())
+                }
             }
             val modelModule = module {
                 single {
                     UserModel(get<UserAPISource>())
                 }
+                single {
+                    DietRecordModel(get<DietRecordAPISource>())
+                }
             }
             val viewModelModule = module {
                 viewModel {
                     MainViewModel(get())
+                }
+                viewModel {
+                    DietRecordViewModel(get())
                 }
             }
             modules(
