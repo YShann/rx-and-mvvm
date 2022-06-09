@@ -1,14 +1,14 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
+import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -17,25 +17,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.json.jsonObject
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.MainActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
+import java.io.ByteArrayOutputStream
 import java.io.File
-import java.lang.Double.parseDouble
-import java.lang.Integer.parseInt
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,8 +72,15 @@ class CreateDietRecordFragment : Fragment() {
     private lateinit var editFat: EditText
     private lateinit var createDietRecordArrow: ImageButton
     private lateinit var createDietRecordFinish: ImageButton
+    private lateinit var createRecordHeadBack: CardView
+    private lateinit var createRecordHeadImage: ImageView
+    private lateinit var createRecordHeadText: TextView
+    private var pathUri: String? = null
     private val viewModel: DietRecordViewModel by viewModel()
     private val calender: Calendar = Calendar.getInstance()
+    private val IMAGE_DIRECTORY = "/encoded_image"
+    private val GALLERY = 1
+    private val CAMERA = 2
 
     private lateinit var cameraBtn: Button
     private lateinit var albumBtn: Button
@@ -109,6 +117,14 @@ class CreateDietRecordFragment : Fragment() {
         editFat = view.findViewById(R.id.edit_create_record_fat)
         createDietRecordArrow = view.findViewById(R.id.create_diet_record_arrow)
         createDietRecordFinish = view.findViewById(R.id.create_diet_record_finish)
+        createRecordHeadBack = view.findViewById(R.id.create_record_headBack)
+        createRecordHeadImage = view.findViewById(R.id.image_create_record_takePhoto)
+        createRecordHeadText = view.findViewById(R.id.textView_create_record_takePhoto)
+
+        createRecordHeadBack.setOnClickListener {
+            this.showPictureDialog()
+        }
+
         this.getNowDateTime()
         editDateTime.setOnClickListener {
             this.datePicker()
@@ -221,51 +237,110 @@ class CreateDietRecordFragment : Fragment() {
 
 
     private fun creatDietRecord() {
+        val one = "1"
+        val zero = "0"
         val dateTime = editDateTime.text.toString()
         val seconds = calender.get(Calendar.SECOND)
         val foodName = editName.text.toString()
         val portionSize = (spinnerPortionSize.selectedItemPosition - 1).toString()
         val mealTime = "$dateTime:$seconds"
         val note = editNote.text.toString()
-        val energy = parseInt(editEnergy.text.toString())
-        val fat = parseDouble(editFat.text.toString())
-        val saturatedFat = parseDouble(editSaturatedFat.text.toString())
-        val carbohydrate = parseDouble(editCarbohydrate.text.toString())
-        val protein = parseDouble(editProtein.text.toString())
-        val grains = if (checkBoxGrains.isChecked) "1" else "0"
-        val vegetables = if (checkBoxVegetables.isChecked) "1" else "0"
-        val meatsAndProtein = if (checkBoxMeatsAndProtein.isChecked) "1" else "0"
-        val milkAndDairy = if (checkBoxMilkAndDairy.isChecked) "1" else "0"
-        val fruits = if (checkBoxFruits.isChecked) "1" else "0"
-        val fats = if (checkBoxFats.isChecked) "1" else "0"
-        val data = DietRecord(
-            foodName, portionSize, mealTime, note, energy, fat, saturatedFat, carbohydrate, protein,
-            grains, vegetables, meatsAndProtein, milkAndDairy, fruits, fats,
-        )
-        Log.d("DateTime", "ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" + data)
+        val energy = editEnergy.text.toString()
+        val fat = editFat.text.toString()
+        val saturatedFat = editSaturatedFat.text.toString()
+        val carbohydrate = editCarbohydrate.text.toString()
+        val protein = editProtein.text.toString()
+        val grains = if (checkBoxGrains.isChecked) one else zero
+        val vegetables = if (checkBoxVegetables.isChecked) one else zero
+        val meatsAndProtein = if (checkBoxMeatsAndProtein.isChecked) one else zero
+        val milkAndDairy = if (checkBoxMilkAndDairy.isChecked) one else zero
+        val fruits = if (checkBoxFruits.isChecked) one else zero
+        val fats = if (checkBoxFats.isChecked) one else zero
+
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("foodName", foodName)
+            .addFormDataPart("portionSize", portionSize)
+            .addFormDataPart("mealTime", mealTime)
+            .addFormDataPart("note", note)
+            .addFormDataPart("energy", energy)
+            .addFormDataPart("fat", fat)
+            .addFormDataPart("saturatedFat", saturatedFat)
+            .addFormDataPart("carbohydrate", carbohydrate)
+            .addFormDataPart("protein", protein)
+            .addFormDataPart("grains", grains)
+            .addFormDataPart("vegetables", vegetables)
+            .addFormDataPart("meatsAndProtein", meatsAndProtein)
+            .addFormDataPart("milkAndDairy", milkAndDairy)
+            .addFormDataPart("fruits", fruits)
+            .addFormDataPart("fats", fats)
+
+        val hashMap: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
+        hashMap["foodName"] = foodName.toRequestBody(MultipartBody.FORM)
+        hashMap["portionSize"] = portionSize.toRequestBody(MultipartBody.FORM)
+        hashMap["mealTime"] = mealTime.toRequestBody(MultipartBody.FORM)
+        hashMap["note"] = note.toRequestBody(MultipartBody.FORM)
+        hashMap["energy"] = energy.toRequestBody(MultipartBody.FORM)
+        hashMap["fat"] = fat.toRequestBody(MultipartBody.FORM)
+        hashMap["saturatedFat"] = saturatedFat.toRequestBody(MultipartBody.FORM)
+        hashMap["carbohydrate"] = carbohydrate.toRequestBody(MultipartBody.FORM)
+        hashMap["protein"] = protein.toRequestBody(MultipartBody.FORM)
+        hashMap["grains"] = grains.toRequestBody(MultipartBody.FORM)
+        hashMap["vegetables"] = vegetables.toRequestBody(MultipartBody.FORM)
+        hashMap["meatsAndProtein"] = meatsAndProtein.toRequestBody(MultipartBody.FORM)
+        hashMap["milkAndDairy"] = milkAndDairy.toRequestBody(MultipartBody.FORM)
+        hashMap["fruits"] = fruits.toRequestBody(MultipartBody.FORM)
+        hashMap["fats"] = fats.toRequestBody(MultipartBody.FORM)
 
 
-        val jsonObject: JsonObject = Json.encodeToJsonElement(data).jsonObject
-        viewModel.createDietRecord(jsonObject).enqueue(object : Callback<DietRecord> {
-            override fun onResponse(call: Call<DietRecord>, response: Response<DietRecord>) {
-                if (response.isSuccessful) {
-                    Log.d("Retrofit", "ssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+        val file: File = File(pathUri)
+        val fileRequestBody: RequestBody =
+            file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
+        val filePart = MultipartBody.Part.createFormData("imageFile", file.name, fileRequestBody)
 
+        viewModel.createDietRecord(hashMap, filePart)
+            .enqueue(object : Callback<ResponseBody<DietRecord>> {
+                override fun onResponse(
+                    call: Call<ResponseBody<DietRecord>>,
+                    response: Response<ResponseBody<DietRecord>>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("Retrofit", "Success")
+
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<DietRecord>, t: Throwable) {
-                Log.d("Retrofit", "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-                val transaction = activity?.supportFragmentManager?.beginTransaction()
-                transaction?.replace(R.id.container_activity_main, MainActivity.addFragment)
-                    ?.commit()
-            }
-        })
-//                .mapSourceState { it.data.map { user -> UserItem(user) } }
+                override fun onFailure(call: Call<ResponseBody<DietRecord>>, t: Throwable) {
+                    Log.d("Retrofit", t.stackTraceToString())
+                    val transaction = activity?.supportFragmentManager?.beginTransaction()
+                    transaction?.replace(R.id.container_activity_main, MainActivity.addFragment)
+                        ?.commit()
+                }
+            })
 
-        Log.d("Retrofit", "tttttttttttttttttttttttttttttttttttttttttttttt")
+
+//        val data = DietRecord(
+//            foodName, portionSize, mealTime, note, energy, fat, saturatedFat, carbohydrate, protein,
+//            grains, vegetables, meatsAndProtein, milkAndDairy, fruits, fats,
+//        )
+//        val jsonObject: JsonObject = Json.encodeToJsonElement(data).jsonObject
+//        viewModel.createDietRecord(jsonObject).enqueue(object : Callback<DietRecord> {
+//            override fun onResponse(call: Call<DietRecord>, response: Response<DietRecord>) {
+//                if (response.isSuccessful) {
+//                    Log.d("Retrofit", "ssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+//
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<DietRecord>, t: Throwable) {
+//                Log.d("Retrofit", "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+//                val transaction = activity?.supportFragmentManager?.beginTransaction()
+//                transaction?.replace(R.id.container_activity_main, MainActivity.addFragment)
+//                    ?.commit()
+//            }
+//        })
+
     }
-
 
     private fun datePicker() {
         val picker = context?.let {
@@ -324,4 +399,99 @@ class CreateDietRecordFragment : Fragment() {
         editDateTime.setText(time.format(Date()))
     }
 
+    private fun showPictureDialog() {
+        val pictureDialog: AlertDialog.Builder = AlertDialog.Builder(context)
+        pictureDialog.setTitle("選取相片")
+        val pictureDialogItems = arrayOf(
+            "從圖庫選取",
+            "使用相機"
+        )
+        pictureDialog.setItems(pictureDialogItems,
+            DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    0 -> choosePhotoFromGallary()
+                    1 -> takePhotoFromCamera()
+                }
+            })
+        pictureDialog.show()
+    }
+
+    fun choosePhotoFromGallary() {
+        val galleryIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        )
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+    private fun takePhotoFromCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, CAMERA)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_CANCELED) {
+            return
+        }
+        if (requestCode == GALLERY) {
+            if (data != null) {
+                val contentURI = data.data
+                try {
+                    val bitmap =
+                        MediaStore.Images.Media.getBitmap(context?.contentResolver, contentURI)
+                    val path = this.saveImage(bitmap)
+                    pathUri = data?.data?.let { getPathFromUri(it) }
+                    createRecordHeadImage.setImageBitmap(bitmap)
+                    createRecordHeadText.text = ""
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(
+                        context,
+                        "失敗",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        } else if (requestCode == CAMERA) {
+            val thumbnail = data!!.extras!!["data"] as Bitmap?
+            createRecordHeadImage.setImageBitmap(thumbnail)
+            createRecordHeadText.text = ""
+            saveImage(thumbnail)
+        }
+    }
+
+    private fun saveImage(myBitmap: Bitmap?): String {
+        val bytes = ByteArrayOutputStream()
+        myBitmap?.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+        val wallpaperDirectory =
+            File(Environment.getExternalStorageDirectory().toString() + IMAGE_DIRECTORY)
+        if (!wallpaperDirectory.exists()) {  // have the object build the directory structure, if needed.
+            wallpaperDirectory.mkdirs()
+        }
+        try {
+            val f =
+                File(wallpaperDirectory, Calendar.getInstance().timeInMillis.toString() + ".jpg")
+            f.createNewFile()
+            val fo = FileOutputStream(f)
+            fo.write(bytes.toByteArray())
+            MediaScannerConnection.scanFile(context, arrayOf(f.path), arrayOf("image/jpeg"), null)
+            fo.close()
+            Log.d("TAG", "File Saved::---&gt;" + f.absolutePath)
+            return f.absolutePath
+        } catch (e1: IOException) {
+            e1.printStackTrace()
+        }
+        return ""
+    }
+
+    private fun getPathFromUri(uri: Uri): String {
+        val projection = arrayOf(MediaStore.MediaColumns.DATA)
+        val cursor = requireActivity().contentResolver.query(uri, projection, null, null, null)
+        val column_index: Int? = cursor?.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA) ?: null
+        cursor?.moveToFirst()
+        val result: String = column_index?.let { cursor?.getString(it) } ?: ""
+        cursor?.close()
+        return result
+    }
 }
