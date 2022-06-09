@@ -1,12 +1,11 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
-import android.annotation.SuppressLint
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
@@ -16,11 +15,7 @@ import tw.edu.ntub.imd.birc.rxandmvvm.extension.attachToRecyclerView
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.DietRecordItem
-import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.UserItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,8 +47,8 @@ class RecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_record, container, false)
-        val tabLayout = root.findViewById<TabLayout>(R.id.record_tabLayout_date)
+        val view = inflater.inflate(R.layout.fragment_record, container, false)
+        val tabLayout = view.findViewById<TabLayout>(R.id.record_tabLayout_date)
 
 /////////////////////////////////以下某段程式碼會導致導覽列跳轉頁面時app閃退，不能確定是哪部份
 //        dateEdit = root.findViewById(R.id.date_edit)
@@ -79,7 +74,7 @@ class RecordFragment : Fragment() {
         for (i in 1..12) {
             tabLayout.addTab(tabLayout.newTab().setText("$i 月"))
         }
-        val recyclerView = root.findViewById<RecyclerView>(R.id.recycler_food_record)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_food_record)
         val adapter = ObservableAdapter(
             viewModel.searchAll()
                 .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
@@ -87,7 +82,7 @@ class RecordFragment : Fragment() {
         adapter.attachToRecyclerView(recyclerView)
 
 
-        return root
+        return view
     }
 
 //////////////////////////以下某段程式碼會導致導覽列跳轉頁面時app閃退，不能確定是哪部份

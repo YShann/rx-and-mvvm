@@ -10,27 +10,16 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.json.jsonObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
-import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class AddDietRecordActivity : AppCompatActivity() {
 
@@ -87,8 +76,8 @@ class AddDietRecordActivity : AppCompatActivity() {
     // 通過 intent 使用 Camera
     private fun takeImageFromCameraWithIntent() {
 
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, ACTION_CAMERA_REQUEST_CODE)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, ACTION_CAMERA_REQUEST_CODE)
 
 
     }
@@ -230,4 +219,3 @@ class AddDietRecordActivity : AppCompatActivity() {
         finish()
     }
 }
-

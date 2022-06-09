@@ -22,13 +22,16 @@ import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.*
 
 class MainActivity : AppCompatActivity() {
 
+
     companion object {
         val homeFragment = HomeFragment()
-        val recordFragment = RecordFragment()
+        //原本是val recordFragment = RecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
+        val recordFragment by lazy { RecordFragment() }
         val userFragemnt = UserFragment()
         val addFragment = AddFragment()
         val otherFragment = OtherFragment()
-        val createDietRecordFragment = CreateDietRecordFragment()
+        //原本是val createDietRecordFragment = CreateDietRecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
+        val createDietRecordFragment by lazy { CreateDietRecordFragment() }
 
         private const val MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100
     }
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_READ_CONTACTS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
                 } else {
                     finish()
                 }

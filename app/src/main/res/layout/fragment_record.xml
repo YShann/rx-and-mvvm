@@ -14,8 +14,8 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/record_headBack"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="414dp"
+            android:layout_height="152dp"
             android:elevation="0dp"
             app:cardBackgroundColor="@color/main_color"
             app:cardCornerRadius="0dp"
@@ -39,7 +39,8 @@
                     app:tabGravity="center"
                     app:tabIndicatorColor="@color/main_color"
                     app:tabMode="scrollable"
-                    app:tabTextColor="@color/white">
+                    app:tabTextColor="@color/white"
+                    tools:ignore="SpeakableTextPresentCheck">
 
 
                 </com.google.android.material.tabs.TabLayout>
@@ -52,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="79dp"
             app:cardCornerRadius="10dp"
