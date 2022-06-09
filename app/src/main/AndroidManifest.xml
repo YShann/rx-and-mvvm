@@ -18,6 +18,24 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".loginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".calendarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IncreaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.ApiTestActivity"
             android:exported="false" />
         <activity android:name=".view.activity.MainActivity">
