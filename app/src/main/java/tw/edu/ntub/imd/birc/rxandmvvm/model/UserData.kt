@@ -1,4 +1,7 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.model
 
-class UserData {
-}
+data class UserData (
+    var userName:String,
+    var userMb:String
+
+)
