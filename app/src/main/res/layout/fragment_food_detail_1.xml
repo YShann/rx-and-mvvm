@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragement.CreateDietRecordFragment">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="55dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/create_record_headBack">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <TextView
+                            android:id="@+id/textview36"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="37dp"
+                            android:layout_marginBottom="43dp"
+                            android:text="備註"
+                            android:textColor="@color/main_color"
+                            android:textSize="18dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="318dp"
+                            android:layout_height="100dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="75dp"
+                            android:layout_marginBottom="2dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/note"
+                            android:translationX="45dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <TextView
+                            android:id="@+id/note"
+                            android:layout_width="301dp"
+                            android:layout_height="49dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="92dp"
+                            android:background="@null"
+                            android:ems="10"
+                            android:text="今天難得回去吃了那家牛肉堡，依舊是記憶中的味道"
+                            android:textColor="#000000"
+                            android:textSize="18sp"
+                            android:translationX="55dp"
+                            android:translationY="3dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/edit_create_record_energy"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@null"
+                            android:ems="10"
+                            android:hint="0kcal"
+                            android:inputType="numberDecimal"
+                            android:text="467kcal"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_create_record_carbohydrate"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <EditText
+                            android:id="@+id/edit_create_record_fat"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@null"
+                            android:ems="10"
+                            android:hint="0g"
+                            android:inputType="numberDecimal"
+                            android:text="25g"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/edit_create_record_saturatedFat"
+                            app:layout_constraintTop_toTopOf="@+id/edit_create_record_saturatedFat"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <EditText
+                            android:id="@+id/edit_create_record_saturatedFat"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@null"
+                            android:ems="10"
+                            android:hint="0g"
+                            android:inputType="numberDecimal"
+                            android:text="14g"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_create_record_fat"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/edit_create_record_protein"
+                            app:layout_constraintTop_toTopOf="@+id/edit_create_record_protein"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <EditText
+                            android:id="@+id/edit_create_record_protein"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@null"
+                            android:ems="10"
+                            android:hint="0g"
+                            android:inputType="numberDecimal"
+                            android:text="26g"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_create_record_saturatedFat"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/edit_create_record_carbohydrate"
+                            app:layout_constraintTop_toTopOf="@+id/edit_create_record_carbohydrate"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <EditText
+                            android:id="@+id/edit_create_record_carbohydrate"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:background="@null"
+                            android:ems="10"
+                            android:hint="0g"
+                            android:inputType="numberDecimal"
+                            android:text="35g"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toStartOf="@+id/edit_create_record_protein"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toEndOf="@+id/edit_create_record_energy"
+                            app:layout_constraintTop_toTopOf="@+id/edit_create_record_energy"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <TextView
+                            android:id="@+id/textView29"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="16dp"
+                            android:text="熱量"
+                            android:textColor="@color/main_color"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_energy"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_energy"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_energy" />
+
+                        <TextView
+                            android:id="@+id/textView30"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="碳水化合"
+                            android:textColor="@color/main_color"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_carbohydrate"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_carbohydrate"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_carbohydrate" />
+
+                        <TextView
+                            android:id="@+id/textView31"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="蛋白質"
+                            android:textColor="@color/main_color"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_protein"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_protein"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_protein" />
+
+                        <TextView
+                            android:id="@+id/textView32"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="飽和脂肪"
+                            android:textColor="@color/main_color"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_saturatedFat"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_saturatedFat"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_saturatedFat" />
+
+                        <TextView
+                            android:id="@+id/textView33"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="脂肪"
+                            android:textColor="@color/main_color"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_fat"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_fat"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_fat" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="19dp"
+                            android:layout_marginTop="24dp"
+                            android:text="餐飲名稱"
+                            android:textColor="@color/main_color"
+                            android:textSize="18dp"
+                            app:layout_constraintStart_toEndOf="@+id/icon_create_diet_record_name"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/edit_create_record_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginEnd="49dp"
+                            android:ems="10"
+                            android:text="牛肉堡"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="19dp"
+                            android:layout_marginTop="28dp"
+                            android:text="用餐時間"
+                            android:textColor="@color/main_color"
+                            android:textSize="18dp"
+                            app:layout_constraintStart_toEndOf="@+id/icon_create_diet_record_date"
+                            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                        <TextView
+                            android:id="@+id/edit_create_record_dateTime"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:ems="10"
+                            android:focusableInTouchMode="false"
+                            android:text="2022/06/8  11:00"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_name"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_name"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_name"
+                            tools:ignore="TextFields,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                        <TextView
+                            android:id="@+id/textView28"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="19dp"
+                            android:layout_marginTop="28dp"
+                            android:text="份量"
+                            android:textColor="@color/main_color"
+                            android:textSize="18dp"
+                            app:layout_constraintStart_toEndOf="@+id/icon_create_diet_record_portion"
+                            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+                        <TextView
+                            android:id="@+id/edit_create_record_note"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:layout_marginBottom="24dp"
+                            android:ems="10"
+                            android:gravity="start|top"
+                            android:hint="目前沒備註喔"
+                            android:inputType="textMultiLine"
+                            android:text="全榖雜糧類  蛋豆魚肉類"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/create_record_portionSize_spinner"
+                            app:layout_constraintStart_toStartOf="@+id/create_record_portionSize_spinner"
+                            app:layout_constraintTop_toBottomOf="@+id/create_record_portionSize_spinner"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                        <TextView
+                            android:id="@+id/textview35"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="30dp"
+                            android:text="種類"
+                            android:textColor="@color/main_color"
+                            android:textSize="18dp"
+                            app:layout_constraintStart_toEndOf="@+id/icon_create_diet_record_note"
+                            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+                        <TextView
+                            android:id="@+id/create_record_portionSize_spinner"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:text="適中"
+                            android:textColor="#000000"
+                            android:textSize="18dp"
+                            app:layout_constraintEnd_toEndOf="@+id/edit_create_record_dateTime"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/edit_create_record_dateTime"
+                            app:layout_constraintTop_toBottomOf="@+id/edit_create_record_dateTime"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                        <ImageButton
+                            android:id="@+id/icon_create_diet_record_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="22dp"
+                            android:layout_marginTop="34dp"
+                            android:layout_marginEnd="19dp"
+                            android:background="#00FBAA1D"
+                            android:src="@drawable/ic_diet_record_date"
+                            app:layout_constraintEnd_toStartOf="@+id/textView12"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/icon_create_diet_record_name"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                        <ImageButton
+                            android:id="@+id/icon_create_diet_record_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="22dp"
+                            android:background="#00FBAA1D"
+                            android:src="@drawable/ic_diet_record_edit"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/textView"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                        <ImageButton
+                            android:id="@+id/icon_create_diet_record_portion"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="22dp"
+                            android:layout_marginTop="32dp"
+                            android:background="#00FBAA1D"
+                            android:src="@drawable/ic_diet_record_food"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/icon_create_diet_record_date"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                        <ImageButton
+                            android:id="@+id/icon_create_diet_record_note"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="22dp"
+                            android:layout_marginTop="32dp"
+                            android:background="#00FBAA1D"
+                            android:src="@drawable/ic_foodtype"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/icon_create_diet_record_portion"
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/create_record_headBack"
+            android:layout_width="408dp"
+            android:layout_height="242dp"
+            android:elevation="0dp"
+            app:cardBackgroundColor="@color/main_color"
+            app:cardCornerRadius="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ex_hamburger">
+
+                <ImageButton
+                    android:id="@+id/create_diet_record_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#00FBAA1D"
+                    android:src="@drawable/ic_left_arrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/diet_record_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00FBAA1D"
+                    android:src="@drawable/ic_delete3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/diet_record_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#00FBAA1D"
+                    android:src="@drawable/ic_edit"
+                    app:layout_constraintEnd_toStartOf="@+id/diet_record_delete"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>
