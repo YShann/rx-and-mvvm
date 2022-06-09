@@ -23,11 +23,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:format12Hour="yyyy/dd/MM"
+            android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="25sp"
             android:textStyle="bold"
             android:translationX="140dp"
-            android:translationY="10dp" />
+            android:translationY="14dp" />
 
         <ImageButton
             android:id="@+id/finshButton"
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btnbg"
             android:backgroundTint="@color/my_default_background"
+            android:onClick="finsh"
             android:translationX="340dp"
             app:srcCompat="@drawable/ic_check"
             tools:ignore="SpeakableTextPresentCheck" />
@@ -45,6 +47,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btnbg"
             android:onClick="back"
+            android:translationX="7dp"
             app:srcCompat="@drawable/ic_back4"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -70,15 +73,16 @@
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginBottom="38dp"
         android:text="攝取量："
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.152"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
         android:id="@+id/textView7"
@@ -112,35 +116,27 @@
         android:id="@+id/textView25"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="39dp"
         android:text="c.c."
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/waterIntake"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/waterIntake" />
 
     <EditText
         android:id="@+id/waterIntake"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="57dp"
-        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="38dp"
         android:background="@null"
         android:ems="10"
+        android:gravity="center"
         android:inputType="number"
         android:text="200"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView24"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.36"
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/reduceBtn"
         tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
@@ -181,5 +177,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView26"
         app:srcCompat="@drawable/drinking2" />
+
+    <ImageButton
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="38dp"
+        android:background="@null"
+        android:onClick="addWater"
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/textView25"
+        app:srcCompat="@drawable/ic_add3"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/reduceBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="39dp"
+        android:background="@null"
+        android:onClick="reduceWater"
+        app:layout_constraintBottom_toTopOf="@+id/textView26"
+        app:layout_constraintStart_toEndOf="@+id/textView24"
+        app:srcCompat="@drawable/ic_reduce"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
