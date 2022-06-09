@@ -17,6 +17,8 @@ import tw.edu.ntub.imd.birc.rxandmvvm.data.User
 interface DietRecordSource {
     fun searchAll(): Observable<SourceState<ResponseBody<DietRecord>>>
 
+//    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>>
+
     fun searchByMealTime(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String

@@ -21,6 +21,10 @@ class DietRecordAPISource(private val dietRecordAPI: DietRecordAPI) : DietRecord
         return dietRecordAPI.searchAll().toApiSourceState()
     }
 
+//    override fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>> {
+//        return dietRecordAPI.searchAll().toApiSourceState()
+//    }
+
     override fun searchByMealTime(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
