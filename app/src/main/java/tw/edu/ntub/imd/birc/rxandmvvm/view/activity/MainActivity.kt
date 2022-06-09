@@ -138,10 +138,10 @@ class MainActivity : AppCompatActivity() {
                     t.replace(R.id.container_activity_main, userFragemnt).commit()
                 }
 
-                R.id.f5 -> {
-                    val t = supportFragmentManager.beginTransaction()
-                    t.replace(R.id.container_activity_main, otherFragment).commit()
-                }
+//                R.id.f5 -> {
+//                    val t = supportFragmentManager.beginTransaction()
+//                    t.replace(R.id.container_activity_main, otherFragment).commit()
+//                }
             }
             return true
         }

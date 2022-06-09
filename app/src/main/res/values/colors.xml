@@ -8,13 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!--    <color name="main_color">#93D8DB</color>-->
-    <color name="main_color">#93D8DB</color>
+    <color name="main_color">#4B9AA8</color>
     <color name="main_background">#EDE8E8E8</color>
     <color name="diet_record_icon">#ED979797</color>
     <color name="diet_record_por">#ED979797</color>
     <color name="diet_record_portion_size_green">#00D51C</color>
     <color name="diet_record_portion_size_yellow">#FF8C00</color>
     <color name="diet_record_portion_size_red">#E40000</color>
-    <color name="blue">#0000FF</color>
     <color name="transparent">#00FFFFFF</color>
 </resources>

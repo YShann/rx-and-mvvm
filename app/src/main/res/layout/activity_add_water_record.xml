@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:id="@+id/frameLayout2"
-        android:layout_width="416dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:background="@drawable/bg3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -147,9 +147,9 @@
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/targetwater"
         app:layout_constraintHorizontal_bias="0.817"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
         app:layout_constraintVertical_bias="0.205" />
 
@@ -157,13 +157,12 @@
         android:id="@+id/targetwater"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="2000 c.c."
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.817"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout2"
         app:layout_constraintVertical_bias="0.111" />
 
@@ -201,6 +200,7 @@
         android:onClick="reduceWater"
         app:layout_constraintBottom_toTopOf="@+id/textView26"
         app:layout_constraintStart_toEndOf="@+id/textView24"
+        app:layout_constraintTop_toTopOf="@+id/textView24"
         app:srcCompat="@drawable/ic_reduce"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
