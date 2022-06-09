@@ -21,6 +21,9 @@ class DietRecordViewModel(private val model: DietRecordModel) : ViewModel() {
     fun searchAll(): Observable<SourceState<ResponseBody<DietRecord>>> {
         return model.searchAll()
     }
+//    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>> {
+//        return model.searchAll()
+//    }
 
     fun searchByMealTime(
         @Query("startDate") startDate: String,

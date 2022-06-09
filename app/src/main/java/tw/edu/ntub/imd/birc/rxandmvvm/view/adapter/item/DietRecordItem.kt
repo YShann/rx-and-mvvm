@@ -3,21 +3,21 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.Target
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.constant.UrlConstant
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.MainActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.Adapter
+import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.DietRecordDetailFragment
 import java.util.concurrent.Executors
-
 
 
 class DietRecordItem(private val dietRecord: DietRecord) : AbstractViewItem() {
@@ -101,14 +101,22 @@ class DietRecordItem(private val dietRecord: DietRecord) : AbstractViewItem() {
             }
         }
 
-
-
-
     }
 
-
+    override fun onClick(adapter: Adapter, view: View) {
+        super.onClick(adapter, view)
+        val transaction = (view.context as MainActivity).supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_activity_main, MainActivity.dietRecordDetailFragment(dietRecord))
+            .commit()
+    }
     override fun updateView(adapter: Adapter, view: View, payloads: List<Any>) {
         TODO("Not yet implemented")
     }
 
+    private fun MainActivity.Companion.dietRecordDetailFragment(i: DietRecord?): Fragment {
+        return DietRecordDetailFragment(i)
+    }
+
 }
+
+

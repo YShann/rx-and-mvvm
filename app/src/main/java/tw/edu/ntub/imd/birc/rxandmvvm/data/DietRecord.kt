@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DietRecord(
+    var id: Int?,
     var foodName: String?,
     var portionSize: String?,
     var mealTime: String?,

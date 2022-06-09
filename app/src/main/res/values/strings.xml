@@ -31,7 +31,7 @@
     <string name="蔬菜">蔬菜</string>
     <string name="全榖雜糧">全榖雜糧</string>
     <string name="種類">種類</string>
-=======
+    =======
     <string-array name="create_record_portionSize_spinner_list">
         <item>請選擇</item>
         <item>少量</item>
@@ -39,5 +39,5 @@
         <item>飽食</item>
         <item>過量</item>
     </string-array>
->>>>>>> a8f352795ec1093a1e9a1f44e18e29083ca3c347
+    >>>>>>> a8f352795ec1093a1e9a1f44e18e29083ca3c347
 </resources>

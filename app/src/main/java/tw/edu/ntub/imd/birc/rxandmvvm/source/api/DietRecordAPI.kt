@@ -15,6 +15,9 @@ interface DietRecordAPI {
     @GET("dietRecord")
     fun searchAll(): Observable<Response<ResponseBody<DietRecord>>>
 
+//    @GET("dietRecord")
+//    fun getDetail(@Query("id") id: Int): Observable<Response<ResponseBody<DietRecord>>>
+
     @GET("dietRecord")
     fun searchByMealTime(
         @Query("startDate") startDate: String,
