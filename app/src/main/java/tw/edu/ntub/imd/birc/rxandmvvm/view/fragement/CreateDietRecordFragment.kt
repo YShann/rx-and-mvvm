@@ -130,67 +130,67 @@ class CreateDietRecordFragment : Fragment() {
             this.datePicker()
         }
 
-        cameraBtn = view.findViewById(R.id.cameraBtn)
-        albumBtn = view.findViewById(R.id.albumBtn)
-        foodphotoView = view.findViewById(R.id.foodphotoView)
-
-                //使用 camera獲取圖片
-        var filePath =""
-        val fileLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){
-            val option = BitmapFactory.Options()
-            //option.inSampleSize = 3
-            option.inSampleSize = 2
-            val bitmap = BitmapFactory.decodeFile(filePath, option)
-            bitmap?.let{
-                handleCameraImage(bitmap)
-            }
-        }
-        cameraBtn.setOnClickListener{
-            Log.d("tag", "-------------------------------1111")
-            // intent to open camera app
-            //val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            //launcher.launch(cameraIntent)
-            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            //val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val storageDir = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val file = File.createTempFile(
-                "JPEG_${timeStamp}_",
-                ".jpg",
-                storageDir
-            )
-            Log.d("tag", "-------------------------------2222")
-
-            filePath = file.absolutePath
-            Log.d("tag", filePath)
-            val uri = FileProvider.getUriForFile(
-                this.requireContext(),
-                "tw.edu.ntub.imd.birc.rxandmvvm.fileprovider",
-                file
-            )
-            Log.d("tag", uri.toString())
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-            fileLauncher.launch(intent)
-        }
-
-        // 使用album選擇圖片
-        val pickLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri? ->
-            uri?.let { it ->
-                Log.d("tag", it.toString())
-                val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireActivity().contentResolver, it))
-                } else {
-                    MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
-                }
-                handleCameraImage(bitmap)
-            }
-        }
-        albumBtn.setOnClickListener{
-            //val intent = Intent(Intent.ACTION_GET_CONTENT)
-            //intent.type = "image/*"
-            pickLauncher.launch("image/*")
-        }
+//        cameraBtn = view.findViewById(R.id.cameraBtn)
+//        albumBtn = view.findViewById(R.id.albumBtn)
+//        foodphotoView = view.findViewById(R.id.foodphotoView)
+//
+//                //使用 camera獲取圖片
+//        var filePath =""
+//        val fileLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
+//            ActivityResultContracts.StartActivityForResult()){
+//            val option = BitmapFactory.Options()
+//            //option.inSampleSize = 3
+//            option.inSampleSize = 2
+//            val bitmap = BitmapFactory.decodeFile(filePath, option)
+//            bitmap?.let{
+//                handleCameraImage(bitmap)
+//            }
+//        }
+//        cameraBtn.setOnClickListener{
+//            Log.d("tag", "-------------------------------1111")
+//            // intent to open camera app
+//            //val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            //launcher.launch(cameraIntent)
+//            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//            //val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//            val storageDir = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+//            val file = File.createTempFile(
+//                "JPEG_${timeStamp}_",
+//                ".jpg",
+//                storageDir
+//            )
+//            Log.d("tag", "-------------------------------2222")
+//
+//            filePath = file.absolutePath
+//            Log.d("tag", filePath)
+//            val uri = FileProvider.getUriForFile(
+//                this.requireContext(),
+//                "tw.edu.ntub.imd.birc.rxandmvvm.fileprovider",
+//                file
+//            )
+//            Log.d("tag", uri.toString())
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+//            fileLauncher.launch(intent)
+//        }
+//
+//        // 使用album選擇圖片
+//        val pickLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri? ->
+//            uri?.let { it ->
+//                Log.d("tag", it.toString())
+//                val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//                    ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireActivity().contentResolver, it))
+//                } else {
+//                    MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
+//                }
+//                handleCameraImage(bitmap)
+//            }
+//        }
+//        albumBtn.setOnClickListener{
+//            //val intent = Intent(Intent.ACTION_GET_CONTENT)
+//            //intent.type = "image/*"
+//            pickLauncher.launch("image/*")
+//        }
 
         val adapter = activity?.let {
             ArrayAdapter.createFromResource(
