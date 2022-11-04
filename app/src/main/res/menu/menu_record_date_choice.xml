@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_date"
+        android:title = "以日顯示"
+       />
+    <item
+        android:id="@+id/action_month"
+        android:title="以月顯示"
+        />
+    <item
+        android:id="@+id/action_customize"
+        android:title="自訂"
+      />
+</menu>

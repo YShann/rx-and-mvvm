@@ -1,6 +1,5 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -8,10 +7,8 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -20,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.DatePicker.OnDateChangedListener
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -34,7 +32,7 @@ import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
-import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.MainActivity
+import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -133,68 +131,6 @@ class CreateDietRecordFragment : Fragment() {
             this.datePicker()
         }
 
-//        cameraBtn = view.findViewById(R.id.cameraBtn)
-//        albumBtn = view.findViewById(R.id.albumBtn)
-//        foodphotoView = view.findViewById(R.id.foodphotoView)
-//
-//                //使用 camera獲取圖片
-//        var filePath =""
-//        val fileLauncher : ActivityResultLauncher<Intent> = registerForActivityResult(
-//            ActivityResultContracts.StartActivityForResult()){
-//            val option = BitmapFactory.Options()
-//            //option.inSampleSize = 3
-//            option.inSampleSize = 2
-//            val bitmap = BitmapFactory.decodeFile(filePath, option)
-//            bitmap?.let{
-//                handleCameraImage(bitmap)
-//            }
-//        }
-//        cameraBtn.setOnClickListener{
-//            Log.d("tag", "-------------------------------1111")
-//            // intent to open camera app
-//            //val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            //launcher.launch(cameraIntent)
-//            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-//            //val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//            val storageDir = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-//            val file = File.createTempFile(
-//                "JPEG_${timeStamp}_",
-//                ".jpg",
-//                storageDir
-//            )
-//            Log.d("tag", "-------------------------------2222")
-//
-//            filePath = file.absolutePath
-//            Log.d("tag", filePath)
-//            val uri = FileProvider.getUriForFile(
-//                this.requireContext(),
-//                "tw.edu.ntub.imd.birc.rxandmvvm.fileprovider",
-//                file
-//            )
-//            Log.d("tag", uri.toString())
-//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-//            fileLauncher.launch(intent)
-//        }
-//
-//        // 使用album選擇圖片
-//        val pickLauncher = registerForActivityResult(ActivityResultContracts.GetContent()){ uri: Uri? ->
-//            uri?.let { it ->
-//                Log.d("tag", it.toString())
-//                val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-//                    ImageDecoder.decodeBitmap(ImageDecoder.createSource(requireActivity().contentResolver, it))
-//                } else {
-//                    MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, it)
-//                }
-//                handleCameraImage(bitmap)
-//            }
-//        }
-//        albumBtn.setOnClickListener{
-//            //val intent = Intent(Intent.ACTION_GET_CONTENT)
-//            //intent.type = "image/*"
-//            pickLauncher.launch("image/*")
-//        }
-
         val adapter = activity?.let {
             ArrayAdapter.createFromResource(
                 it,
@@ -222,9 +158,10 @@ class CreateDietRecordFragment : Fragment() {
         }
 
         createDietRecordArrow.setOnClickListener {
-            val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.container_activity_main, MainActivity.addFragment)
-                ?.commit()
+            requireActivity().run{
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            }
         }
         createDietRecordFinish.setOnClickListener {
             this.creatDietRecord()
@@ -260,23 +197,6 @@ class CreateDietRecordFragment : Fragment() {
         val fruits = if (checkBoxFruits.isChecked) one else zero
         val fats = if (checkBoxFats.isChecked) one else zero
 
-//        val requestBody = MultipartBody.Builder()
-//            .setType(MultipartBody.FORM)
-//            .addFormDataPart("foodName", foodName)
-//            .addFormDataPart("portionSize", portionSize)
-//            .addFormDataPart("mealTime", mealTime)
-//            .addFormDataPart("note", note)
-//            .addFormDataPart("energy", energy)
-//            .addFormDataPart("fat", fat)
-//            .addFormDataPart("saturatedFat", saturatedFat)
-//            .addFormDataPart("carbohydrate", carbohydrate)
-//            .addFormDataPart("protein", protein)
-//            .addFormDataPart("grains", grains)
-//            .addFormDataPart("vegetables", vegetables)
-//            .addFormDataPart("meatsAndProtein", meatsAndProtein)
-//            .addFormDataPart("milkAndDairy", milkAndDairy)
-//            .addFormDataPart("fruits", fruits)
-//            .addFormDataPart("fats", fats)
 
         val hashMap: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
         hashMap["foodName"] = foodName.toRequestBody(MultipartBody.FORM)
@@ -315,34 +235,12 @@ class CreateDietRecordFragment : Fragment() {
 
                 override fun onFailure(call: Call<ResponseBody<DietRecord>>, t: Throwable) {
                     Log.d("Retrofit", t.stackTraceToString())
-                    val transaction = activity?.supportFragmentManager?.beginTransaction()
-                    transaction?.replace(R.id.container_activity_main, MainActivity.addFragment)
-                        ?.commit()
+                    requireActivity().run {
+                        startActivity(Intent(this, HomeActivity::class.java))
+                        finish()
+                    }
                 }
             })
-
-
-//        val data = DietRecord(
-//            foodName, portionSize, mealTime, note, energy, fat, saturatedFat, carbohydrate, protein,
-//            grains, vegetables, meatsAndProtein, milkAndDairy, fruits, fats,
-//        )
-//        val jsonObject: JsonObject = Json.encodeToJsonElement(data).jsonObject
-//        viewModel.createDietRecord(jsonObject).enqueue(object : Callback<DietRecord> {
-//            override fun onResponse(call: Call<DietRecord>, response: Response<DietRecord>) {
-//                if (response.isSuccessful) {
-//                    Log.d("Retrofit", "ssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-//
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<DietRecord>, t: Throwable) {
-//                Log.d("Retrofit", "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-//                val transaction = activity?.supportFragmentManager?.beginTransaction()
-//                transaction?.replace(R.id.container_activity_main, MainActivity.addFragment)
-//                    ?.commit()
-//            }
-//        })
-
     }
 
     private fun datePicker() {

@@ -17,13 +17,14 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.create
 import tw.edu.ntub.imd.birc.rxandmvvm.constant.UrlConstant
 import tw.edu.ntub.imd.birc.rxandmvvm.model.DietRecordModel
+import tw.edu.ntub.imd.birc.rxandmvvm.model.PoopRecordModel
 import tw.edu.ntub.imd.birc.rxandmvvm.model.UserModel
-import tw.edu.ntub.imd.birc.rxandmvvm.source.api.DietRecordAPI
-import tw.edu.ntub.imd.birc.rxandmvvm.source.api.DietRecordAPISource
-import tw.edu.ntub.imd.birc.rxandmvvm.source.api.UserAPI
-import tw.edu.ntub.imd.birc.rxandmvvm.source.api.UserAPISource
+import tw.edu.ntub.imd.birc.rxandmvvm.model.WaterRecordModel
+import tw.edu.ntub.imd.birc.rxandmvvm.source.api.*
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
 
 class RxAndMVVMApplication : Application() {
 
@@ -52,6 +53,12 @@ class RxAndMVVMApplication : Application() {
                 single<DietRecordAPI> {
                     get<Retrofit>().create()
                 }
+                single<WaterRecordAPI> {
+                    get<Retrofit>().create()
+                }
+                single<PoopRecordAPI> {
+                    get<Retrofit>().create()
+                }
             }
             val databaseModule = module {
 //                single {
@@ -67,6 +74,12 @@ class RxAndMVVMApplication : Application() {
                 single {
                     DietRecordAPISource(get())
                 }
+                single {
+                    WaterRecordAPISource(get())
+                }
+                single {
+                    PoopRecordAPISource(get())
+                }
             }
             val modelModule = module {
                 single {
@@ -75,6 +88,12 @@ class RxAndMVVMApplication : Application() {
                 single {
                     DietRecordModel(get<DietRecordAPISource>())
                 }
+                single {
+                    WaterRecordModel(get<WaterRecordAPISource>())
+                }
+                single {
+                    PoopRecordModel(get<PoopRecordAPISource>())
+                }
             }
             val viewModelModule = module {
                 viewModel {
@@ -82,6 +101,12 @@ class RxAndMVVMApplication : Application() {
                 }
                 viewModel {
                     DietRecordViewModel(get())
+                }
+                viewModel {
+                    WaterRecordViewModel(get())
+                }
+                viewModel {
+                    PoopRecordViewModel(get())
                 }
             }
             modules(
