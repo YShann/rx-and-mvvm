@@ -52,6 +52,7 @@
         android:onClick="goRecord"
         android:text="登入"
         android:textSize="16sp"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/loginEditPassword"
         app:layout_constraintStart_toStartOf="@+id/loginEditPassword"
         app:layout_constraintTop_toBottomOf="@+id/loginEditPassword" />
