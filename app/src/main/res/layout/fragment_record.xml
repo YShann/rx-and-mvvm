@@ -27,6 +27,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageButton
+                    android:id="@+id/record_date_return"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/main_color"
+                    android:src="@drawable/ic_left_arrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/record_date_choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="#00FBAA1D"
+                    android:src="@drawable/ic_filter"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                    android:id="@+id/record_calendarView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:textColorPrimary="@color/white"
+                    android:theme="@style/CalenderViewCustom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/record_date_choice"
+                    app:mcv_selectionColor="#FFF"
+                    app:mcv_showOtherDates="all"
+                    tools:ignore="MissingConstraints" />
 
                 <com.google.android.material.tabs.TabLayout
                     android:id="@+id/record_tabLayout_date"
@@ -44,6 +80,8 @@
 
 
                 </com.google.android.material.tabs.TabLayout>
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -55,75 +93,33 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="72dp"
+            android:layout_marginBottom="16dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/record_headBack">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_food_record"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_food_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="177dp"
-            android:layout_height="48dp"
-            android:minHeight="48dp"
-            android:translationX="189dp"
-            android:translationY="-27dp"
-            tools:ignore="SpeakableTextPresentCheck"
-            tools:layout_editor_absoluteX="189dp" />
-
-        <EditText
-            android:id="@+id/date_edit"
-            android:layout_width="157dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:ems="10"
-            android:focusableInTouchMode="false"
-            android:text="點選想查詢的日期"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:translationX="29dp"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-            tools:layout_editor_absoluteX="29dp" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/search2" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@null"
-            android:ems="10"
-            android:hint="輸入食物名稱查詢"
-            android:inputType="textPersonName"
-            android:minHeight="48dp"
-            android:translationX="15dp"
-            android:translationY="0dp"
-            app:layout_constraintStart_toStartOf="@+id/cardView" />
-
-        <ImageButton
-            android:id="@+id/searchButton"
-            android:layout_width="36dp"
-            android:layout_height="34dp"
-            android:background="#FFFFFF"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:src="@drawable/ic_search"
-            android:translationX="333dp"
-            android:translationY="7dp"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-            tools:layout_editor_absoluteX="333dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

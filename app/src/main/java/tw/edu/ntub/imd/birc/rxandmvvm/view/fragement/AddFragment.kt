@@ -1,5 +1,6 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import tw.edu.ntub.imd.birc.rxandmvvm.R
+import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.AddWaterRecordActivity
+import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.MainActivity
 
 
@@ -40,10 +43,17 @@ class AddFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add, container, false)
         val createDietRecordBtn = view.findViewById<ImageButton>(R.id.create_diet_record_btn)
+        val goBtn2 = view.findViewById<ImageButton>(R.id.goBtn2)
         createDietRecordBtn.setOnClickListener {
             val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.container_activity_main, MainActivity.createDietRecordFragment)
+            transaction?.replace(R.id.container_activity_main, HomeActivity.createDietRecordFragment)
                 ?.commit()
+        }
+        goBtn2.setOnClickListener {
+            requireActivity().run{
+                startActivity(Intent(this, AddWaterRecordActivity::class.java))
+                finish()
+            }
         }
 
         return view

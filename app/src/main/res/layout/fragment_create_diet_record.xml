@@ -15,7 +15,6 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="59dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -282,7 +281,7 @@
                             android:layout_marginStart="2dp"
                             android:text="餐飲名稱"
                             android:textColor="@color/main_color"
-                            android:textSize="14dp"
+                            android:textSize="14sp"
                             app:layout_constraintBottom_toTopOf="@+id/edit_create_record_name"
                             app:layout_constraintStart_toStartOf="@+id/edit_create_record_name" />
 
@@ -307,7 +306,7 @@
                             android:layout_marginTop="8dp"
                             android:text="用餐時間"
                             android:textColor="@color/main_color"
-                            android:textSize="14dp"
+                            android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="@+id/textView"
                             app:layout_constraintTop_toBottomOf="@+id/edit_create_record_name" />
 
@@ -329,7 +328,7 @@
                             android:layout_marginTop="8dp"
                             android:text="份量"
                             android:textColor="@color/main_color"
-                            android:textSize="14dp"
+                            android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="@+id/textView12"
                             app:layout_constraintTop_toBottomOf="@+id/edit_create_record_dateTime" />
 
@@ -354,7 +353,7 @@
                             android:layout_marginTop="10dp"
                             android:text="備註"
                             android:textColor="@color/main_color"
-                            android:textSize="14dp"
+                            android:textSize="14sp"
                             app:layout_constraintStart_toStartOf="@+id/textView28"
                             app:layout_constraintTop_toBottomOf="@+id/create_record_portionSize_spinner" />
 

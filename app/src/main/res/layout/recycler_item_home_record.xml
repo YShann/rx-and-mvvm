@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/recycler_item_home_recordTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="03：18"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_item_home_recordPortionSize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_item_home_recordName" />
+
+    <TextView
+        android:id="@+id/recycler_item_home_recordName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="4dp"
+        android:text="烏龍麵"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/recycler_item_home_recordTime"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/recycler_item_home_recordFoodKind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:text="全榖雜糧"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView46"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_item_home_recordName" />
+
+    <TextView
+        android:id="@+id/recycler_item_home_recordPortionSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="10"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:background="@color/main_color"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recycler_item_home_recordName"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_item_home_recordName" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="分飽"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_item_home_recordPortionSize"
+        app:layout_constraintStart_toEndOf="@+id/recycler_item_home_recordPortionSize"
+        app:layout_constraintTop_toTopOf="@+id/recycler_item_home_recordPortionSize" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
