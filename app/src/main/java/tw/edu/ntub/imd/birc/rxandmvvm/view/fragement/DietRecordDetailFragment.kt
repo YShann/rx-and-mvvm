@@ -1,6 +1,7 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -18,6 +19,7 @@ import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.constant.UrlConstant
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
+import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.MainActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.DietRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
@@ -49,6 +51,7 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
     private lateinit var protein: TextView
     private lateinit var saturatedFat: TextView
     private lateinit var fat: TextView
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,24 +89,37 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
         protein.text = dietRecord?.protein.toString()+" g"
         saturatedFat.text = dietRecord?.saturatedFat.toString()+" g"
         fat.text = dietRecord?.fat.toString()+" g"
-        when (dietRecord?.portionSize) {
-            "0" -> {
-                label.text = "少量"
-                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
-            }
-            "1" -> {
-                label.text = "適中"
-                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
-            }
-            "2" -> {
-                label.text = "飽食"
-                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
-            }
-            else -> {
-                label.text = "過量"
-                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
-            }
+        if(dietRecord?.portionSize!! <5){
+            label.text = dietRecord.portionSize.toString()
+            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
+        }else if(dietRecord.portionSize!! in 5..6){
+            label.text = dietRecord.portionSize.toString()
+            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
+        }else if(dietRecord.portionSize!! in 7..8){
+            label.text = dietRecord.portionSize.toString()
+            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
+        }else{
+            label.text = dietRecord.portionSize.toString()
+            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
         }
+//        when (dietRecord?.portionSize) {
+//            "0" -> {
+//                label.text = "少量"
+//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
+//            }
+//            "1" -> {
+//                label.text = "適中"
+//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
+//            }
+//            "2" -> {
+//                label.text = "飽食"
+//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
+//            }
+//            else -> {
+//                label.text = "過量"
+//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
+//            }
+//        }
 
         val grains = "全榖雜糧類"
         val meatsAndProtein = "蛋豆魚肉類"
@@ -121,15 +137,19 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
         }
         if (dietRecord?.vegetables == "1") {
             foodKindTextList.add(vegetables)
+
         }
         if (dietRecord?.fruits == "1") {
             foodKindTextList.add(fruits)
+
         }
         if (dietRecord?.milkAndDairy == "1") {
             foodKindTextList.add(milkAndDairy)
+
         }
         if (dietRecord?.fats == "1") {
             foodKindTextList.add(fats)
+
         }
         foodKind.text=foodKindTextList.toString().replace(",","、").replace("[","").replace("]","")
 
@@ -155,7 +175,7 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
 
         dietRecordDetailArrow.setOnClickListener {
             val transaction = activity?.supportFragmentManager?.beginTransaction()
-            transaction?.replace(R.id.container_activity_main, MainActivity.recordFragment)
+            transaction?.replace(R.id.container_activity_main, HomeActivity.recordFragment)
                 ?.commit()
         }
 

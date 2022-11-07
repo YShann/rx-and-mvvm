@@ -1,5 +1,6 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -35,7 +36,9 @@ class AddWaterRecordActivity : AppCompatActivity() {
 
 
     fun back(view: View) {
-        finish()
+//        finish()
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent);
     }
 
     fun addWater(view: View) {

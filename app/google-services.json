@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1097925309910",
+    "project_id": "rxandmvvm",
+    "storage_bucket": "rxandmvvm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097925309910:android:909b5461e2e24c2b432077",
+        "android_client_info": {
+          "package_name": "tw.edu.ntub.imd.birc.rxandmvvm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097925309910-ib4e9to3v0lvdhnditn0icbm0qkpp1sh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tw.edu.ntub.imd.birc.rxandmvvm",
+            "certificate_hash": "e48ea96991e798876570f18c358d6bb6212a8a6f"
+          }
+        },
+        {
+          "client_id": "1097925309910-jj36pi7mi31hhqov4va9gn3mtshujp7t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiufs0zGxzhEimdOjJSl2lrk177ZJre4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097925309910-jj36pi7mi31hhqov4va9gn3mtshujp7t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

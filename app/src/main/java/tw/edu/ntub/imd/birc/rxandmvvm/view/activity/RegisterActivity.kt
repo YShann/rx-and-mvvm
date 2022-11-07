@@ -1,28 +1,35 @@
-package tw.edu.ntub.imd.birc.rxandmvvm
+package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-
+import android.widget.ImageButton
+import android.widget.TextView
+import tw.edu.ntub.imd.birc.rxandmvvm.R
 
 class RegisterActivity : AppCompatActivity() {
-
     var name: EditText? = null
     var username: EditText? = null
     var password: EditText? = null
     var phone: EditText? = null
     var age: EditText? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_register)
         setContentView(R.layout.activity_register)
         name = findViewById(R.id.name)
         username = findViewById(R.id.username);
         password = findViewById(R.id.password)
         phone = findViewById(R.id.phone);
         age = findViewById(R.id.age);
+        val btn_register2 = findViewById<ImageButton>(R.id.btn_register2)
+        btn_register2.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent);
+        }
     }
+}
 
 //    fun register(view: View?) {
 //        val cname = name!!.text.toString()
@@ -76,4 +83,3 @@ class RegisterActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
-}

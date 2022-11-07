@@ -1,19 +1,25 @@
 package tw.edu.ntub.imd.birc.rxandmvvm
 
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.view.View
-import android.widget.EditText
-import android.widget.Toast
+import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 
-class loginActivity : AppCompatActivity() {
+
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
     }
 
+//    if(SaveSharedPreference.getUserName(MainActivity.this).length() == 0)
+//    {
+//        // call Login Activity
+//    }
+//    else
+//    {
+//        // Stay at the current activity.
+//    }
 
 //    fun login(view: View?) {
 //        val EditTextname = findViewById<View>(R.id.name) as EditText
@@ -41,4 +47,22 @@ class loginActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
+
 }
+
+//object SaveSharedPreference {
+//    const val PREF_USER_NAME = "username"
+//    fun getSharedPreferences(ctx: Context?): SharedPreferences {
+//        return PreferenceManager.getDefaultSharedPreferences(ctx)
+//    }
+//
+//    fun setUserName(ctx: Context?, userName: String?) {
+//        val editor: Editor = getSharedPreferences(ctx).edit()
+//        editor.putString(PREF_USER_NAME, userName)
+//        editor.commit()
+//    }
+//
+//    fun getUserName(ctx: Context?): String? {
+//        return getSharedPreferences(ctx).getString(PREF_USER_NAME, "")
+//    }
+//}
