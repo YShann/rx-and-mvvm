@@ -6,12 +6,11 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.style.LineBackgroundSpan
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -24,9 +23,8 @@ import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.PoopRecordItem
-import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.WaterRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
+
 
 class PoopRecordFragment : Fragment() {
 
@@ -65,18 +63,25 @@ class PoopRecordFragment : Fragment() {
                         val year = poopRecord.poopTime?.substring(0, 4)?.toInt()
                         val month = poopRecord.poopTime?.substring(5, 7)?.toInt()
                         val date = poopRecord.poopTime?.substring(8, 10)?.toInt()
-                        calendarView.addDecorator(object : DayViewDecorator {
-                            override fun shouldDecorate(day: CalendarDay): Boolean {
-                                val currentDay  = CalendarDay.from(year!!, month!!, date!!)
-                                return day == currentDay
-                                return true
-                            }
+                        activity?.runOnUiThread(java.lang.Runnable {
+                            calendarView.addDecorator(object : DayViewDecorator {
+                                override fun shouldDecorate(day: CalendarDay): Boolean {
+                                    val currentDay = CalendarDay.from(year!!, month!!, date!!)
+                                    return day == currentDay
+                                    return true
+                                }
 
-                            override fun decorate(view: DayViewFacade) {
-                                view.addSpan(PoopAddTextToDates(poopRecord.poopCount.toString().plus(" 次")))
-                                view.setDaysDisabled(true)
-                            }
+                                override fun decorate(view: DayViewFacade) {
+                                    view.addSpan(
+                                        PoopAddTextToDates(
+                                            poopRecord.poopCount.toString().plus(" 次")
+                                        )
+                                    )
+                                    view.setDaysDisabled(true)
+                                }
+                            })
                         })
+
                     }
                     it.data.map { poopRecord ->
                         PoopRecordItem(poopRecord)
@@ -84,6 +89,7 @@ class PoopRecordFragment : Fragment() {
                 }
         )
         adapter.attachToRecyclerView(poopRecordRecyclerView)
+
 
 
         return view

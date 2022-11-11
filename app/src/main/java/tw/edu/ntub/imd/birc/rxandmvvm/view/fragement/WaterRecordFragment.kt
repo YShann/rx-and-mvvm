@@ -71,17 +71,19 @@ class WaterRecordFragment : Fragment() {
                         val year = waterRecord.waterTime?.substring(0, 4)?.toInt()
                         val month = waterRecord.waterTime?.substring(5, 7)?.toInt()
                         val date = waterRecord.waterTime?.substring(8, 10)?.toInt()
-                        calendarView.addDecorator(object : DayViewDecorator {
-                            override fun shouldDecorate(day: CalendarDay): Boolean {
-                                val currentDay  = CalendarDay.from(year!!, month!!, date!!)
-                                return day == currentDay
-                                return true
-                            }
+                        activity?.runOnUiThread(java.lang.Runnable {
+                            calendarView.addDecorator(object : DayViewDecorator {
+                                override fun shouldDecorate(day: CalendarDay): Boolean {
+                                    val currentDay  = CalendarDay.from(year!!, month!!, date!!)
+                                    return day == currentDay
+                                    return true
+                                }
 
-                            override fun decorate(view: DayViewFacade) {
-                                view.addSpan(AddTextToDates(waterRecord.waterVolume.toString().plus(" c.c.")))
-                                view.setDaysDisabled(true)
-                            }
+                                override fun decorate(view: DayViewFacade) {
+                                    view.addSpan(AddTextToDates(waterRecord.waterVolume.toString().plus(" c.c.")))
+                                    view.setDaysDisabled(true)
+                                }
+                            })
                         })
                     }
                     it.data.map { waterRecord ->
