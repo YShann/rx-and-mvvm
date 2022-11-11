@@ -1,6 +1,7 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupMenu
@@ -204,7 +205,7 @@ class HomeActivity : AppCompatActivity() {
     ) {
 //        val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = ""
-        val allCount = grains + vegetables + meats + milk + fruits + fats
+        val allCount:Float = (grains + vegetables + meats + milk + fruits + fats).toFloat()
         //initializing data
 //        val typeAmountMap: MutableMap<String, Int> = HashMap()
 //        typeAmountMap["全榖雜糧"] = grains / allCount
@@ -215,24 +216,25 @@ class HomeActivity : AppCompatActivity() {
 //        typeAmountMap["油脂與堅果種子"] = fats / allCount
 
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(resources.getColor(R.color.pieChart_0))
-        colors.add(resources.getColor(R.color.pieChart_1))
-        colors.add(resources.getColor(R.color.pieChart_2))
-        colors.add(resources.getColor(R.color.pieChart_3))
-        colors.add(resources.getColor(R.color.pieChart_4))
-        colors.add(resources.getColor(R.color.pieChart_5))
+        colors.add(resources.getColor(R.color.pieChart_grains))
+        colors.add(resources.getColor(R.color.pieChart_meats_protein))
+        colors.add(resources.getColor(R.color.pieChart_milk_dairy))
+        colors.add(resources.getColor(R.color.pieChart_vegetables))
+        colors.add(resources.getColor(R.color.pieChart_fruits))
+        colors.add(resources.getColor(R.color.pieChart_fats))
 
 
 //        for (type in typeAmountMap.keys) {
 //            pieEntries.add(PieEntry(typeAmountMap[type]!!.toFloat(), type))
 //        }
+
         val pieEntries = ArrayList<PieEntry>()
-        pieEntries.add(PieEntry((grains / allCount).toFloat(),"全榖雜糧"))
-        pieEntries.add(PieEntry((meats / allCount).toFloat(),"蛋豆魚肉"))
-        pieEntries.add(PieEntry((milk / allCount).toFloat(),"乳品"))
-        pieEntries.add(PieEntry((vegetables / allCount).toFloat(),"蔬菜"))
-        pieEntries.add(PieEntry((fruits / allCount).toFloat(),"水果"))
-        pieEntries.add(PieEntry((fats / allCount).toFloat(),"油脂與堅果種子"))
+        pieEntries.add(PieEntry((grains.toFloat() / allCount),"全榖雜糧"))
+        pieEntries.add(PieEntry((meats.toFloat() / allCount),"蛋豆魚肉"))
+        pieEntries.add(PieEntry((milk.toFloat() / allCount),"乳品"))
+        pieEntries.add(PieEntry((vegetables.toFloat() / allCount),"蔬菜"))
+        pieEntries.add(PieEntry((fruits.toFloat() / allCount),"水果"))
+        pieEntries.add(PieEntry((fats.toFloat() / allCount),"油脂與堅果種子"))
 
 
         val pieDataSet = PieDataSet(pieEntries, label)
