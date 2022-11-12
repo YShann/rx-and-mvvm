@@ -35,7 +35,7 @@ class WaterRecordViewModel(private val model: WaterRecordModel) : ViewModel() {
     }
 
 
-    fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord> {
+    fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
         return model.createWaterRecord(body)
     }
 //    fun createDietRecord(

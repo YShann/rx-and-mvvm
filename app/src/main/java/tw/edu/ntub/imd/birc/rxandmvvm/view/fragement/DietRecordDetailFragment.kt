@@ -90,36 +90,18 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
         saturatedFat.text = dietRecord?.saturatedFat.toString()+" g"
         fat.text = dietRecord?.fat.toString()+" g"
         if(dietRecord?.portionSize!! <5){
-            label.text = dietRecord.portionSize.toString()
-            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
+            label.text = dietRecord.portionSize.toString().plus("分")
+            label.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_red))
         }else if(dietRecord.portionSize!! in 5..6){
-            label.text = dietRecord.portionSize.toString()
-            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
+            label.text = dietRecord.portionSize.toString().plus("分")
+            label.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_yellow))
         }else if(dietRecord.portionSize!! in 7..8){
-            label.text = dietRecord.portionSize.toString()
-            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
+            label.text = dietRecord.portionSize.toString().plus("分")
+            label.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_green))
         }else{
-            label.text = dietRecord.portionSize.toString()
-            label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
+            label.text = dietRecord.portionSize.toString().plus("分")
+            label.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_red))
         }
-//        when (dietRecord?.portionSize) {
-//            "0" -> {
-//                label.text = "少量"
-//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
-//            }
-//            "1" -> {
-//                label.text = "適中"
-//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
-//            }
-//            "2" -> {
-//                label.text = "飽食"
-//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
-//            }
-//            else -> {
-//                label.text = "過量"
-//                label.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
-//            }
-//        }
 
         val grains = "全榖雜糧類"
         val meatsAndProtein = "蛋豆魚肉類"
@@ -127,27 +109,27 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
         val fruits = "水果類"
         val milkAndDairy = "乳品類"
         val fats = "油脂與堅果種子類"
-        var foodKindTextList: MutableList<String> = mutableListOf<String>()
+        val foodKindTextList: MutableList<String> = mutableListOf<String>()
 
-        if (dietRecord?.grains == "1") {
+        if (dietRecord.grains == "1") {
             foodKindTextList.add(grains)
         }
-        if (dietRecord?.meatsAndProtein == "1") {
+        if (dietRecord.meatsAndProtein == "1") {
             foodKindTextList.add(meatsAndProtein)
         }
-        if (dietRecord?.vegetables == "1") {
+        if (dietRecord.vegetables == "1") {
             foodKindTextList.add(vegetables)
 
         }
-        if (dietRecord?.fruits == "1") {
+        if (dietRecord.fruits == "1") {
             foodKindTextList.add(fruits)
 
         }
-        if (dietRecord?.milkAndDairy == "1") {
+        if (dietRecord.milkAndDairy == "1") {
             foodKindTextList.add(milkAndDairy)
 
         }
-        if (dietRecord?.fats == "1") {
+        if (dietRecord.fats == "1") {
             foodKindTextList.add(fats)
 
         }
@@ -157,7 +139,7 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
         val handler = Handler(Looper.getMainLooper())
         var imageBitmap: Bitmap? = null
         executor.execute {
-            val imageURL = dietRecord?.imageUrl!!.replace("http://localhost:8080/", UrlConstant.BASE_URL)
+            val imageURL = dietRecord.imageUrl!!.replace("http://localhost:8080/", UrlConstant.BASE_URL)
 
             try {
                 val `in` = java.net.URL(imageURL).openStream()

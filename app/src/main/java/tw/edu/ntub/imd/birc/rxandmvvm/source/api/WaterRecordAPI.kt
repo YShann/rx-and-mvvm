@@ -28,7 +28,7 @@ interface WaterRecordAPI {
 
     //不需圖片上傳用這個
         @POST("waterRecord")
-    fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord>
+    fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord>
 
 //    @Multipart
 //    @POST("waterRecord")

@@ -5,7 +5,9 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Canvas
 import android.graphics.Point
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -29,6 +31,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.attachToRecyclerView
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
+import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.DividerItemDecorator
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.RegisterActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
@@ -60,12 +63,6 @@ class RecordFragment : Fragment() {
     var endDate: String? = null
     var searchStatusIsDay: Boolean = true
     var searchStatusIsCustom: Boolean = false
-    var grains: Int = 0//全榖雜糧
-    var vegetables: Int = 0//蔬菜
-    var meatsProtein: Int = 0//蛋豆魚肉
-    var milkDairy: Int = 0//乳品
-    var fruits: Int = 0//水果
-    var fats: Int = 0//油脂與堅果種子
     val sharedPref = context?.getSharedPreferences("foodCategory", Context.MODE_PRIVATE)
     val editor = sharedPref?.edit()
     private lateinit var dateEdit: EditText
@@ -103,6 +100,9 @@ class RecordFragment : Fragment() {
                 .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
         )
         adapter.attachToRecyclerView(recyclerView)
+        val dividerItemDecoration: RecyclerView.ItemDecoration =
+            DividerItemDecorator(context?.let { ContextCompat.getDrawable(it, R.drawable.divider) })
+        recyclerView.addItemDecoration(dividerItemDecoration)
 
         recordDateReturn.setOnClickListener {
             requireActivity().run {
@@ -342,15 +342,5 @@ class RecordFragment : Fragment() {
 //        )
 //        adapter.attachToRecyclerView(recyclerView)
     }
-
-//    private fun foodCategory(){
-//      Log.d("grains",sharedPref?.getInt("grains",0).toString())
-//      Log.d("meatsAndProtein",sharedPref?.getInt("meatsAndProtein",0).toString())
-//      Log.d("vegetables",sharedPref?.getInt("vegetables",0).toString())
-//      Log.d("fruits",sharedPref?.getInt("fruits",0).toString())
-//      Log.d("milkAndDairy",sharedPref?.getInt("milkAndDairy",0).toString())
-//      Log.d("fats",sharedPref?.getInt("fats",0).toString())
-//    }
-
 
 }

@@ -39,7 +39,7 @@ class WaterRecordModel(private val apiSource: WaterRecordSource) {
         return apiSource.searchByWaterTime(startDate, endDate)
     }
 
-    fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord> {
+    fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
         return apiSource.createWaterRecord(body)
     }
 //    fun createDietRecord(

@@ -15,9 +15,9 @@
     <color name="home_icon">#F05BAFBD</color>
     <color name="diet_record_icon">#ED979797</color>
     <color name="diet_record_por">#ED979797</color>
-    <color name="diet_record_portion_size_green">#00D51C</color>
-    <color name="diet_record_portion_size_yellow">#FFD500</color>
-    <color name="diet_record_portion_size_red">#E40000</color>
+    <color name="diet_record_portion_size_green">#00AC17</color>
+    <color name="diet_record_portion_size_yellow">#EACB00</color>
+    <color name="diet_record_portion_size_red">#BA0000</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="edittext_border">#EDB8B8B8</color>
     <color name="regis_blue">#425F8E</color>

@@ -36,7 +36,7 @@ class PoopRecordAPISource(private val poopRecordAPI: PoopRecordAPI) : PoopRecord
         return poopRecordAPI.searchByPoopTime(startDate, endDate).toApiSourceState()
     }
 
-    override fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord> {
+    override fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
         return poopRecordAPI.createPoopRecord(body)
     }
 

@@ -29,7 +29,7 @@ interface PoopRecordAPI {
 
     //不需圖片上傳用這個
         @POST("poopRecord")
-    fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord>
+    fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord>
 
 //    @Multipart
 //    @POST("waterRecord")

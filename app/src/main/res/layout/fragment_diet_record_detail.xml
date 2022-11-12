@@ -247,17 +247,11 @@
                             app:layout_constraintTop_toBottomOf="@+id/text_diet_record_detail_dateTime" />
 
                         <TextView
-                            android:id="@+id/label_diet_record_detail"
+                            android:id="@+id/textView45"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="10"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="4dp"
-                            android:paddingRight="4dp"
-                            android:background="@color/main_color"
-                            android:textColor="@color/white"
+                            android:text="飽食度"
                             android:textSize="12dp"
                             app:layout_constraintStart_toStartOf="@+id/textView28"
                             app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -269,9 +263,9 @@
                             android:layout_marginStart="8dp"
                             android:text="TextView"
                             android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/label_diet_record_detail"
+                            app:layout_constraintBottom_toBottomOf="@+id/textView45"
                             app:layout_constraintEnd_toEndOf="@+id/text_diet_record_detail_dateTime"
-                            app:layout_constraintStart_toEndOf="@+id/textView45"
+                            app:layout_constraintStart_toEndOf="@+id/label_diet_record_detail"
                             app:layout_constraintTop_toTopOf="@+id/label_diet_record_detail" />
 
                         <TextView
@@ -346,15 +340,15 @@
                             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                         <TextView
-                            android:id="@+id/textView45"
+                            android:id="@+id/label_diet_record_detail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:text="分飽"
+                            android:text="10分"
                             android:textSize="12dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/label_diet_record_detail"
-                            app:layout_constraintStart_toEndOf="@+id/label_diet_record_detail"
-                            app:layout_constraintTop_toTopOf="@+id/label_diet_record_detail" />
+                            app:layout_constraintBottom_toBottomOf="@+id/textView45"
+                            app:layout_constraintStart_toEndOf="@+id/textView45"
+                            app:layout_constraintTop_toTopOf="@+id/textView45" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>

@@ -37,7 +37,7 @@ class PoopRecordViewModel(private val model: PoopRecordModel) : ViewModel() {
     }
 
 
-    fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord> {
+    fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
         return model.createPoopRecord(body)
     }
 //    fun createDietRecord(

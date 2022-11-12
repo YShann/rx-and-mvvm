@@ -23,7 +23,9 @@ import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.PoopRecordItem
+import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.WaterRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
+import java.util.*
 
 
 class PoopRecordFragment : Fragment() {
@@ -32,7 +34,14 @@ class PoopRecordFragment : Fragment() {
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var poopRecordRecyclerView: RecyclerView
     private val viewModel: PoopRecordViewModel by viewModel()
-
+    private var currentDate: CalendarDay? = null
+    private var currentYear: Int = 0
+    var currentMonth: Int = 0
+    var currentDay: Int = 0
+    var dayList: MutableList<String> =
+        mutableListOf("31", "28", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31")
+    var startDate: String? = null
+    var endDate: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,8 +65,29 @@ class PoopRecordFragment : Fragment() {
                 finish()
             }
         }
+        currentDate = calendarView.currentDate
+        currentYear = calendarView.currentDate.year
+        currentMonth = calendarView.currentDate.month
+        currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        val endDay = dayList[currentMonth.minus(1)].toInt()
+        startDate = "$currentYear-$currentMonth-01"
+        endDate = "$currentYear-$currentMonth-$endDay"
+        setCalendarAndRecycler(startDate!!, endDate!!)
+
+        calendarView.setOnMonthChangedListener { _, date ->
+            currentYear = date.year
+            currentMonth = date.month
+            val endDay = dayList[currentMonth.minus(1)].toInt()
+            startDate = "$currentYear-$currentMonth-01"
+            endDate = "$currentYear-$currentMonth-$endDay"
+            setCalendarAndRecycler(startDate!!, endDate!!)
+        }
+
+        return view
+    }
+    private fun setCalendarAndRecycler(startDate: String,endDate:String){
         val adapter = ObservableAdapter(
-            viewModel.searchAll()
+            viewModel.searchByPoopTime(startDate, endDate)
                 .mapSourceState {
                     it.data.map { poopRecord ->
                         val year = poopRecord.poopTime?.substring(0, 4)?.toInt()
@@ -68,7 +98,6 @@ class PoopRecordFragment : Fragment() {
                                 override fun shouldDecorate(day: CalendarDay): Boolean {
                                     val currentDay = CalendarDay.from(year!!, month!!, date!!)
                                     return day == currentDay
-                                    return true
                                 }
 
                                 override fun decorate(view: DayViewFacade) {
@@ -89,12 +118,7 @@ class PoopRecordFragment : Fragment() {
                 }
         )
         adapter.attachToRecyclerView(poopRecordRecyclerView)
-
-
-
-        return view
     }
-
 }
 
 

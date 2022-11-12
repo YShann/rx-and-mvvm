@@ -34,9 +34,8 @@ class DietRecordItem(private val dietRecord: DietRecord) : AbstractViewItem() {
         val portionSize = view.findViewById<TextView>(R.id.recycler_item_food_portionSize)
         val foodKind = view.findViewById<TextView>(R.id.recycler_item_dietRecord_text_foodKind)
         val image = view.findViewById<ImageView>(R.id.recycler_item_dietRecord_image)
-        recordDate.text = dietRecord.mealTime!!.substring(0 until 16)
+        recordDate.text = dietRecord.mealTime!!.substring(5 until 16)
         foodname.text = dietRecord.foodName
-//        portionSize.text = dietRecord.portionSize
 
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
@@ -97,39 +96,21 @@ class DietRecordItem(private val dietRecord: DietRecord) : AbstractViewItem() {
 //            sharedPref?.getInt("fats",0)?.let { editor?.putInt("fats", it.plus(1) ) }
 
         }
-        foodKind.text=foodKindTextList.toString().replace(",","、").replace("[","").replace("]","")
+        foodKind.text=foodKindTextList.toString().replace(", ","、").replace("[","").replace("]","")
 
         if(dietRecord.portionSize!! <5){
-            portionSize.text = dietRecord.portionSize.toString()
-            portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
+            portionSize.text = dietRecord.portionSize.toString().plus("分")
+            portionSize.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_red))
         }else if(dietRecord.portionSize!! in 5..6){
-            portionSize.text = dietRecord.portionSize.toString()
-            portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
+            portionSize.text = dietRecord.portionSize.toString().plus("分")
+            portionSize.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_yellow))
         }else if(dietRecord.portionSize!! in 7..8){
-            portionSize.text = dietRecord.portionSize.toString()
-            portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
+            portionSize.text = dietRecord.portionSize.toString().plus("分")
+            portionSize.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_green))
         }else{
-            portionSize.text = dietRecord.portionSize.toString()
-            portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
+            portionSize.text = dietRecord.portionSize.toString().plus("分")
+            portionSize.setTextColor(view.resources.getColor(R.color.diet_record_portion_size_red))
         }
-//        when (dietRecord.portionSize) {
-//            dietRecord.portionSize!! <5 -> {
-//                portionSize.text = "少量"
-//                portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
-//            }
-//            "1" -> {
-//                portionSize.text = "適中"
-//                portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_green)
-//            }
-//            "2" -> {
-//                portionSize.text = "飽食"
-//                portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_yellow)
-//            }
-//            else -> {
-//                portionSize.text = "過量"
-//                portionSize.backgroundTintList = view.resources.getColorStateList(R.color.diet_record_portion_size_red)
-//            }
-//        }
 
     }
 

@@ -33,7 +33,7 @@ class PoopRecordModel(private val apiSource: PoopRecordSource) {
         return apiSource.searchByPoopTime(startDate, endDate)
     }
 
-    fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord> {
+    fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
         return apiSource.createPoopRecord(body)
     }
 //    fun createDietRecord(

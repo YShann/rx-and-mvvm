@@ -25,7 +25,7 @@ interface WaterRecordSource {
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>>
 
-    fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord>
+    fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord>
 //    fun createWaterRecord(
 //        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
 //    ): Call<ResponseBody<WaterRecord>>

@@ -1,13 +1,19 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.PopupMenu
-import android.widget.TextView
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
@@ -15,14 +21,24 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
+import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.WaterRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.attachToRecyclerView
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.HomeDietRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.*
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
@@ -30,11 +46,14 @@ import kotlin.math.floor
 
 class HomeActivity : AppCompatActivity() {
     private val viewModel: DietRecordViewModel by viewModel()
+    private val waterViewModel: WaterRecordViewModel by viewModel()
+    private val poopViewModel: PoopRecordViewModel by viewModel()
     private lateinit var navigationview: BottomNavigationView
     private lateinit var homeToolbarTitle: TextView
     private lateinit var pieChart: PieChart
     private lateinit var waterEditImgBtn: ImageButton
     private lateinit var waterEdit: EditText
+    private lateinit var poopEdit: EditText
     private lateinit var homeFoodRecycler: RecyclerView
     private lateinit var homeFoodToDateBtn: ImageButton
     private lateinit var homeFoodToCreateBtn: ImageButton
@@ -44,14 +63,12 @@ class HomeActivity : AppCompatActivity() {
 
 
     companion object {
-        val homeFragment = HomeFragment()
-
         //原本是val recordFragment = RecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
         val recordFragment by lazy { RecordFragment() }
         val createRecordFragment by lazy { CreateDietRecordFragment() }
-        val userFragemnt = UserFragment()
-        val waterRecordFragment = WaterRecordFragment()
-        val poopRecordFragment = PoopRecordFragment()
+        val userFragemnt by lazy { UserFragment() }
+        val waterRecordFragment by lazy { WaterRecordFragment() }
+        val poopRecordFragment by lazy { PoopRecordFragment() }
         val addFragment = AddFragment()
         val otherFragment = OtherFragment()
 
@@ -66,6 +83,7 @@ class HomeActivity : AppCompatActivity() {
         homeToolbarTitle = findViewById<TextView>(R.id.home_toolbar_title)
         pieChart = findViewById<PieChart>(R.id.home_pieChart)
         waterEdit = findViewById<EditText>(R.id.home_water_editText)
+        poopEdit = findViewById<EditText>(R.id.home_poop_editText)
         homeFoodRecycler = findViewById<RecyclerView>(R.id.home_food_recycler)
         homeFoodToDateBtn = findViewById<ImageButton>(R.id.home_food_toDate_btn)
         homeFoodToCreateBtn = findViewById<ImageButton>(R.id.home_food_toCreate_btn)
@@ -126,7 +144,9 @@ class HomeActivity : AppCompatActivity() {
                 }
         )
         adapter.attachToRecyclerView(homeFoodRecycler)
-
+        val dividerItemDecoration: ItemDecoration =
+            DividerItemDecorator(ContextCompat.getDrawable(this, R.drawable.divider))
+        homeFoodRecycler.addItemDecoration(dividerItemDecoration)
 
         homeFoodToDateBtn.setOnClickListener {
             supportFragmentManager.beginTransaction()
@@ -168,8 +188,76 @@ class HomeActivity : AppCompatActivity() {
             })
             popupMenu.show()
         }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+        waterEdit.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val waterVolume:Int = waterEdit.text.toString().toInt()
+                val jsonObject = JSONObject()
+                jsonObject.put("waterVolume", waterVolume)
+                val jsonObjectString = jsonObject.toString()
+                val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                waterViewModel.createWaterRecord(requestBody)
+                    .enqueue(object : Callback<WaterRecord> {
+                        override fun onResponse(
+                            call: Call<WaterRecord>,
+                            response: Response<WaterRecord>
+                        ) {
+                            if (response.isSuccessful) {
+                                Log.d("Retrofit", "Success")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<WaterRecord>, t: Throwable) {
+                            Log.d("Retrofit", t.stackTraceToString())
+                        }
+
+                    })
+            }
+        }
+///////////////////////////////////////////////////////////////////////////////////////////////////
+        poopEdit.setOnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus) {
+                val poopCount:Int = poopEdit.text.toString().toInt()
+                val jsonObject = JSONObject()
+                jsonObject.put("poopCount", poopCount)
+                val jsonObjectString = jsonObject.toString()
+                val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                poopViewModel.createPoopRecord(requestBody)
+                    .enqueue(object : Callback<PoopRecord> {
+                        override fun onResponse(
+                            call: Call<PoopRecord>,
+                            response: Response<PoopRecord>
+                        ) {
+                            if (response.isSuccessful) {
+                                Log.d("Retrofit", "Success")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<PoopRecord>, t: Throwable) {
+                            Log.d("Retrofit", t.stackTraceToString())
+                        }
+
+                    })
+            }
+        }
     }
 
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val v: View? = currentFocus
+            if (v is EditText) {
+                val outRect = Rect()
+                v.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    v.clearFocus()
+                    val imm: InputMethodManager =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0)
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event)
+    }
 
     ///////////////////////////////////////////////////////////////////////////////
     fun Date.toString(format: String, locale: Locale = Locale.getDefault()): String {
@@ -205,7 +293,7 @@ class HomeActivity : AppCompatActivity() {
     ) {
 //        val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = ""
-        val allCount:Float = (grains + vegetables + meats + milk + fruits + fats).toFloat()
+        val allCount: Float = (grains + vegetables + meats + milk + fruits + fats).toFloat()
         //initializing data
 //        val typeAmountMap: MutableMap<String, Int> = HashMap()
 //        typeAmountMap["全榖雜糧"] = grains / allCount
@@ -229,12 +317,12 @@ class HomeActivity : AppCompatActivity() {
 //        }
 
         val pieEntries = ArrayList<PieEntry>()
-        pieEntries.add(PieEntry((grains.toFloat() / allCount),"全榖雜糧"))
-        pieEntries.add(PieEntry((meats.toFloat() / allCount),"蛋豆魚肉"))
-        pieEntries.add(PieEntry((milk.toFloat() / allCount),"乳品"))
-        pieEntries.add(PieEntry((vegetables.toFloat() / allCount),"蔬菜"))
-        pieEntries.add(PieEntry((fruits.toFloat() / allCount),"水果"))
-        pieEntries.add(PieEntry((fats.toFloat() / allCount),"油脂與堅果種子"))
+        pieEntries.add(PieEntry((grains.toFloat() / allCount), "全榖雜糧"))
+        pieEntries.add(PieEntry((meats.toFloat() / allCount), "蛋豆魚肉"))
+        pieEntries.add(PieEntry((milk.toFloat() / allCount), "乳品"))
+        pieEntries.add(PieEntry((vegetables.toFloat() / allCount), "蔬菜"))
+        pieEntries.add(PieEntry((fruits.toFloat() / allCount), "水果"))
+        pieEntries.add(PieEntry((fats.toFloat() / allCount), "油脂與堅果種子"))
 
 
         val pieDataSet = PieDataSet(pieEntries, label)
@@ -246,7 +334,7 @@ class HomeActivity : AppCompatActivity() {
             override fun getFormattedValue(value: Float): String {
                 if (value == 0.0f)
                     return "";
-                return floor(value).toString().replace(".0","%")
+                return floor(value).toString().replace(".0", "%")
             }
         }
         pieChart.legend.textSize = 14f
@@ -260,5 +348,23 @@ class HomeActivity : AppCompatActivity() {
         pieData.setDrawValues(true)
         pieChart.data = pieData
         pieChart.invalidate()
+    }
+}
+
+class DividerItemDecorator(private val divider: Drawable?) : RecyclerView.ItemDecoration() {
+
+    override fun onDrawOver(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+        val dividerLeft = parent.paddingLeft
+        val dividerRight = parent.width - parent.paddingRight
+        val childCount = parent.childCount
+        for (i in 0..childCount - 2) {
+            val child: View = parent.getChildAt(i)
+            val params =
+                child.layoutParams as RecyclerView.LayoutParams
+            val dividerTop: Int = child.bottom + params.bottomMargin
+            val dividerBottom = dividerTop + (divider?.intrinsicHeight?:0)
+            divider?.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom)
+            divider?.draw(canvas)
+        }
     }
 }

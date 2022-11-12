@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import kotlinx.serialization.json.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Part
@@ -34,7 +35,7 @@ class WaterRecordAPISource(private val waterRecordAPI: WaterRecordAPI) : WaterRe
         return waterRecordAPI.searchByWaterTime(startDate, endDate).toApiSourceState()
     }
 
-    override fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord> {
+    override fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
         return waterRecordAPI.createWaterRecord(body)
     }
 

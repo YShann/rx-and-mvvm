@@ -65,10 +65,9 @@
                             android:id="@+id/home_poop_toDate_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
                             android:background="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/textView42"
-                            app:layout_constraintEnd_toEndOf="@+id/editTextNumber"
+                            app:layout_constraintEnd_toEndOf="@+id/home_poop_editText"
                             app:srcCompat="@drawable/ic_home_record_date" />
 
                         <ImageView
@@ -76,7 +75,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/editTextNumber"
+                            app:layout_constraintBottom_toBottomOf="@+id/home_poop_editText"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/textView42"
                             app:srcCompat="@drawable/ic_poop" />
@@ -90,16 +89,16 @@
                             android:text="今日排便"
                             android:textColor="@color/main_color"
                             android:textSize="14sp"
-                            app:layout_constraintStart_toStartOf="@+id/editTextNumber"
+                            app:layout_constraintStart_toStartOf="@+id/home_poop_editText"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
-                            android:id="@+id/editTextNumber"
+                            android:id="@+id/home_poop_editText"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="24dp"
                             android:layout_marginBottom="20dp"
                             android:ems="10"
                             android:hint="0 次"
@@ -129,7 +128,6 @@
                             android:id="@+id/home_water_toDate_btn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
                             android:background="@color/white"
                             app:layout_constraintBottom_toBottomOf="@+id/textView40"
                             app:layout_constraintEnd_toEndOf="@+id/home_water_editText"
@@ -163,7 +161,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="16dp"
+                            android:layout_marginEnd="24dp"
                             android:layout_marginBottom="20dp"
                             android:ems="10"
                             android:hint="0 c.c."
@@ -212,14 +210,16 @@
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/home_food_recycler"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="12dp"
                             android:layout_marginBottom="8dp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/textView43" />
+                            app:layout_constraintEnd_toEndOf="@+id/imageView9"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/imageView9"
+                            app:layout_constraintTop_toBottomOf="@+id/textView43"
+                            app:layout_constraintVertical_bias="1.0" />
 
                         <ImageView
                             android:id="@+id/imageView9"

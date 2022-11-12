@@ -22,7 +22,7 @@ interface PoopRecordSource {
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>>
 
-    fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord>
+    fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord>
 //    fun createWaterRecord(
 //        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
 //    ): Call<ResponseBody<WaterRecord>>
