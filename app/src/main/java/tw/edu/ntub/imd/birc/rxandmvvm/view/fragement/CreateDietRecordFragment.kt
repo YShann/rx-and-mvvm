@@ -1,5 +1,6 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -15,11 +16,12 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.*
-import android.widget.DatePicker.OnDateChangedListener
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -32,8 +34,13 @@ import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
+import tw.edu.ntub.imd.birc.rxandmvvm.extension.attachToRecyclerView
+import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
+import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
+import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.FoodItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.FoodViewModel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -42,23 +49,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateDietRecordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class CreateDietRecordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private lateinit var editName: EditText
+class CreateDietRecordFragment() : Fragment() {
+    private lateinit var editName: AutoCompleteTextView
+    private lateinit var createRecordRecyclerInvisibility: RecyclerView
     private lateinit var editDateTime: EditText
-    private lateinit var spinnerPortionSize: Spinner
+    private lateinit var editContent: EditText
     private lateinit var editNote: EditText
     private lateinit var checkBoxGrains: CheckBox
     private lateinit var checkBoxMeatsAndProtein: CheckBox
@@ -66,11 +61,6 @@ class CreateDietRecordFragment : Fragment() {
     private lateinit var checkBoxFats: CheckBox
     private lateinit var checkBoxVegetables: CheckBox
     private lateinit var checkBoxFruits: CheckBox
-    private lateinit var editEnergy: EditText
-    private lateinit var editCarbohydrate: EditText
-    private lateinit var editProtein: EditText
-    private lateinit var editSaturatedFat: EditText
-    private lateinit var editFat: EditText
     private lateinit var createDietRecordArrow: ImageButton
     private lateinit var createDietRecordFinish: ImageButton
     private lateinit var createRecordHeadBack: CardView
@@ -78,21 +68,17 @@ class CreateDietRecordFragment : Fragment() {
     private lateinit var createRecordHeadText: TextView
     private var pathUri: String? = null
     private val viewModel: DietRecordViewModel by viewModel()
+    private val foodViewModel: FoodViewModel by viewModel()
     private val calender: Calendar = Calendar.getInstance()
     private val IMAGE_DIRECTORY = "/encoded_image"
     private val GALLERY = 1
     private val CAMERA = 2
 
-    private lateinit var cameraBtn: Button
-    private lateinit var albumBtn: Button
-    private lateinit var foodphotoView: ImageView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -102,20 +88,17 @@ class CreateDietRecordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_create_diet_record, container, false)
         editName = view.findViewById(R.id.edit_create_record_name)
+        createRecordRecyclerInvisibility =
+            view.findViewById(R.id.create_record_recycler_invisibility)
         editDateTime = view.findViewById(R.id.edit_create_record_dateTime)
-        spinnerPortionSize = view.findViewById(R.id.create_record_portionSize_spinner)
         editNote = view.findViewById(R.id.edit_create_record_note)
+        editContent = view.findViewById(R.id.edit_create_record_content)
         checkBoxGrains = view.findViewById(R.id.checkBox_create_record_grains)
         checkBoxMeatsAndProtein = view.findViewById(R.id.checkBox_create_record_meatsAndProtein)
         checkBoxMilkAndDairy = view.findViewById(R.id.checkBox_create_record_milkAndDairy)
         checkBoxFats = view.findViewById(R.id.checkBox_create_record_fats)
         checkBoxVegetables = view.findViewById(R.id.checkBox_create_record_vegetables)
         checkBoxFruits = view.findViewById(R.id.checkBox_create_record_fruits)
-        editEnergy = view.findViewById(R.id.edit_create_record_energy)
-        editCarbohydrate = view.findViewById(R.id.edit_create_record_carbohydrate)
-        editProtein = view.findViewById(R.id.edit_create_record_protein)
-        editSaturatedFat = view.findViewById(R.id.edit_create_record_saturatedFat)
-        editFat = view.findViewById(R.id.edit_create_record_fat)
         createDietRecordArrow = view.findViewById(R.id.create_diet_record_arrow)
         createDietRecordFinish = view.findViewById(R.id.create_diet_record_finish)
         createRecordHeadBack = view.findViewById(R.id.create_record_headBack)
@@ -131,34 +114,8 @@ class CreateDietRecordFragment : Fragment() {
             this.datePicker()
         }
 
-        val adapter = activity?.let {
-            ArrayAdapter.createFromResource(
-                it,
-                R.array.create_record_portionSize_spinner_list,
-                android.R.layout.simple_spinner_item
-            )
-        }
-        adapter?.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerPortionSize.adapter = adapter
-        spinnerPortionSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                println("error")
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val type = parent?.getItemAtPosition(position).toString()
-                println(type)
-            }
-
-        }
-
         createDietRecordArrow.setOnClickListener {
-            requireActivity().run{
+            requireActivity().run {
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             }
@@ -167,13 +124,62 @@ class CreateDietRecordFragment : Fragment() {
             this.creatDietRecord()
         }
 
+
+        createRecordRecyclerInvisibility.visibility = View.INVISIBLE
+
+        val searchList: ArrayList<String> = ArrayList()
+        val searchAdapter = ObservableAdapter(
+            foodViewModel.searchAll()
+                .mapSourceState {
+                    it.data.map { food ->
+                        activity?.runOnUiThread(java.lang.Runnable {
+                            searchList.add(food.name!!.plus(" ${food.energy}kcal"))
+                        })
+                    }
+                    it.data.map { food ->
+                        FoodItem(food)
+                    }
+                }
+        )
+        searchAdapter.attachToRecyclerView(createRecordRecyclerInvisibility)
+        val arrayAdapter =
+            ArrayAdapter<String>(
+                requireActivity(),
+                android.R.layout.simple_dropdown_item_1line,
+                searchList
+            )
+        editName.setAdapter(arrayAdapter)
+        editName.threshold = 1
+        editName.onFocusChangeListener = OnFocusChangeListener { _, _ ->
+            editName.setAdapter(arrayAdapter)
+            editName.threshold = 1
+        }
+
+        editName.setOnItemClickListener { parent, view, position, id ->
+            val searchName = editName.text.split(" ")[0]
+            val searchNameAdapter = ObservableAdapter(
+                foodViewModel.getFood(searchName)
+                    .mapSourceState {
+                        it.data.map { food ->
+                            activity?.runOnUiThread(java.lang.Runnable {
+                                checkBoxGrains.isChecked = food.grains == "1"
+                                checkBoxVegetables.isChecked = food.vegetables == "1"
+                                checkBoxMeatsAndProtein.isChecked = food.meatsAndProtein == "1"
+                                checkBoxMilkAndDairy.isChecked = food.milkAndDairy == "1"
+                                checkBoxFruits.isChecked = food.fruits == "1"
+                                checkBoxFats.isChecked = food.fats == "1"
+                            })
+                        }
+                        it.data.map { food ->
+                            FoodItem(food)
+                        }
+                    }
+            )
+            searchNameAdapter.attachToRecyclerView(createRecordRecyclerInvisibility)
+        }
+
         return view
     }
-
-//    //把圖片設定到foodPhoto
-//    private fun handleCameraImage(bitmap: Bitmap) {
-//        foodphotoView.setImageBitmap(bitmap)
-//    }
 
 
     private fun creatDietRecord() {
@@ -182,14 +188,9 @@ class CreateDietRecordFragment : Fragment() {
         val dateTime = editDateTime.text.toString()
         val seconds = calender.get(Calendar.SECOND)
         val foodName = editName.text.toString()
-        val portionSize = (spinnerPortionSize.selectedItemPosition - 1).toString()
+        val foodContent = editContent.text.toString()
         val mealTime = "$dateTime:$seconds"
         val note = editNote.text.toString()
-        val energy = editEnergy.text.toString()
-        val fat = editFat.text.toString()
-        val saturatedFat = editSaturatedFat.text.toString()
-        val carbohydrate = editCarbohydrate.text.toString()
-        val protein = editProtein.text.toString()
         val grains = if (checkBoxGrains.isChecked) one else zero
         val vegetables = if (checkBoxVegetables.isChecked) one else zero
         val meatsAndProtein = if (checkBoxMeatsAndProtein.isChecked) one else zero
@@ -200,14 +201,9 @@ class CreateDietRecordFragment : Fragment() {
 
         val hashMap: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
         hashMap["foodName"] = foodName.toRequestBody(MultipartBody.FORM)
-        hashMap["portionSize"] = portionSize.toRequestBody(MultipartBody.FORM)
+        hashMap["foodContent"] = foodContent.toRequestBody(MultipartBody.FORM)
         hashMap["mealTime"] = mealTime.toRequestBody(MultipartBody.FORM)
         hashMap["note"] = note.toRequestBody(MultipartBody.FORM)
-        hashMap["energy"] = energy.toRequestBody(MultipartBody.FORM)
-        hashMap["fat"] = fat.toRequestBody(MultipartBody.FORM)
-        hashMap["saturatedFat"] = saturatedFat.toRequestBody(MultipartBody.FORM)
-        hashMap["carbohydrate"] = carbohydrate.toRequestBody(MultipartBody.FORM)
-        hashMap["protein"] = protein.toRequestBody(MultipartBody.FORM)
         hashMap["grains"] = grains.toRequestBody(MultipartBody.FORM)
         hashMap["vegetables"] = vegetables.toRequestBody(MultipartBody.FORM)
         hashMap["meatsAndProtein"] = meatsAndProtein.toRequestBody(MultipartBody.FORM)
@@ -235,35 +231,40 @@ class CreateDietRecordFragment : Fragment() {
 
                 override fun onFailure(call: Call<ResponseBody<DietRecord>>, t: Throwable) {
                     Log.d("Retrofit", t.stackTraceToString())
+                    Toast.makeText(context,"新增成功",Toast. LENGTH_SHORT).show()
                     requireActivity().run {
                         startActivity(Intent(this, HomeActivity::class.java))
                         finish()
                     }
                 }
             })
+
+
     }
 
+
     private fun datePicker() {
-        val picker = context?.let {
-            DatePickerDialog(
-                it,
-                dateListener,
-                calender.get(Calendar.YEAR),
-                calender.get(Calendar.MONTH),
-                calender.get(Calendar.DATE)
-            )
-        }
-        picker?.setCancelable(true)
-        picker?.setCanceledOnTouchOutside(true)
-        picker?.setButton(
-            DialogInterface.BUTTON_POSITIVE, "確定"
-        ) { date, which ->
-            this.timePicker()
-        }
-        picker?.setButton(
-            DialogInterface.BUTTON_NEGATIVE, "取消"
-        ) { _, _ -> Log.d("Picker", "Cancel!") }
-        picker?.show()
+        val year = calender.get(Calendar.YEAR)
+        val month = calender.get(Calendar.MONTH)
+        val day = calender.get(Calendar.DAY_OF_MONTH)
+        var plusZero = "0"
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
+            { _, yearPick, monthOfYear, dayOfMonth ->
+                plusZero = if (dayOfMonth < 10) {
+                    plusZero.plus(dayOfMonth)
+                } else {
+                    dayOfMonth.toString()
+                }
+                val dat = (yearPick.toString() + "/" + (monthOfYear + 1) + "/" + plusZero)
+                editDateTime.setText(dat)
+                this.timePicker()
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
     }
 
 
@@ -280,9 +281,6 @@ class CreateDietRecordFragment : Fragment() {
         timePicker?.show()
     }
 
-    private val dateListener = DatePickerDialog.OnDateSetListener { _, year, month, day ->
-        calender.set(year, month, day)
-    }
 
     private val timeListener = TimePickerDialog.OnTimeSetListener { _, hour, min ->
         calender.set(Calendar.HOUR_OF_DAY, hour)
@@ -290,9 +288,11 @@ class CreateDietRecordFragment : Fragment() {
         format("yyyy/MM/dd HH:mm", editDateTime)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun format(format: String, view: View) {
         val time = SimpleDateFormat(format, Locale.TAIWAN)
-        (view as EditText).setText(time.format(calender.time))
+        val text = editDateTime.text.toString()
+        (view as EditText).setText(text +" "+ time.format(calender.time).substring(11,16))
     }
 
     private fun getNowDateTime() {

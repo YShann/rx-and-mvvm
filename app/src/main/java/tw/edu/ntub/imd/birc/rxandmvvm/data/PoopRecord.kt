@@ -7,4 +7,5 @@ data class PoopRecord(
     var id: Int?,
     var poopCount: Int?,
     var poopTime: String?,
+    var poopStatus: String?,
 )

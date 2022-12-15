@@ -37,6 +37,7 @@ import java.util.*
 class WaterRecordFragment : Fragment() {
 
     private lateinit var waterReturnBtn: ImageButton
+    private lateinit var waterRecordPlus: ImageButton
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var waterRecordRecyclerView: RecyclerView
     private val viewModel: WaterRecordViewModel by viewModel()
@@ -64,6 +65,7 @@ class WaterRecordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_water_record, container, false)
         waterReturnBtn = view.findViewById<ImageButton>(R.id.water_record_return)
+        waterRecordPlus = view.findViewById<ImageButton>(R.id.water_record_plus)
         calendarView = view.findViewById<MaterialCalendarView>(R.id.water_record_calendarView)
         waterRecordRecyclerView = view.findViewById<RecyclerView>(R.id.water_record_recyclerView)
 
@@ -72,6 +74,12 @@ class WaterRecordFragment : Fragment() {
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             }
+        }
+
+        waterRecordPlus.setOnClickListener {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.container_activity_main, HomeActivity.createWaterRecordFragment)
+                ?.commit()
         }
 
         currentDate = calendarView.currentDate
@@ -97,7 +105,7 @@ class WaterRecordFragment : Fragment() {
 
     private fun setCalendarAndRecycler(startDate: String,endDate:String){
         val adapter = ObservableAdapter(
-            viewModel.searchByWaterTime(startDate, endDate)
+            viewModel.searchByWaterTimeRange(startDate, endDate)
                 .mapSourceState {
                     it.data.map { waterRecord ->
                         val year = waterRecord.waterTime?.substring(0, 4)?.toInt()

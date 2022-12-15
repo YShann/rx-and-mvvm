@@ -31,6 +31,7 @@ import java.util.*
 class PoopRecordFragment : Fragment() {
 
     private lateinit var poopReturnBtn: ImageButton
+    private lateinit var poopRecordPlus: ImageButton
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var poopRecordRecyclerView: RecyclerView
     private val viewModel: PoopRecordViewModel by viewModel()
@@ -56,6 +57,7 @@ class PoopRecordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_poop_record, container, false)
         poopReturnBtn = view.findViewById<ImageButton>(R.id.poop_record_return)
+        poopRecordPlus = view.findViewById<ImageButton>(R.id.poop_record_plus)
         calendarView = view.findViewById<MaterialCalendarView>(R.id.poop_record_calendarView)
         poopRecordRecyclerView = view.findViewById<RecyclerView>(R.id.poop_record_recyclerView)
 
@@ -65,6 +67,13 @@ class PoopRecordFragment : Fragment() {
                 finish()
             }
         }
+
+        poopRecordPlus.setOnClickListener {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.container_activity_main, HomeActivity.createPoopRecordFragment)
+                ?.commit()
+        }
+
         currentDate = calendarView.currentDate
         currentYear = calendarView.currentDate.year
         currentMonth = calendarView.currentDate.month
@@ -87,7 +96,7 @@ class PoopRecordFragment : Fragment() {
     }
     private fun setCalendarAndRecycler(startDate: String,endDate:String){
         val adapter = ObservableAdapter(
-            viewModel.searchByPoopTime(startDate, endDate)
+            viewModel.searchByPoopTimeRange(startDate, endDate)
                 .mapSourceState {
                     it.data.map { poopRecord ->
                         val year = poopRecord.poopTime?.substring(0, 4)?.toInt()

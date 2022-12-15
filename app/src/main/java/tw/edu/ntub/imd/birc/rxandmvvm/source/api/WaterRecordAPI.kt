@@ -20,8 +20,13 @@ interface WaterRecordAPI {
 //    @GET("dietRecord")
 //    fun getDetail(@Query("id") id: Int): Observable<Response<ResponseBody<DietRecord>>>
 
-    @GET("waterRecord")
+    @GET("waterRecord/waterTime")
     fun searchByWaterTime(
+        @Query("waterTime") waterTime: String
+    ): Observable<Response<ResponseBody<WaterRecord>>>
+
+    @GET("waterRecord")
+    fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<Response<ResponseBody<WaterRecord>>>
@@ -30,11 +35,9 @@ interface WaterRecordAPI {
         @POST("waterRecord")
     fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord>
 
-//    @Multipart
-//    @POST("waterRecord")
-//    fun createDietRecord(
-//        @PartMap params : Map<String, @JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>>
+    @PATCH("waterRecord")
+    fun editWaterRecord(@Body body: RequestBody): Call<WaterRecord>
 
+    @DELETE("waterRecord")
+    fun deleteWaterRecord(@Query("id") id: String): Call<WaterRecord>
 }

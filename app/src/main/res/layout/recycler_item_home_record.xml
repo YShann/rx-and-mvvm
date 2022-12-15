@@ -18,13 +18,15 @@
 
     <TextView
         android:id="@+id/recycler_item_home_recordName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
         android:text="烏龍麵"
         android:textColor="@color/black"
         android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recycler_item_home_recordTime"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,36 +35,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="16dp"
         android:text="全榖雜糧"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recycler_item_home_recordPortionSize"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/recycler_item_home_recordName"
         app:layout_constraintTop_toBottomOf="@+id/recycler_item_home_recordName" />
-
-    <TextView
-        android:id="@+id/textView46"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="飽食度"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/recycler_item_home_recordPortionSize"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="10分"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/recycler_item_home_recordFoodKind"
-        app:layout_constraintEnd_toEndOf="@+id/textView46"
-        app:layout_constraintStart_toStartOf="@+id/textView46"
-        app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

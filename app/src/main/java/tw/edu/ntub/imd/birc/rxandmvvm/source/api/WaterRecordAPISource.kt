@@ -24,27 +24,30 @@ class WaterRecordAPISource(private val waterRecordAPI: WaterRecordAPI) : WaterRe
         return waterRecordAPI.searchAll().toApiSourceState()
     }
 
-//    override fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>> {
-//        return dietRecordAPI.searchAll().toApiSourceState()
-//    }
-
     override fun searchByWaterTime(
+        @Query("waterTime") waterTime: String
+    ): Observable<SourceState<ResponseBody<WaterRecord>>> {
+        return waterRecordAPI.searchByWaterTime(waterTime).toApiSourceState()
+    }
+
+    override fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return waterRecordAPI.searchByWaterTime(startDate, endDate).toApiSourceState()
+        return waterRecordAPI.searchByWaterTimeRange(startDate,endDate).toApiSourceState()
     }
 
     override fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
         return waterRecordAPI.createWaterRecord(body)
     }
 
-//    override fun createWaterRecord(
-//        @PartMap params : Map<String,@JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>> {
-//        return dietRecordAPI.createDietRecord(params,imageFile)
-//    }
+    override fun editWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
+        return waterRecordAPI.editWaterRecord(body)
+    }
+
+    override fun deleteWaterRecord(@Query("id") id: String): Call<WaterRecord> {
+        return waterRecordAPI.deleteWaterRecord(id)
+    }
 }
 
 

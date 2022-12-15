@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 
 
@@ -18,8 +19,13 @@ interface DietRecordAPI {
 //    @GET("dietRecord")
 //    fun getDetail(@Query("id") id: Int): Observable<Response<ResponseBody<DietRecord>>>
 
+    @GET("dietRecord/mealDate")
+    fun searchByMealDate(
+        @Query("mealDate") mealDate: String
+    ): Observable<Response<ResponseBody<DietRecord>>>
+
     @GET("dietRecord")
-    fun searchByMealTime(
+    fun searchByMealDateRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<Response<ResponseBody<DietRecord>>>
@@ -35,4 +41,9 @@ interface DietRecordAPI {
         @Part imageFile: MultipartBody.Part
     ): Call<ResponseBody<DietRecord>>
 
+    @PATCH("dietRecord")
+    fun editDietRecord(@Body body: RequestBody): Call<DietRecord>
+
+    @DELETE("dietRecord")
+    fun deleteDietRecord(@Query("id") id: String): Call<DietRecord>
 }

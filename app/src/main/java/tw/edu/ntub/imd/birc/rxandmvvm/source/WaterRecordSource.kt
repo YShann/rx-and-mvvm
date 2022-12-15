@@ -21,12 +21,17 @@ interface WaterRecordSource {
 //    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>>
 
     fun searchByWaterTime(
+        @Query("waterTime") waterTime: String
+    ): Observable<SourceState<ResponseBody<WaterRecord>>>
+
+    fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>>
 
     fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord>
-//    fun createWaterRecord(
-//        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-//    ): Call<ResponseBody<WaterRecord>>
+
+    fun editWaterRecord(@Body body: RequestBody): Call<WaterRecord>
+
+    fun deleteWaterRecord(@Query("id") id: String): Call<WaterRecord>
 }

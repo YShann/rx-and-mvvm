@@ -1,6 +1,7 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -10,8 +11,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.github.mikephil.charting.charts.PieChart
@@ -21,6 +24,9 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -28,6 +34,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tw.edu.ntub.imd.birc.rxandmvvm.LoginActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.WaterRecord
@@ -35,10 +42,13 @@ import tw.edu.ntub.imd.birc.rxandmvvm.extension.attachToRecyclerView
 import tw.edu.ntub.imd.birc.rxandmvvm.extension.mapSourceState
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.HomeDietRecordItem
+import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.PoopRecordItem
+import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.WaterRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.*
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.floor
@@ -60,37 +70,53 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var homeWaterToDateBtn: ImageButton
     private lateinit var homePoopToDateBtn: ImageButton
     private lateinit var homeSettingBtn: ImageButton
+    private lateinit var homeRecyclerInvisibility: RecyclerView
+    private lateinit var homePoopStatusSpinner: Spinner
+    private var isWaterRecordCreate: Boolean = true
+    private var isPoopRecordCreate: Boolean = true
+    private lateinit var waterRecordId: String
+    private lateinit var poopRecordId: String
 
 
     companion object {
         //原本是val recordFragment = RecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
         val recordFragment by lazy { RecordFragment() }
-        val createRecordFragment by lazy { CreateDietRecordFragment() }
+        val createDietRecordFragment by lazy { CreateDietRecordFragment() }
         val userFragemnt by lazy { UserFragment() }
+        val foodFragemnt by lazy { FoodFragment() }
         val waterRecordFragment by lazy { WaterRecordFragment() }
         val poopRecordFragment by lazy { PoopRecordFragment() }
-        val addFragment = AddFragment()
-        val otherFragment = OtherFragment()
-
-        //原本是val createDietRecordFragment = CreateDietRecordFragment()被警告有內存洩漏的問題，按照建議改成下面那行
-        val createDietRecordFragment by lazy { CreateDietRecordFragment() }
+        val createWaterRecordFragment by lazy { CreateWaterRecordFragment() }
+        val createPoopRecordFragment by lazy { CreatePoopRecordFragment() }
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        homeToolbarTitle = findViewById<TextView>(R.id.home_toolbar_title)
-        pieChart = findViewById<PieChart>(R.id.home_pieChart)
-        waterEdit = findViewById<EditText>(R.id.home_water_editText)
-        poopEdit = findViewById<EditText>(R.id.home_poop_editText)
-        homeFoodRecycler = findViewById<RecyclerView>(R.id.home_food_recycler)
-        homeFoodToDateBtn = findViewById<ImageButton>(R.id.home_food_toDate_btn)
-        homeFoodToCreateBtn = findViewById<ImageButton>(R.id.home_food_toCreate_btn)
-        homeWaterToDateBtn = findViewById<ImageButton>(R.id.home_water_toDate_btn)
-        homePoopToDateBtn = findViewById<ImageButton>(R.id.home_poop_toDate_btn)
-        homeSettingBtn = findViewById<ImageButton>(R.id.home_setting_btn)
+        homeToolbarTitle = findViewById(R.id.home_toolbar_title)
+        pieChart = findViewById(R.id.home_pieChart)
+        waterEdit = findViewById(R.id.home_water_editText)
+        poopEdit = findViewById(R.id.home_poop_editText)
+        homeFoodRecycler = findViewById(R.id.home_food_recycler)
+        homeFoodToDateBtn = findViewById(R.id.home_food_toDate_btn)
+        homeFoodToCreateBtn = findViewById(R.id.home_food_toCreate_btn)
+        homeWaterToDateBtn = findViewById(R.id.home_water_toDate_btn)
+        homePoopToDateBtn = findViewById(R.id.home_poop_toDate_btn)
+        homeSettingBtn = findViewById(R.id.home_setting_btn)
+        homeRecyclerInvisibility = findViewById(R.id.home_recycler_invisibility)
+        homePoopStatusSpinner = findViewById(R.id.home_poop_status_spinner)
 
+        homeRecyclerInvisibility.visibility = View.INVISIBLE
+        val spinnerAdapter = this.let {
+            ArrayAdapter.createFromResource(
+                it,
+                R.array.poop_state,
+                android.R.layout.simple_spinner_item
+            )
+        }
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        homePoopStatusSpinner.adapter = spinnerAdapter
 /////////////////////////////////////////////////////////////////////////////////////////////////////
         val date = getCurrentDateTime()
         val dateInString = date.toString("MM/dd")
@@ -100,8 +126,7 @@ class HomeActivity : AppCompatActivity() {
         val year = Calendar.getInstance().get(Calendar.YEAR)
         val month = Calendar.getInstance().get(Calendar.MONTH).plus(1)
         val day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-        val startDate = "${year}-${month}-${day}"
-        val endDate = "${year}-${month}-${day.plus(1)}"
+        val mealDate = "${year}-${month}-${day}"
         var grainCount = 0
         var vegetableCount = 0
         var meatCount = 0
@@ -109,7 +134,7 @@ class HomeActivity : AppCompatActivity() {
         var fruitCount = 0
         var fatCount = 0
         val adapter = ObservableAdapter(
-            viewModel.searchByMealTime(startDate, endDate)
+            viewModel.searchByMealDate(mealDate)
                 .mapSourceState {
                     it.data.map { dietRecord ->
                         if (dietRecord.grains == "1") {
@@ -148,6 +173,110 @@ class HomeActivity : AppCompatActivity() {
             DividerItemDecorator(ContextCompat.getDrawable(this, R.drawable.divider))
         homeFoodRecycler.addItemDecoration(dividerItemDecoration)
 
+        val waterAdapter = ObservableAdapter(
+            waterViewModel.searchByWaterTime(mealDate)
+                .mapSourceState {
+                    it.data.map { waterRecord ->
+                        waterEdit.setText(waterRecord.waterVolume.toString())
+                        if (waterEdit.text != null) {
+                            isWaterRecordCreate = false
+                            waterRecordId = waterRecord.id.toString()
+                        }
+                    }
+                    it.data.map { waterRecord ->
+                        WaterRecordItem(waterRecord)
+                    }
+                }
+        )
+        waterAdapter.attachToRecyclerView(homeRecyclerInvisibility)
+
+        val poopAdapter = ObservableAdapter(
+            poopViewModel.searchByPoopTime(mealDate)
+                .mapSourceState {
+                    it.data.map { poopRecord ->
+                        poopEdit.setText(poopRecord.poopCount.toString())
+                        if (poopEdit.text != null) {
+                            isPoopRecordCreate = false
+                            poopRecordId = poopRecord.id.toString()
+                            poopEdit.setText(poopRecord.poopCount.toString())
+                            this.runOnUiThread(java.lang.Runnable {
+                                homePoopStatusSpinner.setSelection(poopRecord.poopStatus?.toInt()!!)
+
+                            })
+                        }
+                    }
+                    it.data.map { poopRecord ->
+                        PoopRecordItem(poopRecord)
+                    }
+                }
+        )
+        poopAdapter.attachToRecyclerView(homeRecyclerInvisibility)
+
+        homePoopStatusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if(poopEdit.text!=null){
+                    try {
+                        val poopCount: Int = poopEdit.text.toString().toInt()
+                        val poopStatus: String = position.toString()
+                        val jsonObject = JSONObject()
+                        jsonObject.put("poopCount", poopCount)
+                        jsonObject.put("poopStatus", poopStatus)
+                        if (isPoopRecordCreate) {
+                            val jsonObjectString = jsonObject.toString()
+                            val requestBody =
+                                jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                            poopViewModel.createPoopRecord(requestBody)
+                                .enqueue(object : Callback<PoopRecord> {
+                                    override fun onResponse(
+                                        call: Call<PoopRecord>,
+                                        response: Response<PoopRecord>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            Log.d("Retrofit", "Success")
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<PoopRecord>, t: Throwable) {
+                                        Toast.makeText(this@HomeActivity, "新增成功", Toast.LENGTH_SHORT)
+                                            .show()
+                                        isPoopRecordCreate=false
+                                    }
+
+                                })
+                        } else {
+                            jsonObject.put("id", poopRecordId)
+                            val jsonObjectString = jsonObject.toString()
+                            val requestBody =
+                                jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                            poopViewModel.editPoopRecord(requestBody)
+                                .enqueue(object : Callback<PoopRecord> {
+                                    override fun onResponse(
+                                        call: Call<PoopRecord>,
+                                        response: Response<PoopRecord>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            Log.d("Retrofit", "Success")
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<PoopRecord>, t: Throwable) {
+
+                                    }
+
+                                })
+                        }
+                    } catch (e: Exception) {
+                        print(e.stackTrace)
+                    }
+                }
+            }
+
+        }
+
         homeFoodToDateBtn.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container_activity_main, recordFragment)
@@ -174,12 +303,20 @@ class HomeActivity : AppCompatActivity() {
             popupMenu.menuInflater.inflate(R.menu.menu_home_setting, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when (item.itemId) {
+                    R.id.action_food -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(R.id.container_activity_main, foodFragemnt)
+                            .commit()
+                    }
                     R.id.action_profile -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.container_activity_main, userFragemnt)
                             .commit()
                     }
                     R.id.action_logout -> {
+                        val i = Intent(this, MainActivity::class.java)
+                        startActivity(i)
+                        Toast.makeText(this, "登出成功", Toast.LENGTH_SHORT).show()
 
                     }
 
@@ -191,53 +328,118 @@ class HomeActivity : AppCompatActivity() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         waterEdit.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                val waterVolume:Int = waterEdit.text.toString().toInt()
-                val jsonObject = JSONObject()
-                jsonObject.put("waterVolume", waterVolume)
-                val jsonObjectString = jsonObject.toString()
-                val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-                waterViewModel.createWaterRecord(requestBody)
-                    .enqueue(object : Callback<WaterRecord> {
-                        override fun onResponse(
-                            call: Call<WaterRecord>,
-                            response: Response<WaterRecord>
-                        ) {
-                            if (response.isSuccessful) {
-                                Log.d("Retrofit", "Success")
-                            }
-                        }
+                try {
+                    val waterVolume: Int = waterEdit.text.toString().toInt()
+                    val jsonObject = JSONObject()
+                    jsonObject.put("waterVolume", waterVolume)
+                    jsonObject.put("waterTime", mealDate)
+                    if (isWaterRecordCreate) {
+                        val jsonObjectString = jsonObject.toString()
+                        val requestBody =
+                            jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                        waterViewModel.createWaterRecord(requestBody)
+                            .enqueue(object : Callback<WaterRecord> {
+                                override fun onResponse(
+                                    call: Call<WaterRecord>,
+                                    response: Response<WaterRecord>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        Log.d("Retrofit", "Success")
+                                    }
+                                }
 
-                        override fun onFailure(call: Call<WaterRecord>, t: Throwable) {
-                            Log.d("Retrofit", t.stackTraceToString())
-                        }
+                                override fun onFailure(call: Call<WaterRecord>, t: Throwable) {
+                                    Toast.makeText(this@HomeActivity, "新增成功", Toast.LENGTH_SHORT)
+                                        .show()
+                                    isWaterRecordCreate=false
+                                }
 
-                    })
+                            })
+                    } else {
+                        jsonObject.put("id", waterRecordId)
+                        val jsonObjectString = jsonObject.toString()
+                        val requestBody =
+                            jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                        waterViewModel.editWaterRecord(requestBody)
+                            .enqueue(object : Callback<WaterRecord> {
+                                override fun onResponse(
+                                    call: Call<WaterRecord>,
+                                    response: Response<WaterRecord>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        Log.d("Retrofit", "Success")
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<WaterRecord>, t: Throwable) {
+                                    Toast.makeText(this@HomeActivity, "修改成功", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+
+                            })
+                    }
+                } catch (e: Exception) {
+                    print(e.stackTrace)
+                }
             }
         }
 ///////////////////////////////////////////////////////////////////////////////////////////////////
         poopEdit.setOnFocusChangeListener { v, hasFocus ->
             if (!hasFocus) {
-                val poopCount:Int = poopEdit.text.toString().toInt()
-                val jsonObject = JSONObject()
-                jsonObject.put("poopCount", poopCount)
-                val jsonObjectString = jsonObject.toString()
-                val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
-                poopViewModel.createPoopRecord(requestBody)
-                    .enqueue(object : Callback<PoopRecord> {
-                        override fun onResponse(
-                            call: Call<PoopRecord>,
-                            response: Response<PoopRecord>
-                        ) {
-                            if (response.isSuccessful) {
-                                Log.d("Retrofit", "Success")
-                            }
-                        }
+                try {
+                    val poopCount: Int = poopEdit.text.toString().toInt()
+                    val poopStatus: String = homePoopStatusSpinner.selectedItemPosition.toString()
+                    val jsonObject = JSONObject()
+                    jsonObject.put("poopCount", poopCount)
+                    jsonObject.put("poopStatus", poopStatus)
+                    if (isPoopRecordCreate) {
+                        val jsonObjectString = jsonObject.toString()
+                        val requestBody =
+                            jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                        poopViewModel.createPoopRecord(requestBody)
+                            .enqueue(object : Callback<PoopRecord> {
+                                override fun onResponse(
+                                    call: Call<PoopRecord>,
+                                    response: Response<PoopRecord>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        Log.d("Retrofit", "Success")
+                                    }
+                                }
 
-                        override fun onFailure(call: Call<PoopRecord>, t: Throwable) {
-                            Log.d("Retrofit", t.stackTraceToString())
-                        }
+                                override fun onFailure(call: Call<PoopRecord>, t: Throwable) {
+                                    Toast.makeText(this@HomeActivity, "新增成功", Toast.LENGTH_SHORT)
+                                        .show()
+                                    isPoopRecordCreate=false
+                                }
 
-                    })
+                            })
+                    } else {
+                        jsonObject.put("id", poopRecordId)
+                        val jsonObjectString = jsonObject.toString()
+                        val requestBody =
+                            jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+                        poopViewModel.editPoopRecord(requestBody)
+                            .enqueue(object : Callback<PoopRecord> {
+                                override fun onResponse(
+                                    call: Call<PoopRecord>,
+                                    response: Response<PoopRecord>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        Log.d("Retrofit", "Success")
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<PoopRecord>, t: Throwable) {
+                                    Toast.makeText(this@HomeActivity, "修改成功", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+
+                            })
+                    }
+                } catch (e: Exception) {
+                    print(e.stackTrace)
+                }
             }
         }
     }
@@ -290,19 +492,10 @@ class HomeActivity : AppCompatActivity() {
         milk: Int,
         fruits: Int,
         fats: Int
+
     ) {
-//        val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = ""
         val allCount: Float = (grains + vegetables + meats + milk + fruits + fats).toFloat()
-        //initializing data
-//        val typeAmountMap: MutableMap<String, Int> = HashMap()
-//        typeAmountMap["全榖雜糧"] = grains / allCount
-//        typeAmountMap["蛋豆魚肉"] = meats / allCount
-//        typeAmountMap["乳品"] = milk / allCount
-//        typeAmountMap["蔬菜"] = vegetables / allCount
-//        typeAmountMap["水果"] = fruits / allCount
-//        typeAmountMap["油脂與堅果種子"] = fats / allCount
-
         val colors: ArrayList<Int> = ArrayList()
         colors.add(resources.getColor(R.color.pieChart_grains))
         colors.add(resources.getColor(R.color.pieChart_meats_protein))
@@ -362,7 +555,7 @@ class DividerItemDecorator(private val divider: Drawable?) : RecyclerView.ItemDe
             val params =
                 child.layoutParams as RecyclerView.LayoutParams
             val dividerTop: Int = child.bottom + params.bottomMargin
-            val dividerBottom = dividerTop + (divider?.intrinsicHeight?:0)
+            val dividerBottom = dividerTop + (divider?.intrinsicHeight ?: 0)
             divider?.setBounds(dividerLeft, dividerTop, dividerRight, dividerBottom)
             divider?.draw(canvas)
         }

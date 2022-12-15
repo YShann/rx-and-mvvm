@@ -21,8 +21,14 @@ interface PoopRecordAPI {
 //    @GET("dietRecord")
 //    fun getDetail(@Query("id") id: Int): Observable<Response<ResponseBody<DietRecord>>>
 
-    @GET("poopRecord")
+    @GET("poopRecord/poopTime")
     fun searchByPoopTime(
+        @Query("poopTime") poopTime: String
+    ): Observable<Response<ResponseBody<PoopRecord>>>
+
+
+    @GET("poopRecord")
+    fun searchByPoopTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<Response<ResponseBody<PoopRecord>>>
@@ -31,11 +37,9 @@ interface PoopRecordAPI {
         @POST("poopRecord")
     fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord>
 
-//    @Multipart
-//    @POST("waterRecord")
-//    fun createDietRecord(
-//        @PartMap params : Map<String, @JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>>
+    @PATCH("poopRecord")
+    fun editPoopRecord(@Body body: RequestBody): Call<PoopRecord>
 
+    @DELETE("poopRecord")
+    fun deletePoopRecord(@Query("id") id: String): Call<PoopRecord>
 }

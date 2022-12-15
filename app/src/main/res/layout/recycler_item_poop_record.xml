@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="排便次數"
+        android:text="排便 "
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/recycler_item_poop_recordDate"
@@ -34,26 +34,15 @@
 
     <TextView
         android:id="@+id/recycler_item_poop_recordCount"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:text="TextView"
-        android:textSize="14sp"
         android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView41"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView41"
-        app:layout_constraintTop_toTopOf="@+id/textView41" />
-
-    <TextView
-        android:id="@+id/textView48"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="次"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView41"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_poop_recordCount"
         app:layout_constraintTop_toTopOf="@+id/textView41" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

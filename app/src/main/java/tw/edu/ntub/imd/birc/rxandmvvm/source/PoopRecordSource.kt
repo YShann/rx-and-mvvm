@@ -18,12 +18,17 @@ interface PoopRecordSource {
 //    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>>
 
     fun searchByPoopTime(
+        @Query("poopTime") poopTime: String
+    ): Observable<SourceState<ResponseBody<PoopRecord>>>
+
+    fun searchByPoopTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>>
 
     fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord>
-//    fun createWaterRecord(
-//        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-//    ): Call<ResponseBody<WaterRecord>>
+
+    fun editPoopRecord(@Body body: RequestBody): Call<PoopRecord>
+
+    fun deletePoopRecord(@Query("id") id: String): Call<PoopRecord>
 }

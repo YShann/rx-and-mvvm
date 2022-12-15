@@ -27,20 +27,28 @@ class PoopRecordModel(private val apiSource: PoopRecordSource) {
 //    }
 
     fun searchByPoopTime(
+        @Query("poopTime") poopTime: String
+    ): Observable<SourceState<ResponseBody<PoopRecord>>> {
+        return apiSource.searchByPoopTime(poopTime)
+    }
+
+    fun searchByPoopTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return apiSource.searchByPoopTime(startDate, endDate)
+        return apiSource.searchByPoopTimeRange(startDate, endDate)
     }
 
     fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
         return apiSource.createPoopRecord(body)
     }
-//    fun createDietRecord(
-//        @PartMap params : Map<String,@JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<WaterRecord>> {
-//        return apiSource.createWaterRecord(params,imageFile)
-//    }
+
+    fun editPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
+        return apiSource.editPoopRecord(body)
+    }
+    fun deletePoopRecord(@Query("id") id: String): Call<PoopRecord> {
+        return apiSource.deletePoopRecord(id)
+    }
+
 
 }

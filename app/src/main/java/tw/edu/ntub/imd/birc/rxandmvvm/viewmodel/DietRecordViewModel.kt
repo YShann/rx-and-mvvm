@@ -13,6 +13,7 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 import retrofit2.http.Query
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.model.DietRecordModel
 import tw.edu.ntub.imd.birc.rxandmvvm.source.SourceState
@@ -25,11 +26,17 @@ class DietRecordViewModel(private val model: DietRecordModel) : ViewModel() {
 //        return model.searchAll()
 //    }
 
-    fun searchByMealTime(
+    fun searchByMealDate(
+        @Query("mealDate") mealDate: String
+    ): Observable<SourceState<ResponseBody<DietRecord>>> {
+        return model.searchByMealDate(mealDate)
+    }
+
+    fun searchByMealDateRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return model.searchByMealTime(startDate,endDate)
+        return model.searchByMealDateRange(startDate,endDate)
     }
 
     //
@@ -41,5 +48,12 @@ class DietRecordViewModel(private val model: DietRecordModel) : ViewModel() {
         @Part imageFile: MultipartBody.Part
     ): Call<ResponseBody<DietRecord>> {
         return model.createDietRecord(params, imageFile)
+    }
+
+    fun editDietRecord(@Body body: RequestBody): Call<DietRecord> {
+        return model.editDietRecord(body)
+    }
+    fun deleteDietRecord(@Query("id") id: String): Call<DietRecord> {
+        return model.deleteDietRecord(id)
     }
 }

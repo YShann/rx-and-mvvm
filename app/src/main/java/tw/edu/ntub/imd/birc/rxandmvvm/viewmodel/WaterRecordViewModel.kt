@@ -28,20 +28,27 @@ class WaterRecordViewModel(private val model: WaterRecordModel) : ViewModel() {
 //    }
 
     fun searchByWaterTime(
+        @Query("waterTime") waterTime: String
+    ): Observable<SourceState<ResponseBody<WaterRecord>>> {
+        return model.searchByWaterTime(waterTime)
+    }
+
+    fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
         @Query("endDate") endDate: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return model.searchByWaterTime(startDate,endDate)
+        return model.searchByWaterTimeRange(startDate, endDate)
     }
 
 
     fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
         return model.createWaterRecord(body)
     }
-//    fun createDietRecord(
-//        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>> {
-//        return model.createDietRecord(params, imageFile)
-//    }
+
+    fun editWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
+        return model.editWaterRecord(body)
+    }
+    fun deleteWaterRecord(@Query("id") id: String): Call<WaterRecord> {
+        return model.deleteWaterRecord(id)
+    }
 }
