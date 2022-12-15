@@ -25,25 +25,33 @@ class PoopRecordViewModel(private val model: PoopRecordModel) : ViewModel() {
     fun searchAll(): Observable<SourceState<ResponseBody<PoopRecord>>> {
         return model.searchAll()
     }
-//    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>> {
-//        return model.searchAll()
-//    }
+
 
     fun searchByPoopTime(
-        @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("poopTime") poopTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return model.searchByPoopTime(startDate,endDate)
+        return model.searchByPoopTime(poopTime,account)
     }
 
 
-    fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord> {
+    fun searchByPoopTimeRange(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
+    ): Observable<SourceState<ResponseBody<PoopRecord>>> {
+        return model.searchByPoopTimeRange(startDate,endDate,account)
+    }
+
+
+    fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
         return model.createPoopRecord(body)
     }
-//    fun createDietRecord(
-//        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>> {
-//        return model.createDietRecord(params, imageFile)
-//    }
+
+    fun editPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
+        return model.editPoopRecord(body)
+    }
+    fun deletePoopRecord(@Query("id") id: String): Call<PoopRecord> {
+        return model.deletePoopRecord(id)
+    }
 }

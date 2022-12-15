@@ -11,6 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.data.User
 
@@ -19,9 +20,15 @@ interface DietRecordSource {
 
 //    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>>
 
-    fun searchByMealTime(
+    fun searchByMealDate(
+        @Query("mealDate") mealDate: String,
+        @Query("account") account: String
+    ): Observable<SourceState<ResponseBody<DietRecord>>>
+
+    fun searchByMealDateRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>>
 
     //    fun createDietRecord(@Body body: JsonObject): Call<DietRecord>
@@ -29,4 +36,9 @@ interface DietRecordSource {
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part imageFile: MultipartBody.Part
     ): Call<ResponseBody<DietRecord>>
+
+    fun editDietRecord(@Body body: RequestBody): Call<DietRecord>
+
+    fun deleteDietRecord(@Query("id") id: String): Call<DietRecord>
+
 }

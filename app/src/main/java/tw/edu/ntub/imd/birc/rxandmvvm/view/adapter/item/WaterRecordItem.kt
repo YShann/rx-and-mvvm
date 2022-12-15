@@ -22,6 +22,7 @@ import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.MainActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.Adapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.DietRecordDetailFragment
+import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.WaterRecordDetailFragment
 import java.util.concurrent.Executors
 
 
@@ -32,19 +33,23 @@ class WaterRecordItem(private val waterRecord: WaterRecord) : AbstractViewItem()
     override fun bindView(adapter: Adapter, view: View) {
         val waterRecordDate = view.findViewById<TextView>(R.id.recycler_item_water_recordDate)
         val waterRecordVolume = view.findViewById<TextView>(R.id.recycler_item_water_recordVolume)
-        waterRecordDate.text = waterRecord.waterTime
+        waterRecordDate.text = waterRecord.waterTime?.substring(5,10)
         waterRecordVolume.text = waterRecord.waterVolume.toString()
     }
 
     override fun onClick(adapter: Adapter, view: View) {
         super.onClick(adapter, view)
-
+        val transaction = (view.context as HomeActivity).supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_activity_main, HomeActivity.waterRecordDetailFragment(waterRecord))
+            .commit()
     }
     override fun updateView(adapter: Adapter, view: View, payloads: List<Any>) {
         TODO("Not yet implemented")
     }
 
-
+    private fun HomeActivity.Companion.waterRecordDetailFragment(i: WaterRecord?): Fragment {
+        return WaterRecordDetailFragment(i)
+    }
 }
 
 

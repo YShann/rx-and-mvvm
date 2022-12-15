@@ -5,155 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="熱量"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recycler_item_food_energy"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_name" />
 
     <TextView
         android:id="@+id/recycler_item_food_name"
-        android:layout_width="80dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="16dp"
+        android:text="麵包"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/recycler_item_food_type"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_item_food_energy"
+        app:layout_constraintEnd_toStartOf="@+id/recycler_item_food_energy"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="麵包100g" />
-
-    <TextView
-        android:id="@+id/recycler_item_food_type"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="217dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="全榖雜糧" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="8dp"
-        android:text="碳水化合"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recycler_item_food_carbohydrate"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_energy"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_type" />
-
-    <TextView
-        android:id="@+id/recycler_item_food_energy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_name"
-        tools:text="250" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="8dp"
-        android:text="蛋白質"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recycler_item_food_protein"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_carbohydrate"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/textView23" />
 
     <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="8dp"
-        android:text="脂肪"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recycler_item_food_fat"
-        app:layout_constraintStart_toEndOf="@+id/recycler_item_food_protein"
+        android:layout_marginTop="16dp"
+        android:text="熱量(kcal)"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="@+id/recycler_item_food_energy"
+        app:layout_constraintStart_toStartOf="@+id/recycler_item_food_energy"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/recycler_item_food_carbohydrate"
+        android:id="@+id/recycler_item_food_energy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="0kal"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/recycler_item_food_type"
-        tools:text="20" />
-
-    <TextView
-        android:id="@+id/recycler_item_food_protein"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView23"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="20" />
-
-    <TextView
-        android:id="@+id/recycler_item_food_fat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="55dp"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView23"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="20" />
-
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

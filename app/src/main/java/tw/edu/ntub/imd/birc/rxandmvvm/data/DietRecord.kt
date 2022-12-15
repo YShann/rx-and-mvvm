@@ -8,6 +8,7 @@ data class DietRecord(
     var foodName: String?,
     var portionSize: Int?,
     var mealTime: String?,
+    var mealDate: String?,
     var note: String?,
     var energy: Int?,
     var fat: Double?,
@@ -20,5 +21,7 @@ data class DietRecord(
     var milkAndDairy: String?,
     var fruits: String?,
     var fats: String?,
-    var imageUrl:String?
+    var imageUrl:String?,
+    var foodContent:String?,
+    var account:String?
 )

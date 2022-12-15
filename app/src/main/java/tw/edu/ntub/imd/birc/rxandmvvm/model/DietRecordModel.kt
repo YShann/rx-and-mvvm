@@ -15,6 +15,7 @@ import retrofit2.http.Part
 import retrofit2.http.PartMap
 import retrofit2.http.Query
 import tw.edu.ntub.imd.birc.rxandmvvm.data.DietRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.data.ResponseBody
 import tw.edu.ntub.imd.birc.rxandmvvm.data.User
 import tw.edu.ntub.imd.birc.rxandmvvm.source.DietRecordSource
@@ -29,11 +30,19 @@ class DietRecordModel(private val apiSource: DietRecordSource) {
 //        return apiSource.searchAll()
 //    }
 
-    fun searchByMealTime(
-        @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+    fun searchByMealDate(
+        @Query("mealDate") mealDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return apiSource.searchByMealTime(startDate, endDate)
+        return apiSource.searchByMealDate(mealDate,account)
+    }
+
+    fun searchByMealDateRange(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
+    ): Observable<SourceState<ResponseBody<DietRecord>>> {
+        return apiSource.searchByMealDateRange(startDate, endDate,account)
     }
 
     //    fun createDietRecord(@Body body: JsonObject): Call<DietRecord> {
@@ -44,6 +53,13 @@ class DietRecordModel(private val apiSource: DietRecordSource) {
         @Part imageFile: MultipartBody.Part
     ): Call<ResponseBody<DietRecord>> {
         return apiSource.createDietRecord(params,imageFile)
+    }
+
+    fun editDietRecord(@Body body: RequestBody): Call<DietRecord> {
+        return apiSource.editDietRecord(body)
+    }
+    fun deleteDietRecord(@Query("id") id: String): Call<DietRecord> {
+        return apiSource.deleteDietRecord(id)
     }
 
 }

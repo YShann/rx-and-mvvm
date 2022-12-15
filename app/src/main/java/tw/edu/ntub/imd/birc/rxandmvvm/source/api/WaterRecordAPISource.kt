@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Observable
 import kotlinx.serialization.json.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Part
@@ -23,27 +24,32 @@ class WaterRecordAPISource(private val waterRecordAPI: WaterRecordAPI) : WaterRe
         return waterRecordAPI.searchAll().toApiSourceState()
     }
 
-//    override fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>> {
-//        return dietRecordAPI.searchAll().toApiSourceState()
-//    }
-
     override fun searchByWaterTime(
-        @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return waterRecordAPI.searchByWaterTime(startDate, endDate).toApiSourceState()
+        return waterRecordAPI.searchByWaterTime(waterTime,account).toApiSourceState()
     }
 
-    override fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord> {
+    override fun searchByWaterTimeRange(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
+    ): Observable<SourceState<ResponseBody<WaterRecord>>> {
+        return waterRecordAPI.searchByWaterTimeRange(startDate,endDate,account).toApiSourceState()
+    }
+
+    override fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
         return waterRecordAPI.createWaterRecord(body)
     }
 
-//    override fun createWaterRecord(
-//        @PartMap params : Map<String,@JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>> {
-//        return dietRecordAPI.createDietRecord(params,imageFile)
-//    }
+    override fun editWaterRecord(@Body body: RequestBody): Call<WaterRecord> {
+        return waterRecordAPI.editWaterRecord(body)
+    }
+
+    override fun deleteWaterRecord(@Query("id") id: String): Call<WaterRecord> {
+        return waterRecordAPI.deleteWaterRecord(id)
+    }
 }
 
 
