@@ -85,7 +85,6 @@
         android:layout_marginTop="32dp"
         android:text="飲水日期"
         android:textSize="14dp"
-
         android:textColor="@color/main_color"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView6" />
@@ -97,7 +96,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/textView45"
         app:layout_constraintTop_toBottomOf="@+id/textView45" />
 
@@ -108,7 +107,7 @@
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="14dp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/edit_water_record_volume"
         app:layout_constraintStart_toStartOf="@+id/textView30"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />

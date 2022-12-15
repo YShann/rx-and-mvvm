@@ -67,10 +67,10 @@ class HomeDietRecordItem(private val dietRecord: DietRecord) : AbstractViewItem(
 
 
     override fun onClick(adapter: Adapter, view: View) {
-        super.onClick(adapter, view)
-        val transaction = (view.context as HomeActivity).supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_activity_main, HomeActivity.dietRecordDetailFragment(dietRecord))
-            .commit()
+//        super.onClick(adapter, view)
+//        val transaction = (view.context as HomeActivity).supportFragmentManager.beginTransaction()
+//        transaction.replace(R.id.container_activity_main, HomeActivity.dietRecordDetailFragment(dietRecord))
+//            .commit()
     }
     override fun updateView(adapter: Adapter, view: View, payloads: List<Any>) {
         TODO("Not yet implemented")

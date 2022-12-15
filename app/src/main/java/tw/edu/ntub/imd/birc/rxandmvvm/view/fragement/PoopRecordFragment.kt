@@ -1,11 +1,13 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.style.LineBackgroundSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -95,8 +97,10 @@ class PoopRecordFragment : Fragment() {
         return view
     }
     private fun setCalendarAndRecycler(startDate: String,endDate:String){
+        val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        val account = sharedPreference?.getString("account", "defaultAccount")
         val adapter = ObservableAdapter(
-            viewModel.searchByPoopTimeRange(startDate, endDate)
+            viewModel.searchByPoopTimeRange(startDate, endDate,account.toString())
                 .mapSourceState {
                     it.data.map { poopRecord ->
                         val year = poopRecord.poopTime?.substring(0, 4)?.toInt()

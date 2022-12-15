@@ -1,8 +1,7 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.content.DialogInterface
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.recyclerview.widget.RecyclerView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
@@ -20,10 +18,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
 import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
-import tw.edu.ntub.imd.birc.rxandmvvm.data.WaterRecord
 import tw.edu.ntub.imd.birc.rxandmvvm.view.activity.HomeActivity
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -97,12 +93,15 @@ class CreatePoopRecordFragment : Fragment() {
         }
 
         createPoopReturnCheck.setOnClickListener {
+            val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+            val account = sharedPreference?.getString("account", "defaultAccount")
             val poopCount: Int = createPoopRecordCount.text.toString().toInt()
             val poopTime: String = createPoopRecordDate.text.toString()
             val jsonObject = JSONObject()
             jsonObject.put("poopCount", poopCount)
             jsonObject.put("poopTime", poopTime)
             jsonObject.put("poopStatus", poopstatus)
+            jsonObject.put("account", account)
             val jsonObjectString = jsonObject.toString()
             val requestBody =
                 jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
@@ -126,11 +125,14 @@ class CreatePoopRecordFragment : Fragment() {
                             HomeActivity.poopRecordFragment
                         )
                             ?.commit()
+                        createPoopRecordCount.setText("")
+                        createPoopRecordState.setSelection(0)
                     }
 
                 })
-
+            this.getNowDateTime()
         }
+
 
         return view
     }

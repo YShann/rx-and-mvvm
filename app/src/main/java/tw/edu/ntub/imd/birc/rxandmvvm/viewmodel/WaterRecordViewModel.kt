@@ -28,16 +28,18 @@ class WaterRecordViewModel(private val model: WaterRecordModel) : ViewModel() {
 //    }
 
     fun searchByWaterTime(
-        @Query("waterTime") waterTime: String
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return model.searchByWaterTime(waterTime)
+        return model.searchByWaterTime(waterTime,account)
     }
 
     fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return model.searchByWaterTimeRange(startDate, endDate)
+        return model.searchByWaterTimeRange(startDate, endDate,account)
     }
 
 

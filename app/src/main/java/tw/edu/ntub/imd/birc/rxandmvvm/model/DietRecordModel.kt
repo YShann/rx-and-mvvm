@@ -32,15 +32,17 @@ class DietRecordModel(private val apiSource: DietRecordSource) {
 
     fun searchByMealDate(
         @Query("mealDate") mealDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return apiSource.searchByMealDate(mealDate)
+        return apiSource.searchByMealDate(mealDate,account)
     }
 
     fun searchByMealDateRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return apiSource.searchByMealDateRange(startDate, endDate)
+        return apiSource.searchByMealDateRange(startDate, endDate,account)
     }
 
     //    fun createDietRecord(@Body body: JsonObject): Call<DietRecord> {

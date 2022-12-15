@@ -22,13 +22,15 @@ interface WaterRecordAPI {
 
     @GET("waterRecord/waterTime")
     fun searchByWaterTime(
-        @Query("waterTime") waterTime: String
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<WaterRecord>>>
 
     @GET("waterRecord")
     fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<WaterRecord>>>
 
     //不需圖片上傳用這個

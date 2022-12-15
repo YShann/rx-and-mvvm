@@ -21,12 +21,14 @@ interface WaterRecordSource {
 //    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>>
 
     fun searchByWaterTime(
-        @Query("waterTime") waterTime: String
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>>
 
     fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>>
 
     fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord>

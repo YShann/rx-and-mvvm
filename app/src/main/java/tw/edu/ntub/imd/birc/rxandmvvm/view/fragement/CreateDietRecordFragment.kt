@@ -5,6 +5,7 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
@@ -183,14 +184,17 @@ class CreateDietRecordFragment() : Fragment() {
 
 
     private fun creatDietRecord() {
+        val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        val account = sharedPreference?.getString("account", "defaultAccount")
         val one = "1"
         val zero = "0"
-        val dateTime = editDateTime.text.toString()
+        val mealDate = editDateTime.text.toString().substring(0, 10)
         val seconds = calender.get(Calendar.SECOND)
         val foodName = editName.text.toString()
-        val foodContent = editContent.text.toString()
-        val mealTime = "$dateTime:$seconds"
-        val note = editNote.text.toString()
+        val foodContent =
+            if (editContent.text.toString().isNotEmpty()) editContent.text.toString() else "未填寫"
+        val mealTime = "${editDateTime.text.toString().substring(11, 16)}:$seconds"
+        val note = if (editNote.text.toString().isNotEmpty()) editNote.text.toString() else "未填寫"
         val grains = if (checkBoxGrains.isChecked) one else zero
         val vegetables = if (checkBoxVegetables.isChecked) one else zero
         val meatsAndProtein = if (checkBoxMeatsAndProtein.isChecked) one else zero
@@ -198,11 +202,11 @@ class CreateDietRecordFragment() : Fragment() {
         val fruits = if (checkBoxFruits.isChecked) one else zero
         val fats = if (checkBoxFats.isChecked) one else zero
 
-
         val hashMap: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
         hashMap["foodName"] = foodName.toRequestBody(MultipartBody.FORM)
         hashMap["foodContent"] = foodContent.toRequestBody(MultipartBody.FORM)
         hashMap["mealTime"] = mealTime.toRequestBody(MultipartBody.FORM)
+        hashMap["mealDate"] = mealDate.toRequestBody(MultipartBody.FORM)
         hashMap["note"] = note.toRequestBody(MultipartBody.FORM)
         hashMap["grains"] = grains.toRequestBody(MultipartBody.FORM)
         hashMap["vegetables"] = vegetables.toRequestBody(MultipartBody.FORM)
@@ -210,6 +214,7 @@ class CreateDietRecordFragment() : Fragment() {
         hashMap["milkAndDairy"] = milkAndDairy.toRequestBody(MultipartBody.FORM)
         hashMap["fruits"] = fruits.toRequestBody(MultipartBody.FORM)
         hashMap["fats"] = fats.toRequestBody(MultipartBody.FORM)
+        hashMap["account"] = account!!.toRequestBody(MultipartBody.FORM)
 
 
         val file: File = File(pathUri)
@@ -231,14 +236,23 @@ class CreateDietRecordFragment() : Fragment() {
 
                 override fun onFailure(call: Call<ResponseBody<DietRecord>>, t: Throwable) {
                     Log.d("Retrofit", t.stackTraceToString())
-                    Toast.makeText(context,"新增成功",Toast. LENGTH_SHORT).show()
+                    Toast.makeText(context, "新增成功", Toast.LENGTH_SHORT).show()
                     requireActivity().run {
                         startActivity(Intent(this, HomeActivity::class.java))
                         finish()
                     }
+                    editName.setText("")
+                    editContent.setText("")
+                    editNote.setText("")
+                    checkBoxGrains.isChecked = false
+                    checkBoxMeatsAndProtein.isChecked = false
+                    checkBoxMilkAndDairy.isChecked = false
+                    checkBoxFats.isChecked = false
+                    checkBoxVegetables.isChecked = false
+                    checkBoxFruits.isChecked = false
                 }
             })
-
+        this.getNowDateTime()
 
     }
 
@@ -292,7 +306,7 @@ class CreateDietRecordFragment() : Fragment() {
     private fun format(format: String, view: View) {
         val time = SimpleDateFormat(format, Locale.TAIWAN)
         val text = editDateTime.text.toString()
-        (view as EditText).setText(text +" "+ time.format(calender.time).substring(11,16))
+        (view as EditText).setText(text + " " + time.format(calender.time).substring(11, 16))
     }
 
     private fun getNowDateTime() {

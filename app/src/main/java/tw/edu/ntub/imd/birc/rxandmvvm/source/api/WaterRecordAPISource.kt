@@ -25,16 +25,18 @@ class WaterRecordAPISource(private val waterRecordAPI: WaterRecordAPI) : WaterRe
     }
 
     override fun searchByWaterTime(
-        @Query("waterTime") waterTime: String
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return waterRecordAPI.searchByWaterTime(waterTime).toApiSourceState()
+        return waterRecordAPI.searchByWaterTime(waterTime,account).toApiSourceState()
     }
 
     override fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return waterRecordAPI.searchByWaterTimeRange(startDate,endDate).toApiSourceState()
+        return waterRecordAPI.searchByWaterTimeRange(startDate,endDate,account).toApiSourceState()
     }
 
     override fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {

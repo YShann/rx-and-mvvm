@@ -23,14 +23,16 @@ interface PoopRecordAPI {
 
     @GET("poopRecord/poopTime")
     fun searchByPoopTime(
-        @Query("poopTime") poopTime: String
+        @Query("poopTime") poopTime: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<PoopRecord>>>
 
 
     @GET("poopRecord")
     fun searchByPoopTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<PoopRecord>>>
 
     //不需圖片上傳用這個

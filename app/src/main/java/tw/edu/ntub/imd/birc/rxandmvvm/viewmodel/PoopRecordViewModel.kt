@@ -28,17 +28,19 @@ class PoopRecordViewModel(private val model: PoopRecordModel) : ViewModel() {
 
 
     fun searchByPoopTime(
-        @Query("poopTime") poopTime: String
+        @Query("poopTime") poopTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return model.searchByPoopTime(poopTime)
+        return model.searchByPoopTime(poopTime,account)
     }
 
 
     fun searchByPoopTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return model.searchByPoopTimeRange(startDate,endDate)
+        return model.searchByPoopTimeRange(startDate,endDate,account)
     }
 
 

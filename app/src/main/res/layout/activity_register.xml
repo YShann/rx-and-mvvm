@@ -98,13 +98,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView49" />
 
             <TextView
-                android:id="@+id/textView52"
+                android:id="@+id/text_profile_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="體重"
                 android:textColor="@color/main_color"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
                 app:layout_constraintTop_toBottomOf="@+id/register_height" />
 
             <EditText
@@ -118,8 +118,8 @@
                 android:digits="0123456789."
                 android:hint="公分"
                 app:layout_constraintEnd_toEndOf="@+id/register_password"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
-                app:layout_constraintTop_toBottomOf="@+id/textView51" />
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_name" />
 
             <EditText
                 android:id="@+id/register_account"
@@ -145,7 +145,7 @@
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="@+id/register_height"
                 app:layout_constraintStart_toStartOf="@+id/register_height"
-                app:layout_constraintTop_toBottomOf="@+id/textView52" />
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_birthday" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -168,7 +168,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView48" />
 
             <TextView
-                android:id="@+id/textView51"
+                android:id="@+id/text_profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

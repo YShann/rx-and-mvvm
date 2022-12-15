@@ -30,16 +30,18 @@ class PoopRecordAPISource(private val poopRecordAPI: PoopRecordAPI) : PoopRecord
 //    }
 
     override fun searchByPoopTime(
-        @Query("poopTime") poopTime: String
+        @Query("poopTime") poopTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return poopRecordAPI.searchByPoopTime(poopTime).toApiSourceState()
+        return poopRecordAPI.searchByPoopTime(poopTime,account).toApiSourceState()
     }
 
     override fun searchByPoopTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return poopRecordAPI.searchByPoopTimeRange(startDate, endDate).toApiSourceState()
+        return poopRecordAPI.searchByPoopTimeRange(startDate, endDate,account).toApiSourceState()
     }
 
     override fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {

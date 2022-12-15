@@ -22,6 +22,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/profile_recycler_invisibility"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <TextView
                 android:id="@+id/textView44"
                 android:layout_width="wrap_content"
@@ -48,11 +58,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView44" />
 
             <TextView
-                android:id="@+id/textView51"
+                android:id="@+id/text_profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="28dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="姓名"
                 android:textColor="@color/main_color"
                 android:textSize="14sp"
@@ -69,17 +79,17 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/profile_account"
                 app:layout_constraintStart_toStartOf="@+id/profile_account"
-                app:layout_constraintTop_toBottomOf="@+id/textView51" />
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_name" />
 
             <TextView
-                android:id="@+id/textView55"
+                android:id="@+id/text_profile_gender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="性別"
                 android:textColor="@color/main_color"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_name" />
 
             <TextView
@@ -92,17 +102,17 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/profile_account"
                 app:layout_constraintStart_toStartOf="@+id/profile_account"
-                app:layout_constraintTop_toBottomOf="@+id/textView55" />
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_gender" />
 
             <TextView
-                android:id="@+id/textView52"
+                android:id="@+id/text_profile_birthday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="生日"
                 android:textColor="@color/main_color"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
                 app:layout_constraintTop_toBottomOf="@+id/profile_gender" />
 
             <TextView
@@ -115,17 +125,17 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/profile_account"
                 app:layout_constraintStart_toStartOf="@+id/profile_account"
-                app:layout_constraintTop_toBottomOf="@+id/textView52" />
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_birthday" />
 
             <TextView
-                android:id="@+id/textView53"
+                android:id="@+id/text_profile_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="身高"
                 android:textColor="@color/main_color"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_birthday" />
 
             <TextView
@@ -138,17 +148,17 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="@+id/profile_account"
                 app:layout_constraintStart_toStartOf="@+id/profile_account"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" />
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_height" />
 
             <TextView
-                android:id="@+id/textView54"
+                android:id="@+id/text_profile_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:text="體重"
                 android:textColor="@color/main_color"
                 android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
                 app:layout_constraintTop_toBottomOf="@+id/edit_profile_height" />
 
 
@@ -157,15 +167,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="28dp"
                 android:text="體重"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/profile_account"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/profile_account"
-                app:layout_constraintTop_toBottomOf="@+id/textView54" />
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_weight" />
 
             <EditText
                 android:id="@+id/edit_profile_name"
@@ -174,8 +182,8 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="@+id/profile_name"
-                app:layout_constraintStart_toStartOf="@+id/textView51"
-                app:layout_constraintTop_toBottomOf="@+id/textView51" />
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_name" />
 
             <Spinner
                 android:id="@+id/edit_profile_gender"
@@ -184,8 +192,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 app:layout_constraintEnd_toEndOf="@+id/profile_gender"
-                app:layout_constraintStart_toStartOf="@+id/textView55"
-                app:layout_constraintTop_toBottomOf="@+id/textView55" />
+                app:layout_constraintStart_toStartOf="@+id/text_profile_gender"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_gender" />
 
             <EditText
                 android:id="@+id/edit_profile_birthday"
@@ -195,8 +203,8 @@
                 android:inputType="date"
                 android:focusableInTouchMode="false"
                 app:layout_constraintEnd_toEndOf="@+id/profile_birthday"
-                app:layout_constraintStart_toStartOf="@+id/textView52"
-                app:layout_constraintTop_toBottomOf="@+id/textView52" />
+                app:layout_constraintStart_toStartOf="@+id/text_profile_birthday"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_birthday" />
 
             <EditText
                 android:id="@+id/edit_profile_height"
@@ -204,28 +212,53 @@
                 android:layout_height="wrap_content"
                 android:digits="0123456789."
                 android:ems="10"
-                android:hint="公斤"
+                android:hint="公分"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="@+id/profile_height"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/textView53"
-                app:layout_constraintTop_toBottomOf="@+id/textView53" />
+                app:layout_constraintStart_toStartOf="@+id/text_profile_height"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_height" />
 
             <EditText
                 android:id="@+id/edit_profile_weight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number"
                 android:digits="0123456789."
-                android:hint="公分"
+                android:ems="10"
+                android:hint="公斤"
+                android:inputType="number"
                 app:layout_constraintEnd_toEndOf="@+id/profile_weight"
-                app:layout_constraintStart_toStartOf="@+id/textView54"
-                app:layout_constraintTop_toBottomOf="@+id/textView54" />
+                app:layout_constraintStart_toStartOf="@+id/text_profile_weight"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_weight" />
+
+            <TextView
+                android:id="@+id/text_profile_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="密碼"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_weight"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_weight" />
+
+            <EditText
+                android:id="@+id/edit_profile_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="28dp"
+                android:ems="10"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/profile_weight"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_password"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_password" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
     <androidx.cardview.widget.CardView
             android:id="@+id/cardView6"
             android:layout_width="match_parent"

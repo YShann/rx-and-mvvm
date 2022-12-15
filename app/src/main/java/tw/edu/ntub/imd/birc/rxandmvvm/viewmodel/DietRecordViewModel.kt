@@ -27,16 +27,18 @@ class DietRecordViewModel(private val model: DietRecordModel) : ViewModel() {
 //    }
 
     fun searchByMealDate(
-        @Query("mealDate") mealDate: String
+        @Query("mealDate") mealDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return model.searchByMealDate(mealDate)
+        return model.searchByMealDate(mealDate,account)
     }
 
     fun searchByMealDateRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return model.searchByMealDateRange(startDate,endDate)
+        return model.searchByMealDateRange(startDate,endDate,account)
     }
 
     //

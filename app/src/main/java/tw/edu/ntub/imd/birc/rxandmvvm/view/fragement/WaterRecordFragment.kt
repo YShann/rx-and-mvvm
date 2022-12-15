@@ -2,6 +2,7 @@ package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.R.attr.font
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -104,8 +105,10 @@ class WaterRecordFragment : Fragment() {
     }
 
     private fun setCalendarAndRecycler(startDate: String,endDate:String){
+        val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        val account = sharedPreference?.getString("account", "defaultAccount")
         val adapter = ObservableAdapter(
-            viewModel.searchByWaterTimeRange(startDate, endDate)
+            viewModel.searchByWaterTimeRange(startDate, endDate,account.toString())
                 .mapSourceState {
                     it.data.map { waterRecord ->
                         val year = waterRecord.waterTime?.substring(0, 4)?.toInt()

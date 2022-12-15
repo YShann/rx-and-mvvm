@@ -27,16 +27,18 @@ class DietRecordAPISource(private val dietRecordAPI: DietRecordAPI) : DietRecord
 //    }
 
     override fun searchByMealDate(
-        @Query("mealDate") mealDate: String
+        @Query("mealDate") mealDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return dietRecordAPI.searchByMealDate(mealDate).toApiSourceState()
+        return dietRecordAPI.searchByMealDate(mealDate,account).toApiSourceState()
     }
 
     override fun searchByMealDateRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>> {
-        return dietRecordAPI.searchByMealDateRange(startDate, endDate).toApiSourceState()
+        return dietRecordAPI.searchByMealDateRange(startDate, endDate,account).toApiSourceState()
     }
 
     //    override fun createDietRecord(@Body body: JsonObject): Call<DietRecord> {

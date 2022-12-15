@@ -33,15 +33,17 @@ class WaterRecordModel(private val apiSource: WaterRecordSource) {
 //    }
 
     fun searchByWaterTime(
-        @Query("waterTime") waterTime: String
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return apiSource.searchByWaterTime(waterTime)
+        return apiSource.searchByWaterTime(waterTime,account)
     }
     fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<WaterRecord>>> {
-        return apiSource.searchByWaterTimeRange(startDate,endDate)
+        return apiSource.searchByWaterTimeRange(startDate,endDate,account)
     }
 
     fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord> {

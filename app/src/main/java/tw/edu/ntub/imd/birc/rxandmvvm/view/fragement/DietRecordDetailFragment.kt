@@ -167,29 +167,34 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
 
 
         detailName.text = dietRecord?.foodName
-        if(dietRecord?.foodContent==null){
-            detailContent.text = "未填寫"
-        }else{
+        if(dietRecord?.foodContent?.isNotEmpty()!!){
             detailContent.text = dietRecord.foodContent
+        }else{
+            detailContent.text = "未填寫"
         }
-        detailDateTime.text = dietRecord?.mealDate?.plus(" ").plus(dietRecord?.mealTime?.substring(0 until 5))
-        note.text = dietRecord?.note
-        if (dietRecord?.grains == "1") {
+        if(dietRecord.note?.isNotEmpty()!!){
+            note.text = dietRecord.note
+        }else{
+            note.text = "未填寫"
+        }
+        detailDateTime.text = dietRecord.mealDate?.plus(" ").plus(dietRecord.mealTime?.substring(0 until 5))
+        note.text = dietRecord.note
+        if (dietRecord.grains == "1") {
             checkBoxGrains.isChecked=true
         }
-        if (dietRecord?.meatsAndProtein == "1") {
+        if (dietRecord.meatsAndProtein == "1") {
             checkBoxMeatsAndProtein.isChecked=true
         }
-        if (dietRecord?.vegetables == "1") {
+        if (dietRecord.vegetables == "1") {
             checkBoxVegetables.isChecked=true
         }
-        if (dietRecord?.fruits == "1") {
+        if (dietRecord.fruits == "1") {
             checkBoxFruits.isChecked=true
         }
-        if (dietRecord?.milkAndDairy == "1") {
+        if (dietRecord.milkAndDairy == "1") {
             checkBoxMilkAndDairy.isChecked=true
         }
-        if (dietRecord?.fats == "1") {
+        if (dietRecord.fats == "1") {
             checkBoxFats.isChecked=true
         }
 
@@ -215,26 +220,26 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
                 checkBoxMilkAndDairy.isEnabled = false
                 checkBoxFats.isEnabled = false
                 detailName.text = editDetailName.text
-                if(editDetailName.text==null){
-                    detailContent.text = "未填寫"
-                }else{
+                if(editDetailContent.text.isNotEmpty()){
                     detailContent.text = editDetailContent.text
+                }else{
+                    detailContent.text = "未填寫"
                 }
                 detailDateTime.text = editDetailDate.text
-                if(editDetailNote.text==null){
-                    note.text = "未填寫"
-                }else{
+                if(editDetailNote.text.isNotEmpty()){
                     note.text = editDetailContent.text
+                }else{
+                    note.text = "未填寫"
                 }
 
-                val dateTime = editDetailDate.text.toString()
+                val dateTime = editDetailDate.text.toString().substring(0,10)
                 val seconds = calender.get(Calendar.SECOND)
                 val one = "1"
                 val zero = "0"
                 val id:String = dietRecord?.id.toString()
                 val foodName:String = editDetailName.text.toString()
                 val foodContent:String = editDetailContent.text.toString()
-                val mealTime = "$dateTime:$seconds"
+                val mealTime = "${editDetailDate.text.toString().substring(11,16)}:$seconds"
                 val note:String = editDetailNote.text.toString()
                 val grains = if (checkBoxGrains.isChecked) one else zero
                 val vegetables = if (checkBoxVegetables.isChecked) one else zero
@@ -246,6 +251,7 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
                 jsonObject.put("id", id)
                 jsonObject.put("foodName", foodName)
                 jsonObject.put("foodContent", foodContent)
+                jsonObject.put("mealDate", dateTime)
                 jsonObject.put("mealTime", mealTime)
                 jsonObject.put("note", note)
                 jsonObject.put("grains", grains)
@@ -290,10 +296,18 @@ class DietRecordDetailFragment(val dietRecord: DietRecord?) : Fragment() {
                 detailContent.visibility = View.INVISIBLE
                 detailDateTime.visibility = View.INVISIBLE
                 note.visibility = View.INVISIBLE
-                editDetailName.setText(dietRecord?.foodName)
-                editDetailContent.setText(dietRecord?.foodContent)
-                editDetailDate.setText(dietRecord?.mealDate?.plus(" ").plus(dietRecord?.mealTime?.substring(0 until 5)))
-                editDetailNote.setText(dietRecord?.note)
+                editDetailName.setText(dietRecord.foodName)
+                editDetailDate.setText(dietRecord.mealDate?.plus(" ").plus(dietRecord.mealTime?.substring(0 until 5)))
+                if(dietRecord.foodContent!!.isNotEmpty()){
+                    editDetailContent.setText(dietRecord.foodContent)
+                }else{
+                    editDetailContent.setText("未填寫")
+                }
+                if(dietRecord.note!!.isNotEmpty()){
+                    editDetailNote.setText(dietRecord.note)
+                }else{
+                    editDetailNote.setText("未填寫")
+                }
 
                 val searchList: ArrayList<String> = ArrayList()
                 val searchAdapter = ObservableAdapter(

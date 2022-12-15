@@ -8,4 +8,5 @@ data class PoopRecord(
     var poopCount: Int?,
     var poopTime: String?,
     var poopStatus: String?,
+    var account:String?
 )

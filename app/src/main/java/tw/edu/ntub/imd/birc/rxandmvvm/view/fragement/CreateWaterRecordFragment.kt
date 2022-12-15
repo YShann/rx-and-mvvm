@@ -1,6 +1,7 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -66,11 +67,15 @@ class CreateWaterRecordFragment : Fragment() {
                 ?.commit()
         }
         createWaterReturnCheck.setOnClickListener {
+            val sharedPreference =
+                this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+            val account = sharedPreference?.getString("account", "defaultAccount")
             val waterVolume: Int = createWaterRecordVolume.text.toString().toInt()
             val waterTime: String = createWaterRecordDate.text.toString()
             val jsonObject = JSONObject()
             jsonObject.put("waterVolume", waterVolume)
             jsonObject.put("waterTime", waterTime)
+            jsonObject.put("account", account)
             val jsonObjectString = jsonObject.toString()
             val requestBody =
                 jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
@@ -94,10 +99,11 @@ class CreateWaterRecordFragment : Fragment() {
                             HomeActivity.waterRecordFragment
                         )
                             ?.commit()
+                        createWaterRecordVolume.setText("")
                     }
 
                 })
-
+            this.getNowDateTime()
         }
 
         return view

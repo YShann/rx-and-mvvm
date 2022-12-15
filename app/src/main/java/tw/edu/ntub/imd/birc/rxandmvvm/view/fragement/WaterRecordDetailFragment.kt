@@ -128,6 +128,7 @@ class WaterRecordDetailFragment(val waterRecord: WaterRecord?) : Fragment() {
                 detailVolume.visibility = View.VISIBLE
                 editDetailVolume.visibility = View.INVISIBLE
                 val waterTime = waterRecord?.waterTime
+                Log.d("testtttttttttttttttttttttttttttttttttttttttttt",waterTime.toString())
                 val waterVolume = editDetailVolume.text.toString()
                 val id:String = waterRecord?.id.toString()
 

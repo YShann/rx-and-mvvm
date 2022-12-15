@@ -21,13 +21,15 @@ interface DietRecordAPI {
 
     @GET("dietRecord/mealDate")
     fun searchByMealDate(
-        @Query("mealDate") mealDate: String
+        @Query("mealDate") mealDate: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<DietRecord>>>
 
     @GET("dietRecord")
     fun searchByMealDateRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<DietRecord>>>
 
     ///不需圖片上傳用這個

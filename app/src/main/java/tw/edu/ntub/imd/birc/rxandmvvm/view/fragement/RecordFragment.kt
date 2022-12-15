@@ -96,14 +96,15 @@ class RecordFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     ?.select()
             }, 100
         )
-
+        val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        val account = sharedPreference?.getString("account", "defaultAccount")
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (searchStatusIsDay) {
                     val tabDate = tab?.position?.plus(1)
                     mealDate = "$currentYear-$currentMonth-${tabDate}"
                     val adapter = ObservableAdapter(
-                        viewModel.searchByMealDate(mealDate!!)
+                        viewModel.searchByMealDate(mealDate!!,account.toString())
                             .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
                     )
                     adapter.attachToRecyclerView(recyclerView)
@@ -138,7 +139,7 @@ class RecordFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                     Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                 }"
                 val adapter = ObservableAdapter(
-                    viewModel.searchByMealDate(mealDate!!)
+                    viewModel.searchByMealDate(mealDate!!,account.toString())
                         .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
                 )
                 adapter.attachToRecyclerView(recyclerView)
@@ -148,7 +149,7 @@ class RecordFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                 endDate = "$currentYear-$currentMonth-$day"
 
                 val adapter = ObservableAdapter(
-                    viewModel.searchByMealDateRange(startDate!!, endDate!!)
+                    viewModel.searchByMealDateRange(startDate!!, endDate!!,account.toString())
                         .mapSourceState { it.data.map { dietRecord -> DietRecordItem(dietRecord) } }
                 )
                 adapter.attachToRecyclerView(recyclerView)
@@ -169,7 +170,7 @@ class RecordFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                             Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                         }"
                         val adapter = ObservableAdapter(
-                            viewModel.searchByMealDate(mealDate!!)
+                            viewModel.searchByMealDate(mealDate!!,account.toString())
                                 .mapSourceState {
                                     it.data.map { dietRecord ->
                                         DietRecordItem(
@@ -188,7 +189,7 @@ class RecordFragment : Fragment(), DatePickerDialog.OnDateSetListener {
                         startDate = "$currentYear-$currentMonth-01"
                         endDate = "$currentYear-$currentMonth-$day"
                         val adapter = ObservableAdapter(
-                            viewModel.searchByMealDateRange(startDate!!, endDate!!)
+                            viewModel.searchByMealDateRange(startDate!!, endDate!!,account.toString())
                                 .mapSourceState {
                                     it.data.map { dietRecord ->
                                         DietRecordItem(
@@ -238,8 +239,10 @@ class RecordFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     ) {
         val timeStart = "$year-${monthOfYear.plus(1)}-$dayOfMonth"
         val timeEnd = "$yearEnd-${monthOfYearEnd.plus(1)}-$dayOfMonthEnd"
+        val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        val account = sharedPreference?.getString("account", "defaultAccount")
         val adapter = ObservableAdapter(
-            viewModel.searchByMealDateRange(timeStart, timeEnd)
+            viewModel.searchByMealDateRange(timeStart, timeEnd,account.toString())
                 .mapSourceState {
                     it.data.map { dietRecord ->
                         DietRecordItem(

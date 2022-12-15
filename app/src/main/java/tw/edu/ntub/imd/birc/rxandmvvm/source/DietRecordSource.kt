@@ -21,12 +21,14 @@ interface DietRecordSource {
 //    fun getDetail(@Query("id") id: Int): Observable<SourceState<ResponseBody<DietRecord>>>
 
     fun searchByMealDate(
-        @Query("mealDate") mealDate: String
+        @Query("mealDate") mealDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>>
 
     fun searchByMealDateRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<DietRecord>>>
 
     //    fun createDietRecord(@Body body: JsonObject): Call<DietRecord>

@@ -22,5 +22,6 @@ data class DietRecord(
     var fruits: String?,
     var fats: String?,
     var imageUrl:String?,
-    var foodContent:String?
+    var foodContent:String?,
+    var account:String?
 )
