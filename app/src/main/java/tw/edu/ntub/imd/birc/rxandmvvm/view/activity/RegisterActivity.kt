@@ -1,85 +1,162 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.activity
 
+import android.app.DatePickerDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
+import android.util.Log
+import android.view.View
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import tw.edu.ntub.imd.birc.rxandmvvm.R
+import tw.edu.ntub.imd.birc.rxandmvvm.data.PoopRecord
+import tw.edu.ntub.imd.birc.rxandmvvm.data.User
+import tw.edu.ntub.imd.birc.rxandmvvm.view.fragement.UserFragment
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
-    var name: EditText? = null
-    var username: EditText? = null
-    var password: EditText? = null
-    var phone: EditText? = null
-    var age: EditText? = null
+    private val viewModel: MainViewModel by viewModel()
+    private lateinit var name: EditText
+    private lateinit var gender: Spinner
+    private lateinit var birthday: EditText
+    private lateinit var account: EditText
+    private lateinit var password: EditText
+    private lateinit var height: EditText
+    private lateinit var weight: EditText
+    private lateinit var registerBtn: Button
+    private var genderPosition: Int = 0
+    private val calender: Calendar = Calendar.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        setContentView(R.layout.activity_register)
-        name = findViewById(R.id.name)
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password)
-        phone = findViewById(R.id.phone);
-        age = findViewById(R.id.age);
-        val btn_register2 = findViewById<ImageButton>(R.id.btn_register2)
-        btn_register2.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent);
+        name = findViewById(R.id.register_name)
+        gender = findViewById(R.id.register_gender)
+        birthday = findViewById(R.id.register_birthday)
+        account = findViewById(R.id.register_account)
+        password = findViewById(R.id.register_password)
+        height = findViewById(R.id.register_height)
+        weight = findViewById(R.id.register_weight)
+        registerBtn = findViewById(R.id.register_btn)
+
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.gender,
+            android.R.layout.simple_spinner_dropdown_item
+        )
+        gender.adapter = adapter
+        gender.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    println("error")
+                }
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    genderPosition = position
+                }
+
+            }
+
+        birthday.setOnClickListener {
+            datePicker()
+        }
+
+
+        registerBtn.setOnClickListener {
+            val jsonName: String = name.text.toString()
+            val jsonGender: String = genderPosition.toString()
+            val jsonBirthday: String = birthday.text.toString()
+            val jsonAccount: String = account.text.toString()
+            val jsonPassword: String = password.text.toString()
+            val jsonHeight: String = height.text.toString()
+            val jsonWeight: String = weight.text.toString()
+            val jsonObject = JSONObject()
+            jsonObject.put("name", jsonName)
+            jsonObject.put("gender", jsonGender)
+            jsonObject.put("birthday", jsonBirthday)
+            jsonObject.put("account", jsonAccount)
+            jsonObject.put("password", jsonPassword)
+            jsonObject.put("height", jsonHeight)
+            jsonObject.put("weight", jsonWeight)
+            jsonObject.put("isEmailLogin", "0")
+            val jsonObjectString = jsonObject.toString()
+            val requestBody =
+                jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+            viewModel.register(requestBody)
+                .enqueue(object : Callback<User> {
+                    override fun onResponse(
+                        call: Call<User>,
+                        response: Response<User>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d("Retrofit", "Success")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        val sharedPreference = getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+                        val editor = sharedPreference.edit()
+                        editor.putString("account", jsonAccount)
+                        editor.putString("password", jsonPassword)
+                        editor.putString("isEmailLogin", "0")
+                        editor.putString("isLogin", "1")
+                        editor.apply()
+                        Toast.makeText(this@RegisterActivity, "註冊成功", Toast.LENGTH_SHORT)
+                            .show()
+                        finish()
+                        startActivity(Intent(this@RegisterActivity, HomeActivity::class.java))
+                        name.setText("")
+                        gender.setSelection(0)
+                        birthday.setText("")
+                        account.setText("")
+                        password.setText("")
+                        height.setText("")
+                        weight.setText("")
+                    }
+
+                })
         }
     }
-}
 
-//    fun register(view: View?) {
-//        val cname = name!!.text.toString()
-//        val cusername = username!!.text.toString()
-//        val cpassword = password!!.text.toString()
-//        println(phone!!.text.toString())
-//        val cphone = phone!!.text.toString()
-//        val cgae = age!!.text.toString().toInt()
-//        if (cname.length < 2 || cusername.length < 2 || cpassword.length < 2) {
-//            Toast.makeText(applicationContext, "輸入資訊不符合要求請重新輸入", Toast.LENGTH_LONG).show()
-//            return
-//        }
-//        val user = User()
-//        user.setName(cname)
-//        user.setUsername(cusername)
-//        user.setPassword(cpassword)
-//        user.setAge(cgae)
-//        user.setPhone(cphone)
-//        object : Thread() {
-//            override fun run() {
-//                var msg = 0
-//                val userDao = UserDao()
-//                val uu: User = userDao.findUser(user.getName())
-//                if (uu != null) {
-//                    msg = 1
-//                }
-//                val flag: Boolean = userDao.register(user)
-//                if (flag) {
-//                    msg = 2
-//                }
-//                hand.sendEmptyMessage(msg)
-//            }
-//        }.start()
-//    }
-//
-//    val hand: Handler = object : Handler() {
-//        override fun handleMessage(msg: Message) {
-//            if (msg.what == 0) {
-//                Toast.makeText(applicationContext, "註冊失敗", Toast.LENGTH_LONG).show()
-//            }
-//            if (msg.what == 1) {
-//                Toast.makeText(applicationContext, "該賬號已經存在，請換一個賬號", Toast.LENGTH_LONG).show()
-//            }
-//            if (msg.what == 2) {
-//                //startActivity(new Intent(getApplication(),MainActivity.class));
-//                val intent = Intent()
-//                //將想要傳遞的資料用putExtra封裝在intent中
-//                intent.putExtra("a", "註冊")
-//                setResult(RESULT_CANCELED, intent)
-//                finish()
-//            }
-//        }
-//    }
+    private fun datePicker() {
+        val year = calender.get(Calendar.YEAR)
+        val month = calender.get(Calendar.MONTH)
+        val day = calender.get(Calendar.DAY_OF_MONTH)
+        var plusZero = "0"
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, yearPick, monthOfYear, dayOfMonth ->
+                plusZero = if (dayOfMonth < 10) {
+                    plusZero.plus(dayOfMonth)
+                } else {
+                    dayOfMonth.toString()
+                }
+                val dat = (yearPick.toString() + "/" + (monthOfYear + 1) + "/" + plusZero)
+                birthday.setText(dat)
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
+    }
+
+
+}

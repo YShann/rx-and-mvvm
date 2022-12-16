@@ -8,7 +8,258 @@
     android:background="@color/white">
 
 
-        <androidx.cardview.widget.CardView
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView6"
+        app:layout_constraintVertical_bias="0.0">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/profile_recycler_invisibility"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/textView44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="28dp"
+                android:text="帳號"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/profile_account"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="28dp"
+                android:text="帳號"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView44"
+                app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+            <TextView
+                android:id="@+id/text_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="24dp"
+                android:text="姓名"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_account" />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="姓名"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_account"
+                app:layout_constraintStart_toStartOf="@+id/profile_account"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_name" />
+
+            <TextView
+                android:id="@+id/text_profile_gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="性別"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_name" />
+
+            <TextView
+                android:id="@+id/profile_gender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="性別"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_account"
+                app:layout_constraintStart_toStartOf="@+id/profile_account"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_gender" />
+
+            <TextView
+                android:id="@+id/text_profile_birthday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="生日"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/profile_gender" />
+
+            <TextView
+                android:id="@+id/profile_birthday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="生日"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_account"
+                app:layout_constraintStart_toStartOf="@+id/profile_account"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_birthday" />
+
+            <TextView
+                android:id="@+id/text_profile_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="身高"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_birthday" />
+
+            <TextView
+                android:id="@+id/profile_height"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="身高"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_account"
+                app:layout_constraintStart_toStartOf="@+id/profile_account"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_height" />
+
+            <TextView
+                android:id="@+id/text_profile_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="體重"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_height" />
+
+
+            <TextView
+                android:id="@+id/profile_weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="體重"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_account"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/profile_account"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_weight" />
+
+            <EditText
+                android:id="@+id/edit_profile_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="@+id/profile_name"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_name" />
+
+            <Spinner
+                android:id="@+id/edit_profile_gender"
+                style="@android:style/Widget.Holo.Light.Spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="@+id/profile_gender"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_gender"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_gender" />
+
+            <EditText
+                android:id="@+id/edit_profile_birthday"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date"
+                android:focusableInTouchMode="false"
+                app:layout_constraintEnd_toEndOf="@+id/profile_birthday"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_birthday"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_birthday" />
+
+            <EditText
+                android:id="@+id/edit_profile_height"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:ems="10"
+                android:hint="公分"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="@+id/profile_height"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_height"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_height" />
+
+            <EditText
+                android:id="@+id/edit_profile_weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:digits="0123456789."
+                android:ems="10"
+                android:hint="公斤"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="@+id/profile_weight"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_weight"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_weight" />
+
+            <TextView
+                android:id="@+id/text_profile_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="密碼"
+                android:textColor="@color/main_color"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_weight"
+                app:layout_constraintTop_toBottomOf="@+id/edit_profile_weight" />
+
+            <EditText
+                android:id="@+id/edit_profile_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="28dp"
+                android:ems="10"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/profile_weight"
+                app:layout_constraintStart_toStartOf="@+id/text_profile_password"
+                app:layout_constraintTop_toBottomOf="@+id/text_profile_password" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <androidx.cardview.widget.CardView
             android:id="@+id/cardView6"
             android:layout_width="match_parent"
             android:layout_height="58dp"
@@ -26,45 +277,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="12dp"
                     android:background="@color/main_color"
                     android:src="@drawable/ic_left_arrow"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/profile_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/main_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/profile_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="帳號"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/textView44"
-        app:layout_constraintTop_toBottomOf="@+id/textView44" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:src="@drawable/ic_profile_account"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_account"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView44" />
-
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
-        android:text="帳號"
-        android:textColor="@color/main_color"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/cardView6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

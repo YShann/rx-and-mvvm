@@ -7,4 +7,5 @@ data class WaterRecord(
     var id: Int?,
     var waterVolume: Int?,
     var waterTime: String?,
+    var account:String?
 )

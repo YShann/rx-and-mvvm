@@ -16,15 +16,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.create
 import tw.edu.ntub.imd.birc.rxandmvvm.constant.UrlConstant
-import tw.edu.ntub.imd.birc.rxandmvvm.model.DietRecordModel
-import tw.edu.ntub.imd.birc.rxandmvvm.model.PoopRecordModel
-import tw.edu.ntub.imd.birc.rxandmvvm.model.UserModel
-import tw.edu.ntub.imd.birc.rxandmvvm.model.WaterRecordModel
+import tw.edu.ntub.imd.birc.rxandmvvm.model.*
 import tw.edu.ntub.imd.birc.rxandmvvm.source.api.*
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.DietRecordViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.MainViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
+import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.*
 
 class RxAndMVVMApplication : Application() {
 
@@ -59,6 +53,9 @@ class RxAndMVVMApplication : Application() {
                 single<PoopRecordAPI> {
                     get<Retrofit>().create()
                 }
+                single<FoodAPI> {
+                    get<Retrofit>().create()
+                }
             }
             val databaseModule = module {
 //                single {
@@ -80,6 +77,9 @@ class RxAndMVVMApplication : Application() {
                 single {
                     PoopRecordAPISource(get())
                 }
+                single {
+                    FoodAPISource(get())
+                }
             }
             val modelModule = module {
                 single {
@@ -94,6 +94,9 @@ class RxAndMVVMApplication : Application() {
                 single {
                     PoopRecordModel(get<PoopRecordAPISource>())
                 }
+                single {
+                    FoodModel(get<FoodAPISource>())
+                }
             }
             val viewModelModule = module {
                 viewModel {
@@ -107,6 +110,9 @@ class RxAndMVVMApplication : Application() {
                 }
                 viewModel {
                     PoopRecordViewModel(get())
+                }
+                viewModel {
+                    FoodViewModel(get())
                 }
             }
             modules(

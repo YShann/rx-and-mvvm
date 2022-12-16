@@ -10,6 +10,13 @@
         <item>油脂與堅果種子</item>
         <item>其他</item>
     </string-array>
+
+    <string-array name="gender">
+        <item>男</item>
+        <item>女</item>
+
+    </string-array>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="date">以日顯示</string>
@@ -48,5 +55,18 @@
         <item>8分飽</item>
         <item>9分飽</item>
         <item>10分飽</item>
+    </string-array>
+    <string-array name="profile_gender">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="poop_state">
+        <item>硬球狀(便祕型)</item>
+        <item>有凹凸長條狀(便祕型)</item>
+        <item>有裂痕長條狀(正常型)</item>
+        <item>光滑的長條狀(正常型)</item>
+        <item>鬆軟的顆粒狀(腹瀉型)</item>
+        <item>軟泥狀(腹瀉型)</item>
+        <item>水狀(腹瀉型)</item>
     </string-array>
 </resources>

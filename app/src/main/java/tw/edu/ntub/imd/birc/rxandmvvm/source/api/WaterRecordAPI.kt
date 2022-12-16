@@ -20,21 +20,26 @@ interface WaterRecordAPI {
 //    @GET("dietRecord")
 //    fun getDetail(@Query("id") id: Int): Observable<Response<ResponseBody<DietRecord>>>
 
-    @GET("waterRecord")
+    @GET("waterRecord/waterTime")
     fun searchByWaterTime(
+        @Query("waterTime") waterTime: String,
+        @Query("account") account: String
+    ): Observable<Response<ResponseBody<WaterRecord>>>
+
+    @GET("waterRecord")
+    fun searchByWaterTimeRange(
         @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
     ): Observable<Response<ResponseBody<WaterRecord>>>
 
     //不需圖片上傳用這個
         @POST("waterRecord")
-    fun createWaterRecord(@Body body: JsonObject): Call<WaterRecord>
+    fun createWaterRecord(@Body body: RequestBody): Call<WaterRecord>
 
-//    @Multipart
-//    @POST("waterRecord")
-//    fun createDietRecord(
-//        @PartMap params : Map<String, @JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>>
+    @PATCH("waterRecord")
+    fun editWaterRecord(@Body body: RequestBody): Call<WaterRecord>
 
+    @DELETE("waterRecord")
+    fun deleteWaterRecord(@Query("id") id: String): Call<WaterRecord>
 }

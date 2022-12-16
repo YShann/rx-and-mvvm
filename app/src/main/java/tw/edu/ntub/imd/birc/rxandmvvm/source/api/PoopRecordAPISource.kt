@@ -30,22 +30,31 @@ class PoopRecordAPISource(private val poopRecordAPI: PoopRecordAPI) : PoopRecord
 //    }
 
     override fun searchByPoopTime(
-        @Query("startDate") startDate: String,
-        @Query("endDate") endDate: String
+        @Query("poopTime") poopTime: String,
+        @Query("account") account: String
     ): Observable<SourceState<ResponseBody<PoopRecord>>> {
-        return poopRecordAPI.searchByPoopTime(startDate, endDate).toApiSourceState()
+        return poopRecordAPI.searchByPoopTime(poopTime,account).toApiSourceState()
     }
 
-    override fun createPoopRecord(@Body body: JsonObject): Call<PoopRecord> {
+    override fun searchByPoopTimeRange(
+        @Query("startDate") startDate: String,
+        @Query("endDate") endDate: String,
+        @Query("account") account: String
+    ): Observable<SourceState<ResponseBody<PoopRecord>>> {
+        return poopRecordAPI.searchByPoopTimeRange(startDate, endDate,account).toApiSourceState()
+    }
+
+    override fun createPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
         return poopRecordAPI.createPoopRecord(body)
     }
 
-//    override fun createWaterRecord(
-//        @PartMap params : Map<String,@JvmSuppressWildcards RequestBody> ,
-//        @Part imageFile: MultipartBody.Part
-//    ): Call<ResponseBody<DietRecord>> {
-//        return dietRecordAPI.createDietRecord(params,imageFile)
-//    }
+    override fun editPoopRecord(@Body body: RequestBody): Call<PoopRecord> {
+        return poopRecordAPI.editPoopRecord(body)
+    }
+
+    override fun deletePoopRecord(@Query("id") id: String): Call<PoopRecord> {
+        return poopRecordAPI.deletePoopRecord(id)
+    }
 }
 
 

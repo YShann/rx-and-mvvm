@@ -1,17 +1,18 @@
 package tw.edu.ntub.imd.birc.rxandmvvm.view.fragement
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.style.LineBackgroundSpan
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -26,15 +27,24 @@ import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.ObservableAdapter
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.PoopRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.view.adapter.item.WaterRecordItem
 import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.PoopRecordViewModel
-import tw.edu.ntub.imd.birc.rxandmvvm.viewmodel.WaterRecordViewModel
+import java.util.*
+
 
 class PoopRecordFragment : Fragment() {
 
     private lateinit var poopReturnBtn: ImageButton
+    private lateinit var poopRecordPlus: ImageButton
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var poopRecordRecyclerView: RecyclerView
     private val viewModel: PoopRecordViewModel by viewModel()
-
+    private var currentDate: CalendarDay? = null
+    private var currentYear: Int = 0
+    var currentMonth: Int = 0
+    var currentDay: Int = 0
+    var dayList: MutableList<String> =
+        mutableListOf("31", "28", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31")
+    var startDate: String? = null
+    var endDate: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +59,7 @@ class PoopRecordFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_poop_record, container, false)
         poopReturnBtn = view.findViewById<ImageButton>(R.id.poop_record_return)
+        poopRecordPlus = view.findViewById<ImageButton>(R.id.poop_record_plus)
         calendarView = view.findViewById<MaterialCalendarView>(R.id.poop_record_calendarView)
         poopRecordRecyclerView = view.findViewById<RecyclerView>(R.id.poop_record_recyclerView)
 
@@ -58,25 +69,61 @@ class PoopRecordFragment : Fragment() {
                 finish()
             }
         }
+
+        poopRecordPlus.setOnClickListener {
+            val transaction = activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.container_activity_main, HomeActivity.createPoopRecordFragment)
+                ?.commit()
+        }
+
+        currentDate = calendarView.currentDate
+        currentYear = calendarView.currentDate.year
+        currentMonth = calendarView.currentDate.month
+        currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        val endDay = dayList[currentMonth.minus(1)].toInt()
+        startDate = "$currentYear-$currentMonth-01"
+        endDate = "$currentYear-$currentMonth-$endDay"
+        setCalendarAndRecycler(startDate!!, endDate!!)
+
+        calendarView.setOnMonthChangedListener { _, date ->
+            currentYear = date.year
+            currentMonth = date.month
+            val endDay = dayList[currentMonth.minus(1)].toInt()
+            startDate = "$currentYear-$currentMonth-01"
+            endDate = "$currentYear-$currentMonth-$endDay"
+            setCalendarAndRecycler(startDate!!, endDate!!)
+        }
+
+        return view
+    }
+    private fun setCalendarAndRecycler(startDate: String,endDate:String){
+        val sharedPreference = this.activity?.getSharedPreferences("LOGIN", Context.MODE_PRIVATE)
+        val account = sharedPreference?.getString("account", "defaultAccount")
         val adapter = ObservableAdapter(
-            viewModel.searchAll()
+            viewModel.searchByPoopTimeRange(startDate, endDate,account.toString())
                 .mapSourceState {
                     it.data.map { poopRecord ->
                         val year = poopRecord.poopTime?.substring(0, 4)?.toInt()
                         val month = poopRecord.poopTime?.substring(5, 7)?.toInt()
                         val date = poopRecord.poopTime?.substring(8, 10)?.toInt()
-                        calendarView.addDecorator(object : DayViewDecorator {
-                            override fun shouldDecorate(day: CalendarDay): Boolean {
-                                val currentDay  = CalendarDay.from(year!!, month!!, date!!)
-                                return day == currentDay
-                                return true
-                            }
+                        activity?.runOnUiThread(java.lang.Runnable {
+                            calendarView.addDecorator(object : DayViewDecorator {
+                                override fun shouldDecorate(day: CalendarDay): Boolean {
+                                    val currentDay = CalendarDay.from(year!!, month!!, date!!)
+                                    return day == currentDay
+                                }
 
-                            override fun decorate(view: DayViewFacade) {
-                                view.addSpan(PoopAddTextToDates(poopRecord.poopCount.toString().plus(" 次")))
-                                view.setDaysDisabled(true)
-                            }
+                                override fun decorate(view: DayViewFacade) {
+                                    view.addSpan(
+                                        PoopAddTextToDates(
+                                            poopRecord.poopCount.toString().plus(" 次")
+                                        )
+                                    )
+                                    view.setDaysDisabled(true)
+                                }
+                            })
                         })
+
                     }
                     it.data.map { poopRecord ->
                         PoopRecordItem(poopRecord)
@@ -84,11 +131,7 @@ class PoopRecordFragment : Fragment() {
                 }
         )
         adapter.attachToRecyclerView(poopRecordRecyclerView)
-
-
-        return view
     }
-
 }
 
 
