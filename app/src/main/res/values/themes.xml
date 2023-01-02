@@ -34,5 +34,14 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="Theme.RxAndMVVM.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.RxAndMVVM.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.RxAndMVVM.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

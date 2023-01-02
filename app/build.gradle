@@ -40,6 +40,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
@@ -58,6 +59,8 @@ dependencies {
     implementation 'androidx.test:core-ktx:1.4.0'
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.7.1'
     implementation 'com.google.firebase:firebase-auth:21.0.8'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
     def room_version = "2.3.0-alpha04"
     def lifecycle_version = "2.2.0"
     def retrofit2_version = "2.9.0"
